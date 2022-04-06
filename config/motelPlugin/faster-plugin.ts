@@ -45,7 +45,7 @@ export default (api: IApi) => {
     });
   }
   if (opts?.envParams) {
-    const configObj = {};
+    const configObj: Record<string, any> = {};
     opts?.envParams?.forEach?.((param) => {
       const { key, origin } = param;
       configObj[key] = env === 'production' ? `{{_ .${key} }}` : origin;
