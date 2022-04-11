@@ -38,9 +38,8 @@ const SettingContainer: React.FC = (props) => {
           </SubMenu>
         </Menu>
       </Sider>
-      <Layout style={{ padding: '0 24px 24px' }}>
+      <Layout>
         <Content
-          className="site-layout-background"
           style={{
             padding: 24,
             margin: 0,
