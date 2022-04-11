@@ -5,8 +5,18 @@ export default [
   },
   {
     name: '首页',
-    icon: 'HomeOutlined',
     path: '/home',
     component: 'Home',
+  },
+  {
+    name: '房态',
+    path: '/room-state',
+    component: 'RoomState',
+  },
+  {
+    name: '设置',
+    path: '/setting',
+    component: 'Setting',
+    routes: [{ path: '/setting/rooms', component: 'Setting/Rooms' }],
   },
 ];

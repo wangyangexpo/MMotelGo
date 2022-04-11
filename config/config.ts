@@ -9,15 +9,15 @@ export default defineConfig({
   dva: false,
   // 最佳实践中内置了 Layout，你也可以配置为 false 关闭它
   layout: {
-    name: 'MotelGo 管理后台',
+    name: 'MotelGo',
     // logo: 'https://img.alicdn.com/imgextra/i3/O1CN01u0CsC61b0A6wBavkQ_!!6000000003402-2-tps-360-362.png',
     navTheme: 'light',
-    layout: 'side',
+    layout: 'top',
     contentWidth: 'Fluid',
     fixedHeader: true,
     fixSiderbar: true,
     breadcrumbRender: false,
-    title: 'MotelGo 管理后台',
+    title: 'MotelGo',
     pwa: false,
   },
   title: 'MotelGo 管理后台',

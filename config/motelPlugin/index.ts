@@ -6,8 +6,6 @@ import { readFileSync } from 'fs';
 import { PLUGIN_NAME } from './utils/constant';
 import getWorkHappyProvider from './utils/getWorkHappyProvider';
 
-import registerAemPlugin from './aem-plugin';
-import registerFasterPlugin from './faster-plugin';
 import registerLoadingPlugin from './loading-plugin';
 import registerWaterMarkPlugin from './water-mark-plugin';
 
@@ -20,25 +18,6 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          // aem配置
-          aem: joi.object({
-            pid: joi.string(),
-            userType: joi.string(),
-            requiredFields: joi.array().items(joi.string()),
-          }),
-          // faster配置
-          faster: joi.alternatives(
-            joi.boolean(),
-            joi.object({
-              cdn: joi.boolean(),
-              envParams: joi.array().items(
-                joi.object({
-                  key: joi.string(),
-                  origin: joi.string().allow(''),
-                }),
-              ),
-            }),
-          ),
           // loading配置
           loading: joi.object({
             imgSrc: joi.string(),
@@ -54,10 +33,6 @@ export default (api: IApi) => {
     },
   });
 
-  // 注册 aem 插件
-  registerAemPlugin(api);
-  // 注册 faster 插件
-  registerFasterPlugin(api);
   // 注册 loading 插件
   registerLoadingPlugin(api);
   // 注册 waterMark 插件
