@@ -18,6 +18,7 @@ export default defineConfig({
     fixSiderbar: true,
     breadcrumbRender: false,
     title: 'MotelGo',
+    locale: true,
     pwa: false,
   },
   // favicon:

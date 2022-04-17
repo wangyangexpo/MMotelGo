@@ -7,7 +7,6 @@ export default [
     name: '首页',
     path: '/home',
     component: 'Home',
-    title: 'home_title',
   },
   {
     name: '房态',
