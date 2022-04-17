@@ -1,6 +1,7 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
+import { Button } from 'antd';
 
 const SettingRoomsPage: React.FC = () => {
   const columns: ProColumns[] = [
@@ -37,7 +38,20 @@ const SettingRoomsPage: React.FC = () => {
     },
   ];
 
-  return <ProTable columns={columns} options={false}></ProTable>;
+  return (
+    <ProTable
+      columns={columns}
+      options={false}
+      search={{
+        defaultCollapsed: false,
+      }}
+      toolBarRender={(action) => [
+        <Button type="primary" onClick={() => {}}>
+          添加房型
+        </Button>,
+      ]}
+    ></ProTable>
+  );
 };
 
 export default SettingRoomsPage;

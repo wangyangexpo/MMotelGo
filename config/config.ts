@@ -30,6 +30,12 @@ export default defineConfig({
   // linkS: {appId: '5c6feaf3fbdf01f7a4d35cf1' },
   nodeModulesTransform: { type: 'none' },
   history: { type: 'hash' },
+  // 接口代理配置
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1',
+    },
+  },
   // 提速方案配置
   mfsu: {},
   fastRefresh: {},

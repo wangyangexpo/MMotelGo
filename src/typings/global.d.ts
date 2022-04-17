@@ -1,3 +1,5 @@
+declare module 'mockjs';
+
 declare type Key = React.Key;
 
 declare interface BasicExtraProps {
