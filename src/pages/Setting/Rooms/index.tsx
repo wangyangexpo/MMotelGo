@@ -1,6 +1,7 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
+import { useIntl, getLocale } from 'umi';
 import { Button } from 'antd';
 
 const SettingRoomsPage: React.FC = () => {
@@ -38,6 +39,10 @@ const SettingRoomsPage: React.FC = () => {
     },
   ];
 
+  const intl = useIntl();
+
+  console.log(getLocale());
+
   return (
     <ProTable
       columns={columns}
@@ -47,7 +52,15 @@ const SettingRoomsPage: React.FC = () => {
       }}
       toolBarRender={(action) => [
         <Button type="primary" onClick={() => {}}>
-          添加房型
+          {intl.formatMessage(
+            {
+              id: 'WELCOME_TO_UMI_WORLD',
+              defaultMessage: '你好，旅行者',
+            },
+            {
+              name: '王阳',
+            },
+          )}
         </Button>,
       ]}
     ></ProTable>
