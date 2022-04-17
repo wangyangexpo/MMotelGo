@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'umi';
 import { Layout, Menu } from 'antd';
 import {
   UserOutlined,
@@ -9,27 +10,32 @@ const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 const SettingContainer: React.FC = (props) => {
+  const history = useHistory();
   return (
     <Layout>
-      <Sider width={200} className="site-layout-background" collapsed={false}>
+      <Sider width={200} collapsed={false} theme="light">
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['room']}
+          defaultSelectedKeys={['/setting/rooms-manage']}
+          defaultOpenKeys={['rooms']}
+          onSelect={(info) => {
+            const { key } = info;
+            history.push(key);
+          }}
         >
-          <SubMenu key="room" icon={<UserOutlined />} title="住宿设置">
-            <Menu.Item key="1">房型房间设置</Menu.Item>
-            <Menu.Item key="2">钟点房设置</Menu.Item>
-            <Menu.Item key="3">房间分组设置</Menu.Item>
-            <Menu.Item key="4">排序设置</Menu.Item>
+          <SubMenu key="rooms" icon={<UserOutlined />} title="住宿设置">
+            <Menu.Item key="/setting/rooms-manage">房型房间设置</Menu.Item>
+            <Menu.Item key="/setting/rooms-hour">钟点房设置</Menu.Item>
+            <Menu.Item key="/setting/rooms-group">房间分组设置</Menu.Item>
+            <Menu.Item key="/setting/rooms-sort">排序设置</Menu.Item>
           </SubMenu>
           <SubMenu key="price" icon={<LaptopOutlined />} title="房价设置">
-            <Menu.Item key="5">房价管理</Menu.Item>
-            <Menu.Item key="6">批量改价</Menu.Item>
-            <Menu.Item key="7">改价记录</Menu.Item>
+            <Menu.Item key="/setting/price-manage">房价管理</Menu.Item>
+            <Menu.Item key="/setting/price-batch">批量改价</Menu.Item>
+            <Menu.Item key="/setting/price-log">改价记录</Menu.Item>
           </SubMenu>
           <SubMenu key="shop" icon={<NotificationOutlined />} title="门店设置">
-            <Menu.Item key="8">门店设置</Menu.Item>
+            <Menu.Item key="/setting/shop-manage">门店设置</Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>

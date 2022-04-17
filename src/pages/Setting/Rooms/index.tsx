@@ -37,7 +37,7 @@ const SettingRoomsPage: React.FC = () => {
     },
   ];
 
-  return <ProTable columns={columns}></ProTable>;
+  return <ProTable columns={columns} options={false}></ProTable>;
 };
 
 export default SettingRoomsPage;
