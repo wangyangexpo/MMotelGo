@@ -19,4 +19,9 @@ export default [
     component: 'Setting',
     routes: [{ path: '/setting/rooms', component: 'Setting/Rooms' }],
   },
+  {
+    name: '登录',
+    path: '/login',
+    component: 'Login',
+  },
 ];

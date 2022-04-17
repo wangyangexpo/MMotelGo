@@ -23,11 +23,7 @@ export default (props: Props) => {
     nickName,
     base64,
     env = 'prod',
-    aemExtraProps = {},
   } = workHappyConfig;
-  if (env === 'prod') {
-    setAemConfig({ userName, userCode, ...aemExtraProps });
-  }
   setWaterMarker({ userName, userCode, nickName, base64 });
   return props.children;
 };
