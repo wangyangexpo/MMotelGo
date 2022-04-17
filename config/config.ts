@@ -20,18 +20,15 @@ export default defineConfig({
     title: 'MotelGo',
     pwa: false,
   },
-  title: 'MotelGo 管理后台',
   // favicon:
   //   'https://img.alicdn.com/imgextra/i2/O1CN01i1hPpT1aLrG439inm_!!6000000003314-2-tps-36-36.png',
-  // 路由配置
   routes,
   locale: {
     default: 'zh-CN',
     antd: true,
+    title: true,
     baseNavigator: false,
   },
-  // 研发小蜜
-  // linkS: {appId: '5c6feaf3fbdf01f7a4d35cf1' },
   nodeModulesTransform: { type: 'none' },
   history: { type: 'hash' },
   // 接口代理配置
