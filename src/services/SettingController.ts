@@ -162,3 +162,17 @@ export async function getRoomPriceList(params?: {
     },
   );
 }
+
+/** 修改房价 */
+export async function updateRoomPrice(params?: {
+  roomTypeId?: number;
+  priceType?: number;
+  startTime?: string;
+  endTime?: string;
+  price?: number;
+}) {
+  return request<API.Result>('/config/price/updateRoomTypePrice', {
+    method: 'PUT',
+    data: params,
+  });
+}
