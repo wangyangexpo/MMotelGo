@@ -1,0 +1,44 @@
+.room-sort-card {
+  width: 172px;
+  height: 56px;
+  background-color: #fff;
+  cursor: move;
+  box-shadow: 0 2px 8px 0 rgb(5 61 200 / 8%);
+  border-radius: 2px;
+  border: 1px solid #eee;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 56px;
+  text-align: center;
+  position: relative;
+
+  &.sortable-chosen {
+    border: 1px solid #1890ff;
+  }
+
+  &.sortable-chosen.sortable-ghost {
+    box-shadow: 0 2px 8px 0 rgb(25 111 255 / 8%);
+    border-radius: 2px;
+    opacity: 0.3;
+    border: 1px dashed #1890ff;
+  }
+
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url('~@/assets/images/draggable.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

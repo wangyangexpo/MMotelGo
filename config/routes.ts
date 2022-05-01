@@ -24,9 +24,9 @@ export default [
     component: 'Setting',
     routes: [
       { path: '/setting/rooms-manage', component: 'Setting/Rooms' },
-      { path: '/setting/rooms-hour', component: 'Setting/Rooms' },
+      { path: '/setting/rooms-hour', component: 'Setting/HourRooms' },
       { path: '/setting/rooms-group', component: 'Setting/Rooms' },
-      { path: '/setting/rooms-sort', component: 'Setting/Rooms' },
+      { path: '/setting/rooms-sort', component: 'Setting/RoomSort' },
       { path: '/setting/price-manage', component: 'Setting/Rooms' },
       { path: '/setting/price-batch', component: 'Setting/Rooms' },
       { path: '/setting/price-log', component: 'Setting/Rooms' },

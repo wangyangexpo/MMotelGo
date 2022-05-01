@@ -15,6 +15,7 @@ declare namespace SETTING {
   interface HourRoom {
     id?: number;
     roomTypeId?: number;
+    roomTypeName?: string;
     lengthOfStay?: number;
     price?: number;
   }

@@ -16,8 +16,8 @@ const SettingContainer: React.FC = (props) => {
       <Sider width={200} collapsed={false} theme="light">
         <Menu
           mode="inline"
-          defaultSelectedKeys={['/setting/rooms-manage']}
-          defaultOpenKeys={['rooms']}
+          defaultSelectedKeys={[history.location.pathname]}
+          // defaultOpenKeys={['rooms']}
           onSelect={(info) => {
             const { key } = info;
             history.push(key);
@@ -44,6 +44,7 @@ const SettingContainer: React.FC = (props) => {
           style={{
             padding: 24,
             margin: 0,
+            minHeight: 'calc(100vh - 48px)',
           }}
         >
           {props.children}

@@ -5,33 +5,20 @@ import { Button } from 'antd';
 import services from '@/services';
 
 const SettingRoomsPage: React.FC = () => {
-  const columns: ProColumns<SETTING.RoomType>[] = [
+  const columns: ProColumns<SETTING.HourRoom>[] = [
     {
       title: '房型名称',
-      width: 120,
+      // width: 180,
       dataIndex: 'roomTypeName',
       ellipsis: true,
     },
-    { title: '简称', width: 120, dataIndex: 'roomTypeShortName' },
+    { title: '入住时长', dataIndex: 'lengthOfStay' },
     {
-      title: '默认门市价',
-      width: 100,
-      dataIndex: 'defaultPrice',
+      title: '价格',
+      width: 140,
+      dataIndex: 'price',
       render: (_, record) => {
-        return record?.defaultPrice ? '¥' + record.defaultPrice : '-';
-      },
-    },
-    {
-      title: '房间数',
-      width: 80,
-      dataIndex: 'roomCount',
-    },
-    {
-      title: '房间号',
-      width: 180,
-      dataIndex: 'roomCodeList',
-      render: (_, record) => {
-        return record?.roomCodeList?.join('，');
+        return record?.price ? '¥' + record.price : '-';
       },
     },
     {
@@ -59,7 +46,7 @@ const SettingRoomsPage: React.FC = () => {
       options={false}
       search={false}
       request={async (params) => {
-        const { data } = await services.SettingController.getRoomTypeList(
+        const { data } = await services.SettingController.getHourRoomList(
           params,
         );
         const { list, totalCount } = data;
@@ -71,7 +58,7 @@ const SettingRoomsPage: React.FC = () => {
       rowKey="id"
       toolBarRender={(action) => [
         <Button type="primary" onClick={() => {}}>
-          新增房型
+          新增钟点房
         </Button>,
       ]}
     ></ProTable>
