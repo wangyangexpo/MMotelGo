@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { Empty } from 'antd';
 
 interface Props<T extends Record<string, any>> {
   /** 数据源 */
@@ -13,12 +12,14 @@ interface Props<T extends Record<string, any>> {
   renderItem: (item: T, index: number) => React.ReactNode;
   /** 排序容器样式. */
   style?: React.CSSProperties;
+  groupName?: string;
 }
 
 export default function SortableList<T extends Record<string, any>>(
   props: Props<T>,
 ) {
   const {
+    groupName,
     dataSource = [],
     disabled = false,
     onChange,
@@ -34,11 +35,10 @@ export default function SortableList<T extends Record<string, any>>(
       })) || [],
     );
   }, [dataSource]);
-  return list.length === 0 ? (
-    <Empty description="暂无数据" />
-  ) : (
+  return list.length >= 0 ? (
     <ReactSortable<T & { id: number }>
       list={list}
+      group={groupName}
       animation={200}
       setList={setList}
       onSort={() => {
@@ -51,5 +51,5 @@ export default function SortableList<T extends Record<string, any>>(
         return renderItem?.(item, index);
       })}
     </ReactSortable>
-  );
+  ) : null;
 }

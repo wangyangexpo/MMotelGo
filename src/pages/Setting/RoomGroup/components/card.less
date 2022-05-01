@@ -5,11 +5,24 @@
   font-size: 14px;
   padding: 4px 16px;
   position: relative;
+  margin-left: 8px;
+  margin-bottom: 4px;
 
   &.draggable {
     position: relative;
     user-select: none;
     cursor: move;
+
+    &.sortable-chosen {
+      border: 1px solid #1890ff;
+    }
+
+    &.sortable-chosen.sortable-ghost {
+      box-shadow: 0 2px 8px 0 rgb(25 111 255 / 8%);
+      border-radius: 2px;
+      opacity: 0.3;
+      border: 1px dashed #1890ff;
+    }
 
     &:before {
       content: '';
