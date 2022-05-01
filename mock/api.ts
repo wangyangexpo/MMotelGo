@@ -70,4 +70,20 @@ export default {
       ],
     },
   }),
+
+  '/config/group/allRoomGroup': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      // totalCount: 100,
+      'list|2-8': [
+        {
+          id: '@id',
+          groupType: '@pick([1, 2])',
+          groupName: '@ctitle(4, 8)',
+          'rooms|1-4': ['@integer(1000, 9999)'],
+        },
+      ],
+    },
+  }),
 };

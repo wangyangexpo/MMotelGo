@@ -8,11 +8,11 @@ const SettingRoomsPage: React.FC = () => {
   const columns: ProColumns<SETTING.HourRoom>[] = [
     {
       title: '房型名称',
-      // width: 180,
+      width: 180,
       dataIndex: 'roomTypeName',
       ellipsis: true,
     },
-    { title: '入住时长', dataIndex: 'lengthOfStay' },
+    { title: '入住时长', width: 180, dataIndex: 'lengthOfStay' },
     {
       title: '价格',
       width: 140,
@@ -43,6 +43,7 @@ const SettingRoomsPage: React.FC = () => {
   return (
     <ProTable
       columns={columns}
+      scroll={{ x: 'scroll' }}
       options={false}
       search={false}
       request={async (params) => {

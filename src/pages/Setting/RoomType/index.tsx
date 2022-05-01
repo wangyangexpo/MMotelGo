@@ -30,6 +30,7 @@ const SettingRoomsPage: React.FC = () => {
       title: '房间号',
       width: 180,
       dataIndex: 'roomCodeList',
+      ellipsis: true,
       render: (_, record) => {
         return record?.roomCodeList?.join('，');
       },
@@ -55,6 +56,7 @@ const SettingRoomsPage: React.FC = () => {
 
   return (
     <ProTable
+      scroll={{ x: 'scroll' }}
       columns={columns}
       options={false}
       search={false}
