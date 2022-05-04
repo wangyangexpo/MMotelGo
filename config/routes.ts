@@ -29,7 +29,7 @@ export default [
       { path: '/setting/rooms-sort', component: 'Setting/RoomSort' },
       { path: '/setting/price-manage', component: 'Setting/PriceCalendar' },
       { path: '/setting/price-batch', component: 'Setting/RoomType' },
-      { path: '/setting/price-log', component: 'Setting/RoomType' },
+      { path: '/setting/price-log', component: 'Setting/PriceChangeLog' },
       { path: '/setting/shop-manage', component: 'Setting/RoomType' },
     ],
   },
