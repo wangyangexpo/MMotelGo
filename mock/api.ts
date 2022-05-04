@@ -86,4 +86,42 @@ export default {
       ],
     },
   }),
+
+  '/config/price/getPriceCalendar': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      empty: false,
+      'list|21': [
+        {
+          date: '@date',
+          festivalTypeList: null,
+          type: -2,
+        },
+      ],
+    },
+  }),
+
+  '/config/price/allRoomTypePrice': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      empty: false,
+      'list|5': [
+        {
+          id: '@id',
+          roomTypeId: '@guid',
+          roomTypeName: '@ctitle(4)',
+          'dateList|21': [
+            {
+              date: '@date',
+              price: '@integer(100,900)',
+              defaultPrice: '@integer(100,900)',
+              remainCount: '@integer(1,9)',
+            },
+          ],
+        },
+      ],
+    },
+  }),
 };

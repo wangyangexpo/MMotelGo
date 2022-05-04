@@ -27,7 +27,7 @@ export default [
       { path: '/setting/rooms-hour', component: 'Setting/HourRooms' },
       { path: '/setting/rooms-group', component: 'Setting/RoomGroup' },
       { path: '/setting/rooms-sort', component: 'Setting/RoomSort' },
-      { path: '/setting/price-manage', component: 'Setting/RoomType' },
+      { path: '/setting/price-manage', component: 'Setting/PriceCalendar' },
       { path: '/setting/price-batch', component: 'Setting/RoomType' },
       { path: '/setting/price-log', component: 'Setting/RoomType' },
       { path: '/setting/shop-manage', component: 'Setting/RoomType' },

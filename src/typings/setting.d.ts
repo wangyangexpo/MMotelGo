@@ -44,4 +44,10 @@ declare namespace SETTING {
       remainCount?: number;
     }[];
   }
+
+  interface CalendarData {
+    date?: string;
+    festivalTypeList?: number[];
+    type?: number;
+  }
 }

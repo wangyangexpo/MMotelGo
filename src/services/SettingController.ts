@@ -148,6 +148,17 @@ export async function updateRoomSort(params?: { list?: SETTING.RoomSort[] }) {
   });
 }
 
+/** 查询房价日历 */
+export async function getRoomPriceCalendar(params?: { startDate?: number }) {
+  return request<API.Result_Setting_PriceCalendarList_>(
+    '/config/price/getPriceCalendar',
+    {
+      method: 'GET',
+      params,
+    },
+  );
+}
+
 /** 查询房价管理列表 */
 export async function getRoomPriceList(params?: {
   roomTypeId?: number; // 0-所有房型
