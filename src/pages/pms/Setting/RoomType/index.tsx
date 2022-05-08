@@ -2,9 +2,12 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
 import { Button } from 'antd';
+import useAddRoomType from './components/AddRoomTypeModal';
 import services from '@/services';
 
 const SettingRoomsPage: React.FC = () => {
+  const { addRoomTypeModal, openAddRoomTypeModal } = useAddRoomType();
+
   const columns: ProColumns<SETTING.RoomType>[] = [
     {
       title: '房型名称',
@@ -55,32 +58,40 @@ const SettingRoomsPage: React.FC = () => {
   ];
 
   return (
-    <ProTable
-      scroll={{ x: 'scroll' }}
-      columns={columns}
-      options={false}
-      search={false}
-      request={async (params) => {
-        const { data } = await services.SettingController.getRoomTypeList(
-          params,
-        );
-        const { list, totalCount } = data;
-        return {
-          data: list,
-          total: totalCount,
-        };
-      }}
-      rowKey="id"
-      pagination={{
-        pageSize: 10,
-        showQuickJumper: true,
-      }}
-      toolBarRender={(action) => [
-        <Button type="primary" onClick={() => {}}>
-          新增房型
-        </Button>,
-      ]}
-    ></ProTable>
+    <>
+      <ProTable
+        scroll={{ x: 'scroll' }}
+        columns={columns}
+        options={false}
+        search={false}
+        request={async (params) => {
+          const { data } = await services.SettingController.getRoomTypeList(
+            params,
+          );
+          const { list, totalCount } = data;
+          return {
+            data: list,
+            total: totalCount,
+          };
+        }}
+        rowKey="id"
+        pagination={{
+          pageSize: 10,
+          showQuickJumper: true,
+        }}
+        toolBarRender={(action) => [
+          <Button
+            type="primary"
+            onClick={() => {
+              openAddRoomTypeModal(action);
+            }}
+          >
+            新增房型
+          </Button>,
+        ]}
+      ></ProTable>
+      {addRoomTypeModal}
+    </>
   );
 };
 
