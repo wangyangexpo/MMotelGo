@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RoomStatePage: React.FC = () => {
-  return <div>todo</div>;
+  return <div>房态页</div>;
 };
 
 export default RoomStatePage;

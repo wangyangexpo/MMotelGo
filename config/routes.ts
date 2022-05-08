@@ -6,12 +6,12 @@ export default [
   {
     name: '首页',
     path: 'pms/home',
-    component: 'Home',
+    component: 'pms/Home',
   },
   {
     name: '房态',
     path: 'pms/room-state',
-    component: 'RoomState',
+    component: 'pms/RoomState',
   },
   {
     path: 'pms/setting',
@@ -21,16 +21,22 @@ export default [
   {
     name: '设置',
     path: 'pms/setting',
-    component: 'Setting',
+    component: 'pms/Setting',
     routes: [
-      { path: '/pms/setting/rooms-manage', component: 'Setting/RoomType' },
-      { path: '/pms/setting/rooms-hour', component: 'Setting/HourRooms' },
-      { path: '/pms/setting/rooms-group', component: 'Setting/RoomGroup' },
-      { path: '/pms/setting/rooms-sort', component: 'Setting/RoomSort' },
-      { path: '/pms/setting/price-manage', component: 'Setting/PriceCalendar' },
-      { path: '/pms/setting/price-batch', component: 'Setting/RoomType' },
-      { path: '/pms/setting/price-log', component: 'Setting/PriceChangeLog' },
-      { path: '/pms/setting/shop-manage', component: 'Setting/RoomType' },
+      { path: '/pms/setting/rooms-manage', component: 'pms/Setting/RoomType' },
+      { path: '/pms/setting/rooms-hour', component: 'pms/Setting/HourRooms' },
+      { path: '/pms/setting/rooms-group', component: 'pms/Setting/RoomGroup' },
+      { path: '/pms/setting/rooms-sort', component: 'pms/Setting/RoomSort' },
+      {
+        path: '/pms/setting/price-manage',
+        component: 'pms/Setting/PriceCalendar',
+      },
+      { path: '/pms/setting/price-batch', component: 'pms/Setting/RoomType' },
+      {
+        path: '/pms/setting/price-log',
+        component: 'pms/Setting/PriceChangeLog',
+      },
+      { path: '/pms/setting/shop-manage', component: 'pms/Setting/RoomType' },
     ],
   },
   {

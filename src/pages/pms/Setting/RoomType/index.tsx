@@ -71,6 +71,10 @@ const SettingRoomsPage: React.FC = () => {
         };
       }}
       rowKey="id"
+      pagination={{
+        pageSize: 10,
+        showQuickJumper: true,
+      }}
       toolBarRender={(action) => [
         <Button type="primary" onClick={() => {}}>
           新增房型
