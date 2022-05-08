@@ -17,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "@ant-design/pro-form": "^1.67.0",
     "@ant-design/pro-layout": "^6.5.0",
     "@ant-design/pro-table": "^2.71.2",
     "react": "^17.x",

@@ -1,4 +1,3 @@
-import { jaJPIntl } from '@ant-design/pro-table';
 import mockjs from 'mockjs';
 
 export default {
