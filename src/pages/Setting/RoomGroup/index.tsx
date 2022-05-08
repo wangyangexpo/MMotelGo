@@ -58,7 +58,7 @@ const SettingRoomGroup: React.FC = () => {
         return (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {record?.rooms?.map((code) => {
-              return <RoomCard name={code} draggable={editable} />;
+              return <RoomCard name={code} key={code} draggable={editable} />;
             })}
           </div>
         );
@@ -133,7 +133,7 @@ const SettingRoomGroup: React.FC = () => {
             ></SortableList>
           ) : (
             ['1001', '1123', '1201'].map((code) => {
-              return <RoomCard name={code} draggable={editable} />;
+              return <RoomCard name={code} key={code} draggable={editable} />;
             })
           )}
         </Card>
