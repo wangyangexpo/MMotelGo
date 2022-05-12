@@ -11,14 +11,14 @@ import {
 } from 'antd';
 import type { ActionType } from '@ant-design/pro-table';
 import { ProFormText, ProFormRadio } from '@ant-design/pro-form';
-// import { PlusOutlined } from '@ant-design/icons';
+import RoomNumberGroup from './RoomNumberGroup';
 import services from '@/services';
 
 const FormItem = Form.Item;
 
 const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 14 },
+  labelCol: { span: 5 },
+  wrapperCol: { span: 16 },
 };
 
 export default () => {
@@ -33,10 +33,9 @@ export default () => {
   async function onSubmit() {
     try {
       const data = await form.validateFields();
-      setSubmitLoading(true);
       await services.SettingController.AddRoomType(
         data,
-        isUpdate ? API.ACTION.UPDATE : API.ACTION.ADD,
+        isUpdate ? 'update' : 'add',
       );
       message.success(`${isUpdate ? '保存' : '添加'}成功`);
       setVisible(false);
@@ -68,7 +67,7 @@ export default () => {
 
   const addRoomTypeModal = (
     <Modal
-      width={600}
+      width={720}
       onCancel={() => setVisible(false)}
       visible={visible}
       title={isUpdate ? '编辑房型' : '添加房型'}
@@ -158,10 +157,27 @@ export default () => {
           <FormItem
             label="房间数量"
             name="roomCount"
-            initialValue={data?.roomCount}
+            initialValue={data?.roomCount || 1}
             rules={[{ required: true }]}
           >
-            <InputNumber style={{ width: '100%' }} addonAfter="间" />
+            <InputNumber
+              min={1}
+              max={99}
+              style={{ width: '100%' }}
+              addonAfter="间"
+            />
+          </FormItem>
+          <FormItem label="房间号" dependencies={['roomCount']}>
+            {({ getFieldValue }) => {
+              const roomCount = getFieldValue(['roomCount']);
+              return (
+                <RoomNumberGroup
+                  form={form}
+                  roomCount={roomCount}
+                  initialValue={data?.roomCodeList}
+                />
+              );
+            }}
           </FormItem>
         </Form>
       </Skeleton>

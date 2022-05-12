@@ -3,9 +3,9 @@ import { request } from 'umi';
 /** 新增修改房型房间 */
 export async function AddRoomType(
   params?: SETTING.RoomType,
-  action: API.ACTION = API.ACTION.ADD,
+  action?: 'add' | 'update',
 ) {
-  if (action === API.ACTION.ADD) {
+  if (action === 'add') {
     return request<API.Result>('/config/room/newTypeAndRoom', {
       method: 'POST',
       data: params,
@@ -23,7 +23,7 @@ export async function getRoomTypeDetail(params?: { id?: number }) {
     '/config/room/queryTypeAndRoomById',
     {
       method: 'GET',
-      data: params,
+      params,
     },
   );
 }
@@ -37,7 +37,7 @@ export async function getRoomTypeList(params?: {
     '/config/room/allTypeAndRoom',
     {
       method: 'GET',
-      data: params,
+      params,
     },
   );
 }
@@ -53,9 +53,9 @@ export async function deleteRoomType(params?: { id?: number }) {
 /** 新增修改钟点房 */
 export async function AddHourRoom(
   params?: SETTING.HourRoom,
-  action: API.ACTION = API.ACTION.ADD,
+  action?: 'add' | 'update',
 ) {
-  if (action === API.ACTION.ADD) {
+  if (action === 'add') {
     return request<API.Result>('/config/room/newHourRoom', {
       method: 'POST',
       data: params,
@@ -73,7 +73,7 @@ export async function getHourRoomDetail(params?: { id?: number }) {
     '/config/room/queryHourRoomById',
     {
       method: 'GET',
-      data: params,
+      params,
     },
   );
 }
@@ -85,7 +85,7 @@ export async function getHourRoomList(params?: {
 }) {
   return request<API.Result_Setting_RoomTypeList_>('/config/room/allHourRoom', {
     method: 'GET',
-    data: params,
+    params,
   });
 }
 

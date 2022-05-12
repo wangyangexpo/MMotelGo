@@ -41,8 +41,9 @@ const SettingRoomGroup: React.FC = () => {
             <SortableList
               groupName="roomGroup"
               dataSource={
-                record?.rooms?.map((name) => ({
+                record?.rooms?.map((name, index) => ({
                   name,
+                  id: index,
                 })) || []
               }
               style={{
@@ -50,7 +51,7 @@ const SettingRoomGroup: React.FC = () => {
                 flexWrap: 'wrap',
               }}
               renderItem={(item) => {
-                return <RoomCard name={item.name} draggable />;
+                return <RoomCard name={item.name} key={item.id} draggable />;
               }}
             ></SortableList>
           );
@@ -119,8 +120,9 @@ const SettingRoomGroup: React.FC = () => {
             <SortableList
               groupName="roomGroup"
               dataSource={
-                ['1001', '1123', '1201'].map((name) => ({
+                ['1001', '1123', '1201'].map((name, index) => ({
                   name,
+                  id: index,
                 })) || []
               }
               style={{
@@ -128,7 +130,7 @@ const SettingRoomGroup: React.FC = () => {
                 flexWrap: 'wrap',
               }}
               renderItem={(item) => {
-                return <RoomCard name={item.name} draggable />;
+                return <RoomCard name={item.name} key={item.id} draggable />;
               }}
             ></SortableList>
           ) : (

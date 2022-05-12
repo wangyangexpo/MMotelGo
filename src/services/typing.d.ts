@@ -1,10 +1,5 @@
 /* 发送异步请求，返回结果的类型 */
 declare namespace API {
-  enum ACTION {
-    ADD,
-    UPDATE,
-  }
-
   interface Result<T = null> {
     success: boolean;
     errorCode: number;

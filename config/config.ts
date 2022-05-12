@@ -6,6 +6,9 @@ export default defineConfig({
     loading: '@/components/Loading',
   },
   dva: false,
+  theme: {
+    // '@primary-color': '#FF6F00',
+  },
   // 最佳实践中内置了 Layout，你也可以配置为 false 关闭它
   layout: {
     name: 'MotelGo',
@@ -41,12 +44,5 @@ export default defineConfig({
   mfsu: {},
   fastRefresh: {},
   // 优化 moment 包大小
-  ignoreMomentLocale: true,
-  // 将 src/assets/template 文件夹下面的模板文件，拷贝到打包之后的 dist/template 目录下，提供前端下载功能
-  // copy: [
-  //   {
-  //     from: 'src/assets/template',
-  //     to: 'template',
-  //   },
-  // ],
+  // ignoreMomentLocale: true,
 });

@@ -39,6 +39,22 @@ export default {
     },
   }),
 
+  '/config/room/queryTypeAndRoomById': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      id: 10,
+      roomTypeName: '大床房',
+      roomTypeShortName: '大床房',
+      defaultPriceType: 2,
+      defaultPrice: 100,
+      weekDayPrice: 100,
+      weekEndPrice: 200,
+      roomCount: 5,
+      roomCodeList: ['101', '102', '103', '104', '1005'],
+    },
+  }),
+
   '/config/room/allHourRoom': mockjs.mock({
     success: true,
     errorMessage: '',

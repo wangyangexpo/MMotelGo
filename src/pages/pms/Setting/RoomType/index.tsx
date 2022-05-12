@@ -46,7 +46,12 @@ const SettingRoomsPage: React.FC = () => {
       fixed: 'right',
       render: (_text, record, _, action) => {
         return [
-          <a key="1" onClick={() => {}}>
+          <a
+            key="1"
+            onClick={() => {
+              openAddRoomTypeModal(action, record?.id);
+            }}
+          >
             编辑
           </a>,
           <a key="2" onClick={() => {}}>
