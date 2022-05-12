@@ -10,7 +10,7 @@ import {
   InputNumber,
 } from 'antd';
 import type { ActionType } from '@ant-design/pro-table';
-import { ProFormText } from '@ant-design/pro-form';
+import { ProFormSelect } from '@ant-design/pro-form';
 import services from '@/services';
 
 const FormItem = Form.Item;
@@ -89,14 +89,25 @@ export default () => {
           preserve={false}
           layout="horizontal"
         >
-          <ProFormText
+          <ProFormSelect
             name="roomTypeId"
             label="房型名称"
-            fieldProps={{
-              maxLength: 20,
-            }}
             rules={[{ required: true }]}
             initialValue={data?.roomTypeId}
+            request={async () => {
+              const { data } = await services.SettingController.getRoomTypeList(
+                {
+                  pageNum: 1,
+                  pageSize: 9,
+                },
+              );
+              const options =
+                data?.list?.map((item) => ({
+                  label: item.roomTypeName,
+                  value: item.id,
+                })) || [];
+              return options;
+            }}
           />
           <FormItem
             label="入住时长"

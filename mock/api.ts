@@ -72,6 +72,18 @@ export default {
     },
   }),
 
+  '/config/room/queryHourRoomById': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      id: 10,
+      roomTypeId: 29,
+      roomTypeName: '大床房',
+      lengthOfStay: 4,
+      price: 120,
+    },
+  }),
+
   '/config/sort/querySortByType': mockjs.mock({
     success: true,
     errorMessage: '',
