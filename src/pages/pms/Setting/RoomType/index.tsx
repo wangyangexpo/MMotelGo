@@ -1,7 +1,7 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Button } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 import useAddRoomType from './components/AddRoomTypeModal';
 import services from '@/services';
 
@@ -54,9 +54,22 @@ const SettingRoomsPage: React.FC = () => {
           >
             编辑
           </a>,
-          <a key="2" onClick={() => {}}>
-            删除
-          </a>,
+          <Popconfirm
+            key="2"
+            placement="topLeft"
+            title="确定要删除该房型房间？"
+            onConfirm={async () => {
+              try {
+                await services.SettingController.deleteRoomType({
+                  id: record.id,
+                });
+                message.success('删除成功');
+                action?.reload();
+              } catch (error) {}
+            }}
+          >
+            <a>删除</a>
+          </Popconfirm>,
         ];
       },
     },

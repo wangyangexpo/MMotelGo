@@ -33,9 +33,9 @@ export default () => {
     try {
       const data = await form.validateFields();
       setSubmitLoading(true);
-      await services.SettingController.AddRoomType(
+      await services.SettingController.AddHourRoom(
         data,
-        isUpdate ? API.ACTION.UPDATE : API.ACTION.ADD,
+        isUpdate ? 'update' : 'add',
       );
       message.success(`${isUpdate ? '保存' : '添加'}成功`);
       setVisible(false);

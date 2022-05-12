@@ -2,6 +2,7 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
 import useAddHourRoom from './components/AddHourRoomModal';
+import SetHourRoomNights from './components/SetHourRoomNights';
 import { Button } from 'antd';
 import services from '@/services';
 
@@ -61,7 +62,9 @@ const SettingRoomsPage: React.FC = () => {
         }}
         rowKey="id"
         toolBarRender={(action) => [
+          <SetHourRoomNights key="1" />,
           <Button
+            key="2"
             type="primary"
             onClick={() => {
               openAddHourRoomModal(action);

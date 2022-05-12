@@ -31,6 +31,9 @@ declare namespace API {
   type Result_Setting_HourRoomDetail_ = Result<SETTING.HourRoom>;
   type Result_Setting_HourRoomList_ = Result_List_<SETTING.HourRoom>;
   type Result_Setting_RoomGroupList_ = Result_List_<SETTING.RoomGroup>;
+  type Result_Setting_IntervalNight_ = Result<{
+    intervalNight: number;
+  }>;
 
   type Result_Setting_RoomSortList_ = Result_List_<SETTING.RoomSort>;
   type Result_Setting_RoomPriceList_ = Result_List_<SETTING.RoomPriceListData>;

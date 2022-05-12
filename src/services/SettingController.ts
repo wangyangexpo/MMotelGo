@@ -97,6 +97,16 @@ export async function deleteHourRoom(params?: { id?: number }) {
   });
 }
 
+/** 获取钟点房间夜量 */
+export async function getHourRoomIntervalNight() {
+  return request<API.Result_Setting_IntervalNight_>(
+    '/config/room/getHourRoomIntervalNight',
+    {
+      method: 'GET',
+    },
+  );
+}
+
 /** 设置钟点房间夜量 */
 export async function setHourRoomIntervalNight(params?: {
   intervalNight?: number;
