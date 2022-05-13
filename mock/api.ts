@@ -1,4 +1,5 @@
 import mockjs from 'mockjs';
+import moment from 'moment';
 
 export default {
   // 支持值为 Object 和 Array
@@ -119,13 +120,17 @@ export default {
     errorMessage: '',
     data: {
       empty: false,
-      'list|21': [
-        {
-          date: '@date',
-          festivalTypeList: null,
-          type: -2,
-        },
-      ],
+      list: () => {
+        const result = [];
+        for (let i = 0; i < 21; i++) {
+          result.push({
+            date: moment().add(i, 'd').format('yyyy-MM-DD'),
+            festivalTypeList: null,
+            type: -2,
+          });
+        }
+        return result;
+      },
     },
   }),
 
@@ -139,14 +144,20 @@ export default {
           id: '@id',
           roomTypeId: '@guid',
           roomTypeName: '@ctitle(4)',
-          'dateList|21': [
-            {
-              date: '@date',
-              price: '@integer(100,900)',
-              defaultPrice: '@integer(100,900)',
-              remainCount: '@integer(1,9)',
-            },
-          ],
+          dateList: () => {
+            const result = [];
+            for (let i = 0; i < 21; i++) {
+              result.push(
+                mockjs.mock({
+                  date: moment().add(i, 'd').format('yyyy-MM-DD'),
+                  price: '@integer(100,900)',
+                  defaultPrice: '@integer(100,900)',
+                  remainCount: '@integer(1,9)',
+                }),
+              );
+            }
+            return result;
+          },
         },
       ],
     },

@@ -5,6 +5,7 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { Switch, Space, Typography } from 'antd';
 import { getWeekDay } from '@/utils';
 import moment from 'moment';
+import PriceEditDrawer from './components/PriceEditDrawer';
 import services from '@/services';
 import './style.less';
 
@@ -39,17 +40,14 @@ const SettingPriceCalendar: React.FC = () => {
           width: 140,
           align: 'center' as 'left' | 'center' | 'right',
           render: (_: ReactNode, record: SETTING.RoomPriceListData) => {
-            if (showRemain) {
-              return (
-                <Space direction="vertical" size={[0, 0]}>
-                  {record?.dateList?.[0]?.price}
-                  <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-                    剩{record?.dateList?.[0]?.remainCount}
-                  </Typography.Text>
-                </Space>
-              );
-            }
-            return record?.dateList?.[0]?.price;
+            return (
+              <PriceEditDrawer
+                record={record}
+                date={item.date}
+                showRemain={showRemain}
+                priceType={1}
+              />
+            );
           },
         };
       }) || []
