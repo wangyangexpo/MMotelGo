@@ -12,7 +12,7 @@ interface Props {
   priceType?: number;
 }
 
-const PriceEditDrawer: React.FC<Props> = (props) => {
+const OrderDrawer: React.FC<Props> = (props) => {
   const { record, showRemain, date, priceType } = props;
   const [visible, setVisible] = useState(false);
 
@@ -87,4 +87,4 @@ const PriceEditDrawer: React.FC<Props> = (props) => {
   );
 };
 
-export default PriceEditDrawer;
+export default OrderDrawer;

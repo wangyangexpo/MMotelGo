@@ -34,7 +34,7 @@ declare namespace SETTING {
   }
 
   interface RoomPriceListData {
-    id?: number;
+    id?: React.Key;
     roomTypeId?: number;
     roomTypeName?: string;
     dateList?: {
