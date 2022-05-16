@@ -1,0 +1,43 @@
+.room-code-box {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: attr(data-text);
+  }
+
+  &:hover {
+    border: 1px solid #053dc8;
+
+    &::before {
+      content: attr(data-hover-text);
+    }
+  }
+
+  &.dirty {
+    background: #ccc;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-image: url('~@/assets/images/dirty.svg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      right: 6px;
+      bottom: 6px;
+    }
+
+    &:hover {
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

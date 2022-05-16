@@ -6,12 +6,13 @@ import { Button, Space, Typography } from 'antd';
 import { getWeekDay } from '@/utils';
 import moment from 'moment';
 import OrderDrawer from './components/OrderDrawer';
+import RoomCodeBox from './components/RoomCodeBox';
 import services from '@/services';
 import './style.less';
 
-const RoomStatePage: React.FC = () => {
-  const [showRemain, setShowRemain] = useState(false);
+type AlignType = 'left' | 'center' | 'right';
 
+const RoomStatePage: React.FC = () => {
   // 获取房态日历-columns
   const { data: colData, loading: colLoading } = useRequest(async () => {
     return services.RoomStateController.getRoomStateCalendar({
@@ -41,10 +42,10 @@ const RoomStatePage: React.FC = () => {
               </Typography.Text>
             </Space>
           ),
-          align: 'center' as 'left' | 'center' | 'right',
+          align: 'center' as AlignType,
           children: [
             {
-              align: 'center' as 'left' | 'center' | 'right',
+              align: 'center' as AlignType,
               width: 120,
               title: (
                 <Typography.Text
@@ -56,12 +57,7 @@ const RoomStatePage: React.FC = () => {
               ),
               render: (_: ReactNode, record: SETTING.RoomPriceListData) => {
                 return (
-                  <OrderDrawer
-                    record={record}
-                    date={item.date}
-                    showRemain={showRemain}
-                    priceType={1}
-                  />
+                  <OrderDrawer record={record} date={item.date} priceType={1} />
                 );
               },
             },
@@ -91,12 +87,7 @@ const RoomStatePage: React.FC = () => {
     return result;
   }
 
-  const columns: ProColumns<
-    SETTING.RoomPriceListData & {
-      rowSpan?: number;
-      colSpan?: number;
-    }
-  >[] = [
+  const columns: ProColumns<ROOM_STATE.StateTableData>[] = [
     {
       title: '本地房型',
       children: [
@@ -118,8 +109,8 @@ const RoomStatePage: React.FC = () => {
           dataIndex: 'roomCode',
           fixed: 'left',
           align: 'center',
-          render: (code) => {
-            return <div style={{ height: 54 }}>{code}</div>;
+          render: (_, record) => {
+            return <RoomCodeBox code={record.roomCode} />;
           },
         },
       ],
