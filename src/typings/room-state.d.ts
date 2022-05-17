@@ -1,7 +1,7 @@
 /** 配置 */
 declare namespace ROOM_STATE {
   interface CalendarData {
-    date?: string;
+    date: string;
     type?: number;
   }
 
@@ -35,5 +35,11 @@ declare namespace ROOM_STATE {
       defaultPrice?: number;
       remainCount?: number;
     }[];
+  }
+
+  interface SelectTableData {
+    date?: string;
+    roomId?: string;
+    roomNumber?: string;
   }
 }

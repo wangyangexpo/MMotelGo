@@ -18,3 +18,23 @@
     }
   }
 }
+
+.room-empty-box-checked {
+  display: flex;
+  height: 52px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background: rgba(140, 140, 236, 0.4);
+
+  &::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url('~@/assets/images/selected.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}

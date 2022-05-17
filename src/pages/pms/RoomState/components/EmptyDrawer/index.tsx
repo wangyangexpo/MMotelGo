@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { message, Space, Form } from 'antd';
+import { message, Form } from 'antd';
 import { DrawerForm } from '@ant-design/pro-form';
 import EmptyBox from './EmptyBox';
 import services from '@/services';
@@ -7,8 +7,8 @@ import services from '@/services';
 const FormItem = Form.Item;
 
 interface Props {
-  record?: ROOM_STATE.StateTableData;
-  date?: string;
+  record: ROOM_STATE.StateTableData;
+  date: string;
 }
 
 const EmptyDrawer: React.FC<Props> = (props) => {
@@ -22,14 +22,7 @@ const EmptyDrawer: React.FC<Props> = (props) => {
       width={480}
       visible={visible}
       onVisibleChange={setVisible}
-      trigger={
-        <EmptyBox
-          record={record}
-          onOrder={() => {
-            setVisible(true);
-          }}
-        />
-      }
+      trigger={<EmptyBox record={record} date={date} />}
       drawerProps={{
         closable: false,
         maskClosable: false,

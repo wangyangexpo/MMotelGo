@@ -49,7 +49,7 @@ const RoomStatePage: React.FC = () => {
     });
   }
 
-  function getCalendarColumns(list?: SETTING.CalendarData[]) {
+  function getCalendarColumns(list?: ROOM_STATE.CalendarData[]) {
     return (
       list?.map?.((item) => {
         const d = moment(item.date);
