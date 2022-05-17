@@ -38,4 +38,7 @@ declare namespace API {
   type Result_Setting_RoomSortList_ = Result_List_<SETTING.RoomSort>;
   type Result_Setting_RoomPriceList_ = Result_List_<SETTING.RoomPriceListData>;
   type Result_Setting_PriceCalendarList_ = Result_List_<SETTING.CalendarData>;
+
+  type Result_RoomState_OrderList_ = Result_List_<ORDER.OrderData>;
+  type Result_RoomState_RoomTypeList_ = Result_List_<ROOM_STATE.RoomType>;
 }

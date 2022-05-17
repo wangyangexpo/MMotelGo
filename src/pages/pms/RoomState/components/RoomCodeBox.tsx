@@ -1,20 +1,20 @@
 // import { Button } from 'antd';
 import React, { useState } from 'react';
-import './style.less';
+import './room-code.less';
 
 interface Props {
   code?: string;
-  status?: boolean;
+  isDirty?: boolean;
 }
 
 const RoomCodeBox: React.FC<Props> = (props) => {
-  const { code, status } = props;
-  const [cleanStatus, setCleanStatus] = useState(status);
+  const { code, isDirty } = props;
+  const [dirty, setDirty] = useState(isDirty);
 
   let className = 'room-code-box';
   let hoverText = '转为脏房';
 
-  if (!cleanStatus) {
+  if (dirty) {
     className += ' dirty';
     hoverText = '转为净房';
   }
@@ -25,7 +25,7 @@ const RoomCodeBox: React.FC<Props> = (props) => {
       data-text={code}
       data-hover-text={hoverText}
       onClick={() => {
-        setCleanStatus(!cleanStatus);
+        setDirty(!dirty);
       }}
     ></div>
   );

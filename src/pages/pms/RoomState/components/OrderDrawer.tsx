@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import { message, Space, Form, Typography, InputNumber, Input } from 'antd';
-import { DrawerForm, ProFormDateRangePicker } from '@ant-design/pro-form';
+import { message, Space, Form } from 'antd';
+import { DrawerForm } from '@ant-design/pro-form';
+import OrderBox from './OrderBox';
 import services from '@/services';
 
 const FormItem = Form.Item;
 
 interface Props {
-  record?: SETTING.RoomPriceListData;
+  record?: ROOM_STATE.StateTableData;
+  order?: ORDER.OrderData;
   date?: string;
-  showRemain?: boolean;
-  priceType?: number;
 }
 
 const OrderDrawer: React.FC<Props> = (props) => {
-  const { record, showRemain, date, priceType } = props;
+  const { order, date, record } = props;
   const [visible, setVisible] = useState(false);
-
-  const data = record?.dateList?.find((item) => item.date === date);
 
   return (
     <DrawerForm
@@ -26,25 +24,20 @@ const OrderDrawer: React.FC<Props> = (props) => {
       visible={visible}
       onVisibleChange={setVisible}
       trigger={
-        <Space
-          direction="vertical"
-          size={[0, 0]}
-          style={{ width: '100%', cursor: 'pointer' }}
-        >
-          {data?.price}
-          {showRemain ? (
-            <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-              剩{data?.remainCount}
-            </Typography.Text>
-          ) : null}
-        </Space>
+        <OrderBox
+          order={order}
+          record={record}
+          onOrder={() => {
+            setVisible(true);
+          }}
+        />
       }
       drawerProps={{
         closable: false,
         maskClosable: false,
       }}
       layout="horizontal"
-      title="修改价格"
+      title="订单详情"
       onFinish={async (values) => {
         try {
           await services.SettingController.updateRoomPrice({
@@ -57,32 +50,7 @@ const OrderDrawer: React.FC<Props> = (props) => {
         return true;
       }}
     >
-      <FormItem label="本地房型">
-        <Typography.Text type="secondary">
-          {record?.roomTypeName}
-        </Typography.Text>
-      </FormItem>
-      <FormItem name="roomTypeId" hidden initialValue={record?.roomTypeId}>
-        <Input />
-      </FormItem>
-      <FormItem name="priceType" hidden initialValue={priceType}>
-        <Input />
-      </FormItem>
-      <ProFormDateRangePicker
-        label="改价日期"
-        name="dateRange"
-        rules={[{ required: true }]}
-        fieldProps={{ style: { width: '100%' } }}
-        initialValue={[date, date]}
-      />
-      <FormItem
-        label="门市价"
-        rules={[{ required: true }]}
-        name="price"
-        initialValue={data?.price}
-      >
-        <InputNumber style={{ width: '100%' }} />
-      </FormItem>
+      {date}
     </DrawerForm>
   );
 };

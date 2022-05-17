@@ -1,0 +1,64 @@
+.room-order-box {
+  height: 52px;
+  position: relative;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 4px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 22px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 52px;
+  }
+
+  & .orgin-source {
+    display: flex;
+    align-items: center;
+    &::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #000;
+      margin-right: 4px;
+    }
+  }
+
+  &.status-1 {
+    background: rgba(242, 181, 69, 0.5);
+
+    &::before {
+      background-color: rgb(246, 164, 14);
+    }
+  }
+}
+
+.room-empty-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 10px;
+  height: 52px;
+  cursor: pointer;
+  line-height: 16px;
+
+  & .hiden {
+    display: none;
+  }
+
+  &:hover {
+    border: 1px solid #053dc8;
+    & .hiden {
+      display: block;
+    }
+  }
+}

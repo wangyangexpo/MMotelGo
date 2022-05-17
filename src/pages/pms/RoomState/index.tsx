@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { useRequest } from 'umi';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -24,6 +24,29 @@ const RoomStatePage: React.FC = () => {
   const { data: rowData, loading: rowLoading } = useRequest(async () => {
     return services.RoomStateController.getAllRoomType();
   });
+
+  // 获取房间订单-渲染订单单元格
+  const { data: orderData, loading: orderLoading } = useRequest(async () => {
+    return services.RoomStateController.getAllRoomOrder({
+      date: '2022-05-14',
+      days: 30,
+    });
+  });
+
+  function findOrderByRecord(record: ROOM_STATE.StateTableData, date?: string) {
+    const recDate = moment(date);
+    return orderData?.list?.find((o) => {
+      if (o.roomId !== record.roomId || !o.checkinTime || !o.checkoutTime) {
+        return false;
+      }
+      const checkinTime = moment(o.checkinTime);
+      const checkoutTime = moment(o.checkoutTime);
+      if (recDate.isBetween(checkinTime, checkoutTime, null, '[]')) {
+        return true;
+      }
+      return false;
+    });
+  }
 
   function getCalendarColumns(list?: SETTING.CalendarData[]) {
     return (
@@ -55,9 +78,32 @@ const RoomStatePage: React.FC = () => {
                   剩 2 间
                 </Typography.Text>
               ),
-              render: (_: ReactNode, record: SETTING.RoomPriceListData) => {
+              onCell: (record: ROOM_STATE.StateTableData) => {
+                const order = findOrderByRecord(record, item.date);
+                if (order) {
+                  const checkinTime = moment(order.checkinTime);
+                  const checkoutTime = moment(order.checkoutTime);
+                  const days = checkoutTime.diff(checkinTime, 'days');
+                  if (checkinTime.isSame(d)) {
+                    return {
+                      colSpan: Math.abs(days) + 1,
+                    };
+                  }
+                  return {
+                    colSpan: 0,
+                  };
+                }
+                return {
+                  colSpan: 1,
+                };
+              },
+              render: (_: ReactNode, record: ROOM_STATE.StateTableData) => {
                 return (
-                  <OrderDrawer record={record} date={item.date} priceType={1} />
+                  <OrderDrawer
+                    record={record}
+                    date={item.date}
+                    order={findOrderByRecord(record, item.date)}
+                  />
                 );
               },
             },
@@ -67,19 +113,19 @@ const RoomStatePage: React.FC = () => {
     );
   }
 
-  function getCalendarRows(list: SETTING.RoomType[] = []) {
+  function getCalendarRows(list: ROOM_STATE.RoomType[] = []) {
     const result = [];
     for (let i = 0; i < list?.length; i++) {
       const rowOrigin = list[i];
-      const roomCodeList = rowOrigin?.roomCodeList;
-      if (roomCodeList) {
-        for (let j = 0; j < roomCodeList.length; j++) {
-          const code = roomCodeList[j];
+      const roomList = rowOrigin?.roomList;
+      if (roomList) {
+        for (let j = 0; j < roomList.length; j++) {
+          const roomData = roomList[j];
           result.push({
             ...rowOrigin,
-            roomCode: code,
-            rowSpan: j === 0 ? roomCodeList.length : 0,
-            id: rowOrigin.id + code,
+            ...roomData,
+            rowSpan: j === 0 ? roomList.length : 0,
+            id: roomData.roomId,
           });
         }
       }
@@ -106,11 +152,16 @@ const RoomStatePage: React.FC = () => {
         {
           title: '房间号',
           width: 100,
-          dataIndex: 'roomCode',
+          dataIndex: 'roomNumber',
           fixed: 'left',
           align: 'center',
           render: (_, record) => {
-            return <RoomCodeBox code={record.roomCode} />;
+            return (
+              <RoomCodeBox
+                code={record.roomNumber}
+                isDirty={record.roomStatus === 1}
+              />
+            );
           },
         },
       ],
@@ -125,7 +176,7 @@ const RoomStatePage: React.FC = () => {
       sticky={{ offsetHeader: 48 }}
       bordered
       size="small"
-      loading={colLoading || rowLoading}
+      loading={colLoading || rowLoading || orderLoading}
       className="roome-state-calendar-table"
       rowClassName="state-table-row"
       scroll={{ x: 'scroll' }}
