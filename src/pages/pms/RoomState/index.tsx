@@ -6,6 +6,7 @@ import { Button, Space, Typography } from 'antd';
 import { getWeekDay } from '@/utils';
 import moment from 'moment';
 import OrderDrawer from './components/OrderDrawer';
+import EmptyDrawer from './components/EmptyDrawer';
 import RoomCodeBox from './components/RoomCodeBox';
 import services from '@/services';
 import './style.less';
@@ -83,28 +84,33 @@ const RoomStatePage: React.FC = () => {
                 if (order) {
                   const checkinTime = moment(order.checkinTime);
                   const checkoutTime = moment(order.checkoutTime);
-                  const days = checkoutTime.diff(checkinTime, 'days');
+
                   if (checkinTime.isSame(d)) {
+                    const days = checkoutTime.diff(checkinTime, 'days');
                     return {
                       colSpan: Math.abs(days) + 1,
                     };
+                  } else if (d.isSame(colData?.list?.[0]?.date, 'day')) {
+                    const days = checkoutTime.diff(d, 'days');
+                    return {
+                      colSpan: Math.abs(days) + 1,
+                    };
+                  } else {
+                    return {
+                      colSpan: 0,
+                    };
                   }
-                  return {
-                    colSpan: 0,
-                  };
                 }
                 return {
                   colSpan: 1,
                 };
               },
               render: (_: ReactNode, record: ROOM_STATE.StateTableData) => {
-                return (
-                  <OrderDrawer
-                    record={record}
-                    date={item.date}
-                    order={findOrderByRecord(record, item.date)}
-                  />
-                );
+                const order = findOrderByRecord(record, item.date);
+                if (order) {
+                  return <OrderDrawer record={record} order={order} />;
+                }
+                return <EmptyDrawer record={record} date={item.date} />;
               },
             },
           ],

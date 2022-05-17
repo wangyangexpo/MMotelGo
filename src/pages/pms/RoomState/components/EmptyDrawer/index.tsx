@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { message, Space, Form } from 'antd';
 import { DrawerForm } from '@ant-design/pro-form';
-import OrderBox from './OrderBox';
+import EmptyBox from './EmptyBox';
 import services from '@/services';
 
 const FormItem = Form.Item;
 
 interface Props {
   record?: ROOM_STATE.StateTableData;
-  order?: ORDER.OrderData;
   date?: string;
 }
 
-const OrderDrawer: React.FC<Props> = (props) => {
-  const { order, date, record } = props;
+const EmptyDrawer: React.FC<Props> = (props) => {
+  const { date, record } = props;
   const [visible, setVisible] = useState(false);
 
   return (
@@ -24,8 +23,7 @@ const OrderDrawer: React.FC<Props> = (props) => {
       visible={visible}
       onVisibleChange={setVisible}
       trigger={
-        <OrderBox
-          order={order}
+        <EmptyBox
           record={record}
           onOrder={() => {
             setVisible(true);
@@ -55,4 +53,4 @@ const OrderDrawer: React.FC<Props> = (props) => {
   );
 };
 
-export default OrderDrawer;
+export default EmptyDrawer;

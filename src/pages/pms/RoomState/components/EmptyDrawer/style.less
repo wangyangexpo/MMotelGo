@@ -1,0 +1,20 @@
+.room-empty-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 10px;
+  height: 52px;
+  cursor: pointer;
+  line-height: 16px;
+
+  & .hiden {
+    display: none;
+  }
+
+  &:hover {
+    border: 1px solid #053dc8;
+    & .hiden {
+      display: block;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import React, { useState } from 'react';
-import './order.less';
+import './style.less';
 
 const Text = Typography.Text;
 
@@ -11,23 +11,7 @@ interface Props {
 }
 
 const OrderBox: React.FC<Props> = (props) => {
-  const { order, record } = props;
-
-  if (!order) {
-    return (
-      <div className="room-empty-box">
-        <Text type="secondary" className="hiden">
-          {record?.roomTypeName}
-        </Text>
-        <Text type="secondary" className="hiden">
-          {record?.roomNumber}
-        </Text>
-        <Text type="secondary" className="hiden">
-          {record?.roomNumber}
-        </Text>
-      </div>
-    );
-  }
+  const { order } = props;
 
   let className = 'room-order-box status-1';
 

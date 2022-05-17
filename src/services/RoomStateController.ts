@@ -2,8 +2,8 @@ import { request } from 'umi';
 
 /** 查询房态日历 */
 export async function getRoomStateCalendar(params?: { startDate?: number }) {
-  return request<API.Result_Setting_PriceCalendarList_>(
-    '/config/price/getPriceCalendar',
+  return request<API.Result_RoomState_CalendarList_>(
+    '/config/roomState/getStateRoomCalendar',
     {
       method: 'GET',
       params,

@@ -1,7 +1,24 @@
 import mockjs from 'mockjs';
-// import moment from 'moment';
+import moment from 'moment';
 
 export default {
+  '/config/roomState/getStateRoomCalendar': mockjs.mock({
+    success: true,
+    errorMessage: '',
+    data: {
+      empty: false,
+      list: () => {
+        const result = [];
+        for (let i = 0; i < 30; i++) {
+          result.push({
+            date: moment().add(i, 'd').format('yyyy-MM-DD'),
+            type: -2,
+          });
+        }
+        return result;
+      },
+    },
+  }),
   '/config/roomState/allStateRoom': mockjs.mock({
     success: true,
     errorMessage: '',
@@ -66,9 +83,9 @@ export default {
     data: {
       list: [
         {
-          checkinTime: '2022-05-19',
+          checkinTime: '2022-05-16',
           checkinType: 1,
-          checkoutTime: '2022-05-21',
+          checkoutTime: '2022-05-18',
           customer: '美美',
           needPayAmount: 300,
           orderId: '900900731',
@@ -83,9 +100,26 @@ export default {
           totalAmount: 300,
         },
         {
+          checkinTime: '2022-05-16',
+          checkinType: 1,
+          checkoutTime: '2022-05-17',
+          customer: '老大哥',
+          needPayAmount: 300,
+          orderId: '900900731',
+          origin: '携程',
+          originColor: '#FFCC00',
+          paidAmount: 0,
+          phone: '16877778888',
+          remark: null,
+          roomId: '100004',
+          serviceId: '901017443',
+          status: 40,
+          totalAmount: 300,
+        },
+        {
           checkinTime: '2022-06-05',
           checkinType: 1,
-          checkoutTime: '2022-06-09',
+          checkoutTime: '2022-06-07',
           customer: '钱美美',
           needPayAmount: 1300,
           orderId: '900900734',
