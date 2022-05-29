@@ -36,7 +36,7 @@ export default [
         path: '/pms/setting/price-log',
         component: 'pms/Setting/PriceChangeLog',
       },
-      { path: '/pms/setting/shop-manage', component: 'pms/Setting/RoomType' },
+      { path: '/pms/setting/shop-manage', component: 'pms/Setting/ShopManage' },
     ],
   },
   {
