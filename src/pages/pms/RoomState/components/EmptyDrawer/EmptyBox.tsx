@@ -13,24 +13,23 @@ interface Props {
 const EmptyBox: React.FC<Props> = (props) => {
   const { record, date } = props;
 
+  const [selected, setSelected] = useState(false);
+
   const { state, setState } = useModel('state');
 
-  const finded = state.find(
-    (s) => s.roomId === record.roomId && s.date === date,
-  );
-
-  return !finded ? (
+  return !selected ? (
     <div
       className="room-empty-box"
       onClick={() => {
-        setState([
-          ...state,
-          {
-            date,
-            roomId: record.roomId,
-            roomNumber: record.roomNumber,
-          },
-        ]);
+        setSelected(true);
+        // setState([
+        //   ...state,
+        //   {
+        //     date,
+        //     roomId: record.roomId,
+        //     roomNumber: record.roomNumber,
+        //   },
+        // ]);
       }}
     >
       <Text type="secondary" className="hiden">
@@ -47,7 +46,10 @@ const EmptyBox: React.FC<Props> = (props) => {
     <div
       className="room-empty-box-checked"
       onClick={() => {
-        setState(state.filter((s) => s !== finded));
+        setSelected(false);
+        // setState(
+        //   state.filter((s) => s.roomId !== record.roomId || s.date !== date),
+        // );
       }}
     ></div>
   );
