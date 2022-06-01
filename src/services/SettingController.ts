@@ -34,7 +34,7 @@ export async function getRoomTypeList(params?: {
   pageSize?: number;
 }) {
   return request<API.Result_Setting_RoomTypeList_>(
-    '/config/room/allTypeAndRoom',
+    '/motel/config/room/allTypeAndRoom',
     {
       method: 'GET',
       params,
