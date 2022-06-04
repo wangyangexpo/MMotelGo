@@ -87,6 +87,7 @@ export default () => {
             {
               pattern: emailPattern,
               message: '邮箱账号格式不正确',
+              validateTrigger: 'blur',
             },
           ]}
           onGetCaptcha={async (value) => {

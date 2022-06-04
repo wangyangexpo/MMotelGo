@@ -15,6 +15,7 @@ import {
 import { message, Divider, Tabs, Space, Button } from 'antd';
 import type { CSSProperties } from 'react';
 import { useState } from 'react';
+import { history } from 'umi';
 
 type LoginType = 'phone' | 'account';
 
@@ -118,7 +119,7 @@ export default () => {
                 size: 'large',
                 prefix: <UserOutlined className={'prefixIcon'} />,
               }}
-              placeholder={'用户名: admin or user'}
+              placeholder={'用户名'}
               rules={[
                 {
                   required: true,
@@ -132,7 +133,7 @@ export default () => {
                 size: 'large',
                 prefix: <LockOutlined className={'prefixIcon'} />,
               }}
-              placeholder={'密码: ant.design'}
+              placeholder={'密码'}
               rules={[
                 {
                   required: true,
@@ -202,8 +203,11 @@ export default () => {
             style={{
               float: 'right',
             }}
+            onClick={() => {
+              history.push('/user/regist');
+            }}
           >
-            忘记密码
+            注册账号
           </a>
         </div>
       </LoginFormPage>
