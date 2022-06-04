@@ -52,14 +52,14 @@ export default [
   },
   {
     name: '注册账号',
-    path: 'user/join',
+    path: 'user/regist',
     hideInMenu: true,
     layout: {
       hideMenu: true, //  隐藏边栏
       hideNav: true, // 隐藏顶部导航
       hideFooter: true, // 隐藏底部底栏
     },
-    component: 'user/Join',
+    component: 'user/Regist',
   },
   {
     name: '忘记密码',
