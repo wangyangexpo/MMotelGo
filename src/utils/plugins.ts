@@ -1,6 +1,25 @@
+import { history } from 'umi';
 import envConfig from '@/utils/env';
 
 const { APP_BASE_URL } = envConfig;
+
+export const notLoginResponseInterceptor = (response: Response) => {
+  response
+    .clone()
+    .json()
+    .then((result) => {
+      // 用户未登录
+      if (result.errorCode === 'NOT_LOGIN') {
+        if (history.location.pathname === '/user/login') {
+          return;
+        }
+        history.push(
+          `/user/login?redirectTo=${encodeURIComponent(window.location.href)}`,
+        );
+      }
+    });
+  return response;
+};
 
 export const commonRequestInterceptor = (
   url: string,

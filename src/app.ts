@@ -1,7 +1,10 @@
 // 运行时配置
 import type { RunTimeLayoutConfig, RequestConfig } from 'umi';
 import rightContentRender from '@/components/Layout/RightContentRender';
-import { commonRequestInterceptor } from '@/utils/plugins';
+import {
+  commonRequestInterceptor,
+  notLoginResponseInterceptor,
+} from '@/utils/plugins';
 import services from '@/services';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
@@ -14,8 +17,9 @@ export async function getInitialState(): Promise<SYSTEM.InitialState> {
 }
 
 export const request: RequestConfig = {
-  credentials: 'include',
+  // credentials: 'include',
   requestInterceptors: [commonRequestInterceptor],
+  responseInterceptors: [notLoginResponseInterceptor],
 };
 
 /**

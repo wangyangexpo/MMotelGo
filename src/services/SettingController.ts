@@ -20,7 +20,7 @@ export async function AddRoomType(
 /** 获取单个房型房间详情信息 */
 export async function getRoomTypeDetail(params?: { id?: number }) {
   return request<API.Result_Setting_RoomTypeDetail_>(
-    '/config/room/queryTypeAndRoomById',
+    '/motel/config/room/queryTypeAndRoomById',
     {
       method: 'GET',
       params,
@@ -30,14 +30,17 @@ export async function getRoomTypeDetail(params?: { id?: number }) {
 
 /** 查询房型房间列表 */
 export async function getRoomTypeList(params?: {
-  pageNum?: number;
+  current?: number;
   pageSize?: number;
 }) {
   return request<API.Result_Setting_RoomTypeList_>(
     '/motel/config/room/allTypeAndRoom',
     {
-      method: 'GET',
-      params,
+      method: 'POST',
+      data: {
+        ...params,
+        pageNum: params?.current,
+      },
     },
   );
 }
