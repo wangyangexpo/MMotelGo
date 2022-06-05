@@ -2,7 +2,7 @@ import mockjs from 'mockjs';
 import moment from 'moment';
 
 export default {
-  '/config/roomState/getStateRoomCalendar': mockjs.mock({
+  '/api/config/roomState/getStateRoomCalendar': mockjs.mock({
     success: true,
     errorMessage: '',
     data: {
@@ -19,7 +19,7 @@ export default {
       },
     },
   }),
-  '/config/roomState/allStateRoom': mockjs.mock({
+  '/api/config/roomState/allStateRoom': mockjs.mock({
     success: true,
     errorMessage: '',
     data: {
@@ -77,7 +77,7 @@ export default {
     },
   }),
 
-  '/config/roomState/allStateRoomOrder': mockjs.mock({
+  '/api/config/roomState/allStateRoomOrder': mockjs.mock({
     success: true,
     errorMessage: '',
     data: {

@@ -10,14 +10,11 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { message, Tabs, Form, Button } from 'antd';
+import { message, Form, Button } from 'antd';
 import { emailPattern } from '@/constants';
-import { useState } from 'react';
-
-type LoginType = 'phone' | 'account';
+// import { useState } from 'react';
 
 export default () => {
-  const [loginType, setLoginType] = useState<LoginType>('phone');
   const [form] = Form.useForm();
   return (
     <div style={{ backgroundColor: 'white' }}>
@@ -26,7 +23,7 @@ export default () => {
         size="large"
         logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
         title="MotelGo"
-        subTitle="全球最大酒店管理平台"
+        subTitle="账号注册"
         submitter={{
           render: () => {
             return (
@@ -44,12 +41,6 @@ export default () => {
           },
         }}
       >
-        <Tabs
-          activeKey={loginType}
-          onChange={(activeKey) => setLoginType(activeKey as LoginType)}
-        >
-          <Tabs.TabPane key={'phone'} tab={'用户注册'} />
-        </Tabs>
         <ProFormText
           fieldProps={{
             prefix: <UserOutlined />,
@@ -125,15 +116,20 @@ export default () => {
           ]}
           placeholder="请输入用户密码"
         />
-        <div
-          style={{
-            marginBottom: 24,
+        <ProFormText
+          name="confirmPassword"
+          fieldProps={{
+            type: 'password',
+            prefix: <KeyOutlined />,
           }}
-        >
-          <ProFormCheckbox noStyle name="agree" initialValue={false}>
-            同意用户协议
-          </ProFormCheckbox>
-        </div>
+          rules={[
+            {
+              required: true,
+              message: '请确认用户密码',
+            },
+          ]}
+          placeholder="请确认用户密码"
+        />
       </LoginForm>
     </div>
   );

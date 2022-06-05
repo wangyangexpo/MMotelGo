@@ -14,7 +14,7 @@ export async function getRoomStateCalendar(params?: { startDate?: number }) {
 /** 查询房型房间列表 */
 export async function getAllRoomType() {
   return request<API.Result_RoomState_RoomTypeList_>(
-    '/config/roomState/allStateRoom',
+    '/api/config/roomState/allStateRoom',
     {
       method: 'GET',
     },
@@ -24,7 +24,7 @@ export async function getAllRoomType() {
 /** 查询房间订单 */
 export async function getAllRoomOrder(params: { date: string; days: number }) {
   return request<API.Result_RoomState_OrderList_>(
-    '/config/roomState/allStateRoomOrder',
+    '/api/config/roomState/allStateRoomOrder',
     {
       method: 'GET',
       params,
