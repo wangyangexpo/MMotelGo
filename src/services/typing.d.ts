@@ -45,6 +45,7 @@ declare namespace API {
   // 用户注册，登录，修改密码相关
   type Result_LoginInfo_ = Result<{
     token: string;
-    storeList?: SYSTEM.StoreInfo[];
+    storeList?: SYSTEM.StoreListInfo[];
   }>;
+  type Result_PmsStoreList_ = Result_List_<SYSTEM.StoreListInfo>;
 }

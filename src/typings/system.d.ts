@@ -3,7 +3,7 @@ declare namespace SYSTEM {
   type InitialState =
     | {
         token?: string;
-        storeList?: StoreInfo[];
+        storeList?: StoreListInfo[];
       }
     | undefined;
 
@@ -22,9 +22,19 @@ declare namespace SYSTEM {
     isSuper?: '0' | '1';
   }
 
-  interface StoreInfo {
+  interface StoreListInfo {
     storeId: number;
     storeName: string;
     expirationTime: string;
+  }
+
+  interface ShopDetail {
+    name: string; //⻔店名称
+    code: string; //⻔店编号
+    address: string; //⼀级地址
+    detailAddress: string; //⼆级详细地址
+    type: number; //⻔店类型 1-⺠宿 2-其他
+    bossName: string; //负责⼈姓名
+    emailAccount: string; //负责⼈邮箱账号
   }
 }

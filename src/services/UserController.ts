@@ -25,21 +25,13 @@ export async function accountLogin(params?: {
 
 /** 获取门店列表 */
 export async function getPmsStoreList() {
-  return request<API.Result>('/motel/store/getPmsStoreList', {
+  return request<API.Result_PmsStoreList_>('/motel/store/getPmsStoreList', {
     method: 'GET',
   });
 }
 
 /** 添加门店 */
-export async function newPmsStore(params?: {
-  name: string; //⻔店名称
-  code: string; //⻔店编号
-  address: string; //⼀级地址
-  detailAddress: string; //⼆级详细地址
-  type: number; //⻔店类型 1-⺠宿 2-其他
-  bossName: string; //负责⼈姓名
-  emailAccount: string; //负责⼈邮箱账号
-}) {
+export async function newPmsStore(params?: Partial<SYSTEM.ShopDetail>) {
   return request<API.Result>('/motel/store/newStore', {
     method: 'POST',
     data: { ...params },

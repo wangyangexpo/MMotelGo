@@ -1,12 +1,13 @@
 export default [
   {
     path: '/',
-    redirect: 'pms/home',
+    redirect: 'pms/setting',
   },
   {
     name: '首页',
     path: 'pms/home',
     component: 'pms/Home',
+    hideInMenu: true,
   },
   {
     name: '房态',

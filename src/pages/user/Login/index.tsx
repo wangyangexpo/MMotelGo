@@ -4,10 +4,8 @@ import {
   ProFormCheckbox,
 } from '@ant-design/pro-form';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { message, Divider, Tabs, Space, Button } from 'antd';
 import Cookie from 'js-cookie';
 import type { CSSProperties } from 'react';
-import { useState } from 'react';
 import { history, useModel } from 'umi';
 import services from '@/services';
 

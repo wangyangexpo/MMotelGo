@@ -97,7 +97,7 @@ export default () => {
             request={async () => {
               const { data } = await services.SettingController.getRoomTypeList(
                 {
-                  pageNum: 1,
+                  current: 1,
                   pageSize: 9,
                 },
               );
