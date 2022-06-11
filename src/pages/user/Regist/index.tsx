@@ -1,18 +1,9 @@
-import {
-  MailOutlined,
-  UserOutlined,
-  KeyOutlined,
-  TagOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCaptcha,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { MailOutlined, UserOutlined, KeyOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { message, Form, Button } from 'antd';
 import { emailPattern } from '@/constants';
 import services from '@/services';
+import { history } from 'umi';
 // import { useState } from 'react';
 
 export default () => {
@@ -34,6 +25,7 @@ export default () => {
                 onClick={async () => {
                   const values = await form.validateFields();
                   await services.UserController.accountRegister(values);
+                  history.push('/user/login');
                 }}
               >
                 注册
@@ -72,54 +64,6 @@ export default () => {
             },
           ]}
         />
-        {/* <ProFormCaptcha
-          fieldProps={{
-            prefix: <MailOutlined />,
-          }}
-          captchaProps={{
-            type: 'primary',
-          }}
-          placeholder={'请输入邮箱账号'}
-          captchaTextRender={(timing, count) => {
-            if (timing) {
-              return `${count} ${'获取验证码'}`;
-            }
-            return '验证邮箱';
-          }}
-          name="email"
-          phoneName="email"
-          rules={[
-            {
-              required: true,
-              message: '请输入邮箱账号',
-            },
-            {
-              pattern: emailPattern,
-              message: '邮箱账号格式不正确',
-              validateTrigger: 'blur',
-            },
-          ]}
-          onGetCaptcha={async (value) => {
-            if (!emailPattern.test(value)) {
-              return Promise.reject('邮箱账号格式不正确');
-            }
-            message.success('邮箱验证码发送成功！');
-            return Promise.resolve();
-          }}
-        />
-        <ProFormText
-          name="validCode"
-          fieldProps={{
-            prefix: <TagOutlined />,
-          }}
-          rules={[
-            {
-              required: true,
-              message: '请输入邮箱验证码',
-            },
-          ]}
-          placeholder="请输入邮箱验证码"
-        /> */}
         <ProFormText
           name="password"
           fieldProps={{

@@ -40,6 +40,17 @@ export default [
     ],
   },
   {
+    name: '酒店列表',
+    path: 'pms/store',
+    component: 'pms/Store',
+    hideInMenu: true,
+    layout: {
+      hideMenu: true, //  隐藏边栏
+      hideNav: true, // 隐藏顶部导航
+      hideFooter: true, // 隐藏底部底栏
+    },
+  },
+  {
     name: '登录',
     path: 'user/login',
     component: 'user/Login',
@@ -71,5 +82,9 @@ export default [
       hideFooter: true, // 隐藏底部底栏
     },
     component: 'user/ResetPassword',
+  },
+  {
+    name: '404',
+    redirect: 'user/login',
   },
 ];

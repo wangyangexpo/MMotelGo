@@ -5,5 +5,6 @@ export default {
   'menu.登录': '登录',
   'menu.注册账号': '注册账号',
   'menu.忘记密码': '忘记密码',
+  'menu.酒店列表': '酒店列表',
   WELCOME_TO_UMI_WORLD: '{name}，欢迎光临 MotelGo',
 };

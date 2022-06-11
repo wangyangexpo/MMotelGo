@@ -43,7 +43,7 @@ export default () => {
             Cookie.remove('emailAddress');
             Cookie.remove('password');
           }
-          history.push('/pms/home');
+          history.push('/pms/store');
         }}
       >
         <ProFormText
@@ -81,7 +81,7 @@ export default () => {
             marginBottom: 24,
           }}
         >
-          <ProFormCheckbox noStyle name="autoLogin">
+          <ProFormCheckbox noStyle name="autoLogin" initialValue={true}>
             自动登录
           </ProFormCheckbox>
           <a

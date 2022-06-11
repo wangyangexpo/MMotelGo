@@ -1,9 +1,11 @@
 /** 系统配置 */
 declare namespace SYSTEM {
-  interface InitialState {
-    token?: string;
-    storeList?: StoreInfo[];
-  }
+  type InitialState =
+    | {
+        token?: string;
+        storeList?: StoreInfo[];
+      }
+    | undefined;
 
   interface UserInfo {
     id?: string;

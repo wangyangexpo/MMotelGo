@@ -6,12 +6,12 @@ export async function AddRoomType(
   action?: 'add' | 'update',
 ) {
   if (action === 'add') {
-    return request<API.Result>('/config/room/newTypeAndRoom', {
+    return request<API.Result>('/motel/config/room/newTypeAndRoom', {
       method: 'POST',
       data: params,
     });
   }
-  return request<API.Result>('/config/room/updateTypeAndRoom', {
+  return request<API.Result>('/motel/config/room/updateTypeAndRoom', {
     method: 'PUT',
     data: params,
   });
@@ -47,7 +47,7 @@ export async function getRoomTypeList(params?: {
 
 /** 删除房型房间 */
 export async function deleteRoomType(params?: { id?: number }) {
-  return request<API.Result>('/config/room/deleteTypeAndRoom', {
+  return request<API.Result>('/motel/config/room/deleteTypeAndRoom', {
     method: 'POST',
     data: params,
   });
