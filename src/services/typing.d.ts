@@ -25,7 +25,6 @@ declare namespace API {
   type Result_String_Array_ = Result<string[]>;
   type Result_Number_Array_ = Result<number[]>;
 
-  type Result_LoginInfo_ = Result<SYSTEM.UserInfo>;
   type Result_Setting_RoomTypeDetail_ = Result<SETTING.RoomType>;
   type Result_Setting_RoomTypeList_ = Result_List_<SETTING.RoomType>;
   type Result_Setting_HourRoomDetail_ = Result<SETTING.HourRoom>;
@@ -42,4 +41,10 @@ declare namespace API {
   type Result_RoomState_OrderList_ = Result_List_<ORDER.OrderData>;
   type Result_RoomState_RoomTypeList_ = Result_List_<ROOM_STATE.RoomType>;
   type Result_RoomState_CalendarList_ = Result_List_<ROOM_STATE.CalendarData>;
+
+  // 用户注册，登录，修改密码相关
+  type Result_LoginInfo_ = Result<{
+    token: string;
+    storeList?: SYSTEM.StoreInfo[];
+  }>;
 }

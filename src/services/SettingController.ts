@@ -86,10 +86,13 @@ export async function getHourRoomList(params?: {
   pageNum?: number;
   pageSize?: number;
 }) {
-  return request<API.Result_Setting_RoomTypeList_>('/config/room/allHourRoom', {
-    method: 'GET',
-    params,
-  });
+  return request<API.Result_Setting_RoomTypeList_>(
+    '/motel/config/room/allHourRoom',
+    {
+      method: 'GET',
+      params,
+    },
+  );
 }
 
 /** 删除钟点房 */
@@ -123,7 +126,7 @@ export async function setHourRoomIntervalNight(params?: {
 /** 查询房间分组列表 */
 export async function getRoomGroupList() {
   return request<API.Result_Setting_RoomGroupList_>(
-    '/config/group/allRoomGroup',
+    '/motel/config/group/allRoomGroup',
     {
       method: 'GET',
     },
@@ -145,7 +148,7 @@ export async function getRoomSort(params?: {
   type?: number; // 1-房型，2-房间，3-分组
 }) {
   return request<API.Result_Setting_RoomSortList_>(
-    '/config/sort/querySortByType',
+    '/motel/config/sort/querySortByType',
     {
       method: 'GET',
       params,

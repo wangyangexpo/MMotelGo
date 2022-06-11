@@ -1,5 +1,6 @@
 import { history } from 'umi';
 import envConfig from '@/utils/env';
+import Cookie from 'js-cookie';
 
 const { APP_BASE_URL } = envConfig;
 
@@ -10,7 +11,11 @@ export const notLoginResponseInterceptor = (response: Response) => {
     .then((result) => {
       // 用户未登录
       if (result.errorCode === 'NOT_LOGIN') {
-        if (history.location.pathname === '/user/login') {
+        if (
+          history.location.pathname === '/user/login' ||
+          history.location.pathname === '/user/regist' ||
+          history.location.pathname === '/user/reset_password'
+        ) {
           return;
         }
         history.push(
@@ -38,6 +43,7 @@ export const commonRequestInterceptor = (
       ...options,
       headers: {
         ...(options?.headers || null),
+        'x-auth': String(Cookie.get('token')),
       },
     },
   };

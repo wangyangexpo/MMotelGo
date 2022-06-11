@@ -1,7 +1,8 @@
 /** 系统配置 */
 declare namespace SYSTEM {
-  interface InitialState extends UserInfo {
-    base64?: string; // 后端水印base64
+  interface InitialState {
+    token?: string;
+    storeList?: StoreInfo[];
   }
 
   interface UserInfo {
@@ -17,5 +18,11 @@ declare namespace SYSTEM {
     currentChannel?: string;
     corpId?: string;
     isSuper?: '0' | '1';
+  }
+
+  interface StoreInfo {
+    storeId: number;
+    storeName: string;
+    expirationTime: string;
   }
 }

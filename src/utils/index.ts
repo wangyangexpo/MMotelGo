@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { history } from 'umi';
 
 export const getWeekDay = (date: moment.Moment, short?: boolean) => {
   if (short) {
@@ -16,4 +17,16 @@ export const getCalendarDate = (days: number, from?: string) => {
     });
   }
   return result;
+};
+
+export const isLoginPath = () => {
+  const pathname = history.location.pathname;
+  if (
+    pathname === '/user/login' ||
+    pathname === '/user/regist' ||
+    pathname === '/user/reset_password'
+  ) {
+    return true;
+  }
+  return false;
 };

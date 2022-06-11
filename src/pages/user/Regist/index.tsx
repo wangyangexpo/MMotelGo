@@ -12,6 +12,7 @@ import {
 } from '@ant-design/pro-components';
 import { message, Form, Button } from 'antd';
 import { emailPattern } from '@/constants';
+import services from '@/services';
 // import { useState } from 'react';
 
 export default () => {
@@ -32,7 +33,7 @@ export default () => {
                 block
                 onClick={async () => {
                   const values = await form.validateFields();
-                  console.log(values);
+                  await services.UserController.accountRegister(values);
                 }}
               >
                 注册
@@ -45,16 +46,33 @@ export default () => {
           fieldProps={{
             prefix: <UserOutlined />,
           }}
-          name="userName"
+          name="nickName"
           placeholder={'请输入用户昵称'}
           rules={[
             {
               required: true,
-              message: '请输入用户昵称！',
+              message: '请输入用户昵称',
             },
           ]}
         />
-        <ProFormCaptcha
+        <ProFormText
+          fieldProps={{
+            prefix: <MailOutlined />,
+          }}
+          name="emailAddress"
+          placeholder={'请输入邮箱账号'}
+          rules={[
+            {
+              required: true,
+              message: '请输入邮箱账号',
+            },
+            {
+              pattern: emailPattern,
+              message: '邮箱账号格式不正确',
+            },
+          ]}
+        />
+        {/* <ProFormCaptcha
           fieldProps={{
             prefix: <MailOutlined />,
           }}
@@ -101,7 +119,7 @@ export default () => {
             },
           ]}
           placeholder="请输入邮箱验证码"
-        />
+        /> */}
         <ProFormText
           name="password"
           fieldProps={{
@@ -116,7 +134,7 @@ export default () => {
           ]}
           placeholder="请输入用户密码"
         />
-        <ProFormText
+        {/* <ProFormText
           name="confirmPassword"
           fieldProps={{
             type: 'password',
@@ -129,7 +147,7 @@ export default () => {
             },
           ]}
           placeholder="请确认用户密码"
-        />
+        /> */}
       </LoginForm>
     </div>
   );

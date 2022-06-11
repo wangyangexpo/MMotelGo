@@ -1,4 +1,5 @@
 declare module 'mockjs';
+declare module 'js-cookie';
 
 declare type Key = React.Key;
 
