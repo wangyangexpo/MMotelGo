@@ -27,7 +27,7 @@ export default () => {
             onClick={() => {
               Cookie.remove('emailAddress');
               Cookie.remove('password');
-              Cookie.remove('token');
+              sessionStorage.removeItem('token');
               history.push('/user/login');
             }}
           >

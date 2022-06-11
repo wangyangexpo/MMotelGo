@@ -59,12 +59,12 @@ export async function AddHourRoom(
   action?: 'add' | 'update',
 ) {
   if (action === 'add') {
-    return request<API.Result>('/config/room/newHourRoom', {
+    return request<API.Result>('/motel/config/room/newHourRoom', {
       method: 'POST',
       data: params,
     });
   }
-  return request<API.Result>('/config/room/updateHourRoom', {
+  return request<API.Result>('/motel/config/room/updateHourRoom', {
     method: 'PUT',
     data: params,
   });
@@ -73,7 +73,7 @@ export async function AddHourRoom(
 /** 获取钟点房详情信息 */
 export async function getHourRoomDetail(params?: { id?: number }) {
   return request<API.Result_Setting_HourRoomDetail_>(
-    '/config/room/queryHourRoomById',
+    '/motel/config/room/queryHourRoomById',
     {
       method: 'GET',
       params,
@@ -97,7 +97,7 @@ export async function getHourRoomList(params?: {
 
 /** 删除钟点房 */
 export async function deleteHourRoom(params?: { id?: number }) {
-  return request<API.Result>('/config/room/deleteHourRoom', {
+  return request<API.Result>('/motel/config/room/deleteHourRoom', {
     method: 'POST',
     data: params,
   });
@@ -106,7 +106,7 @@ export async function deleteHourRoom(params?: { id?: number }) {
 /** 获取钟点房间夜量 */
 export async function getHourRoomIntervalNight() {
   return request<API.Result_Setting_IntervalNight_>(
-    '/config/room/getHourRoomIntervalNight',
+    '/motel/config/room/getHourRoomIntervalNight',
     {
       method: 'GET',
     },
@@ -117,7 +117,7 @@ export async function getHourRoomIntervalNight() {
 export async function setHourRoomIntervalNight(params?: {
   intervalNight?: number;
 }) {
-  return request<API.Result>('/config/room/hourRoomIntervalNight', {
+  return request<API.Result>('/motel/config/room/hourRoomIntervalNight', {
     method: 'POST',
     data: params,
   });
@@ -137,7 +137,7 @@ export async function getRoomGroupList() {
 export async function updateRoomGroup(params?: {
   groupList?: SETTING.RoomGroup[];
 }) {
-  return request<API.Result>('/config/group/updateRoomGroup', {
+  return request<API.Result>('/motel/config/group/updateRoomGroup', {
     method: 'PUT',
     data: params,
   });
@@ -158,7 +158,7 @@ export async function getRoomSort(params?: {
 
 /** 修改房间排序 */
 export async function updateRoomSort(params?: { list?: SETTING.RoomSort[] }) {
-  return request<API.Result>('/config/group/updateSortByType', {
+  return request<API.Result>('/motel/config/group/updateSortByType', {
     method: 'PUT',
     data: params,
   });
@@ -167,7 +167,7 @@ export async function updateRoomSort(params?: { list?: SETTING.RoomSort[] }) {
 /** 查询房价日历 */
 export async function getRoomPriceCalendar(params?: { startDate?: number }) {
   return request<API.Result_Setting_PriceCalendarList_>(
-    '/config/price/getPriceCalendar',
+    '/motel/config/price/getPriceCalendar',
     {
       method: 'GET',
       params,
@@ -182,7 +182,7 @@ export async function getRoomPriceList(params?: {
   startTime?: string;
 }) {
   return request<API.Result_Setting_RoomPriceList_>(
-    '/config/price/allRoomTypePrice',
+    '/motel/config/price/allRoomTypePrice',
     {
       method: 'GET',
       params,
@@ -198,7 +198,7 @@ export async function updateRoomPrice(params?: {
   endTime?: string;
   price?: number;
 }) {
-  return request<API.Result>('/config/price/updateRoomTypePrice', {
+  return request<API.Result>('/motel/config/price/updateRoomTypePrice', {
     method: 'PUT',
     data: params,
   });

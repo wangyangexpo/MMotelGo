@@ -13,13 +13,16 @@ import { isLoginPath } from '@/utils';
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 export async function getInitialState(): Promise<SYSTEM.InitialState> {
   if (!isLoginPath()) {
-    const emailAddress = Cookie.get('emailAddress');
-    const password = Cookie.get('password');
-    if (emailAddress && password) {
+    const autoLogin = Cookie.get('autoLogin');
+    const token = sessionStorage.getItem('token');
+    if (token || autoLogin) {
       const { data } = await services.AppController.autoLogin();
+      sessionStorage.setItem('token', data?.token);
+      await services.UserController.bindPmsStoreToken();
       return data;
+    } else {
+      history.replace('/user/login');
     }
-    history.replace('/user/login');
   }
 }
 

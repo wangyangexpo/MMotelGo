@@ -1,4 +1,5 @@
 import { request } from 'umi';
+import Cookie from 'js-cookie';
 
 /** 获取登录信息接口 */
 export async function accountRegister(params?: {
@@ -39,9 +40,11 @@ export async function newPmsStore(params?: Partial<SYSTEM.ShopDetail>) {
 }
 
 /** 选择门店进入系统 */
-export async function bindPmsStoreToken(params?: { storeId?: number }) {
+export async function bindPmsStoreToken() {
   return request<API.Result>('/motel/store/getPmsStore', {
     method: 'GET',
-    params,
+    params: {
+      storeId: Cookie.get('storeId'),
+    },
   });
 }

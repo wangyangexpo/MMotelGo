@@ -34,9 +34,8 @@ export default function StorePage() {
                   hoverable
                   style={{ width: 240 }}
                   onClick={async () => {
-                    await services.UserController.bindPmsStoreToken({
-                      storeId: store.storeId,
-                    });
+                    Cookie.set('storeId', store.storeId);
+                    await services.UserController.bindPmsStoreToken();
                     history.push('/');
                   }}
                 >

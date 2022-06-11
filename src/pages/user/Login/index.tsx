@@ -32,14 +32,14 @@ export default () => {
         subTitle="全球最大酒店管理网站"
         onFinish={async (values) => {
           const { data } = await services.UserController.accountLogin(values);
-          Cookie.set('token', data?.token);
+          sessionStorage.setItem('token', data?.token);
+          Cookie.set('emailAddress', values?.emailAddress);
+          Cookie.set('password', values?.password);
+          setInitialState(data);
           if (values?.autoLogin) {
-            Cookie.set('emailAddress', values?.emailAddress);
-            Cookie.set('password', values?.password);
-            setInitialState(data);
+            Cookie.set('autoLogin', 1);
           } else {
-            Cookie.remove('emailAddress');
-            Cookie.remove('password');
+            Cookie.remove('autoLogin');
           }
           history.push('/pms/store');
         }}

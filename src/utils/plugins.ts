@@ -1,5 +1,6 @@
 import { history } from 'umi';
 import envConfig from '@/utils/env';
+import { message } from 'antd';
 import Cookie from 'js-cookie';
 import { isLoginPath } from '@/utils';
 
@@ -15,6 +16,8 @@ export const notLoginResponseInterceptor = (response: Response) => {
         if (isLoginPath()) {
           return;
         }
+        message.destroy();
+        Cookie.remove('autoLogin');
         history.push(
           `/user/login?redirectTo=${encodeURIComponent(window.location.href)}`,
         );
@@ -40,7 +43,7 @@ export const commonRequestInterceptor = (
       ...options,
       headers: {
         ...(options?.headers || null),
-        'x-auth': String(Cookie.get('token')),
+        'x-auth': sessionStorage.getItem('token'),
       },
     },
   };

@@ -104,7 +104,7 @@ const SettingRoomsPage: React.FC = () => {
           const { data } = await services.SettingController.getRoomTypeList(
             params,
           );
-          const { list, totalCount } = data;
+          const { list, totalCount } = data || {};
           return {
             data: list,
             total: totalCount,
