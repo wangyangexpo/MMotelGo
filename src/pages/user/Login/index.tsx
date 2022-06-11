@@ -6,7 +6,7 @@ import {
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Cookie from 'js-cookie';
 import type { CSSProperties } from 'react';
-import { history, useModel } from 'umi';
+import { history } from 'umi';
 import services from '@/services';
 
 const iconStyles: CSSProperties = {
@@ -17,7 +17,6 @@ const iconStyles: CSSProperties = {
 };
 
 export default () => {
-  const { setInitialState } = useModel('@@initialState');
   return (
     <div
       style={{
@@ -31,11 +30,9 @@ export default () => {
         title="MotelGo"
         subTitle="全球最大酒店管理网站"
         onFinish={async (values) => {
-          const { data } = await services.UserController.accountLogin(values);
-          sessionStorage.setItem('token', data?.token);
+          await services.UserController.accountLogin(values);
           Cookie.set('emailAddress', values?.emailAddress);
           Cookie.set('password', values?.password);
-          setInitialState(data);
           if (values?.autoLogin) {
             Cookie.set('autoLogin', 1);
           } else {

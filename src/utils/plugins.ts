@@ -12,7 +12,7 @@ export const notLoginResponseInterceptor = (response: Response) => {
     .json()
     .then((result) => {
       // 用户未登录
-      if (result.errorCode === '9999') {
+      if (result.errorCode === '0403') {
         if (isLoginPath()) {
           return;
         }

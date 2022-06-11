@@ -20,7 +20,12 @@ export async function accountLogin(params?: {
 }) {
   return request<API.Result_LoginInfo_>('/motel/user/login', {
     method: 'POST',
-    data: { ...params },
+    data: {
+      emailAddress: params?.emailAddress || Cookie.get('emailAddress'),
+      password: params?.password || Cookie.get('password'),
+    },
+  }).then(({ data }) => {
+    sessionStorage.setItem('token', data?.token);
   });
 }
 
