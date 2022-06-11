@@ -15,7 +15,9 @@ export async function getInitialState() {
   if (!isLoginPath()) {
     const autoLogin = Cookie.get('autoLogin');
     const token = sessionStorage.getItem('token');
-    if (token || autoLogin) {
+    if (token) {
+      // 有token说明登录着
+    } else if (autoLogin) {
       await services.UserController.accountLogin();
       await services.UserController.bindPmsStoreToken();
     } else {

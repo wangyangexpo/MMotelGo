@@ -1,5 +1,6 @@
 import { request } from 'umi';
 import Cookie from 'js-cookie';
+import { history } from 'umi';
 
 /** 获取登录信息接口 */
 export async function accountRegister(params?: {
@@ -18,11 +19,17 @@ export async function accountLogin(params?: {
   emailAddress?: string;
   password?: string;
 }) {
+  const emailAddress = params?.emailAddress || Cookie.get('emailAddress');
+  const password = params?.password || Cookie.get('password');
+  if (!emailAddress || !password) {
+    history.replace('/user/login');
+    return Promise.reject();
+  }
   return request<API.Result_LoginInfo_>('/motel/user/login', {
     method: 'POST',
     data: {
-      emailAddress: params?.emailAddress || Cookie.get('emailAddress'),
-      password: params?.password || Cookie.get('password'),
+      emailAddress,
+      password,
     },
   }).then(({ data }) => {
     sessionStorage.setItem('token', data?.token);
@@ -46,6 +53,11 @@ export async function newPmsStore(params?: Partial<SYSTEM.ShopDetail>) {
 
 /** 选择门店进入系统 */
 export async function bindPmsStoreToken() {
+  const storeId = Cookie.get('storeId');
+  if (!storeId) {
+    history.replace('/user/login');
+    return Promise.reject();
+  }
   return request<API.Result>('/motel/store/getPmsStore', {
     method: 'GET',
     params: {
