@@ -8,7 +8,7 @@ export default function StorePage() {
     <PageContainer
       ghost
       header={{
-        title: '酒店列表',
+        title: '门店列表',
       }}
       style={{ minHeight: '100vh' }}
     >
@@ -21,7 +21,7 @@ export default function StorePage() {
           );
         })}
       </Space>
-      <Button type="primary">添加酒店</Button>
+      <Button type="primary">添加门店</Button>
     </PageContainer>
   );
 }

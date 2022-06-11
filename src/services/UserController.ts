@@ -23,8 +23,15 @@ export async function accountLogin(params?: {
   });
 }
 
-/** 添加酒店 */
-export async function newStore(params?: {
+/** 获取门店列表 */
+export async function getPmsStoreList() {
+  return request<API.Result>('/motel/store/getPmsStoreList', {
+    method: 'GET',
+  });
+}
+
+/** 添加门店 */
+export async function newPmsStore(params?: {
   name: string; //⻔店名称
   code: string; //⻔店编号
   address: string; //⼀级地址
@@ -39,8 +46,8 @@ export async function newStore(params?: {
   });
 }
 
-/** 选择酒店进入系统 */
-export async function setPmsStore(params?: { id?: number }) {
+/** 选择门店进入系统 */
+export async function bindPmsStoreToken(params?: { id?: number }) {
   return request<API.Result>('/motel/store/getPmsStore', {
     method: 'GET',
     params,

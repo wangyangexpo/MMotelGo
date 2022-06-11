@@ -1,6 +1,7 @@
 import { history } from 'umi';
 import envConfig from '@/utils/env';
 import Cookie from 'js-cookie';
+import { isLoginPath } from '@/utils';
 
 const { APP_BASE_URL } = envConfig;
 
@@ -10,12 +11,8 @@ export const notLoginResponseInterceptor = (response: Response) => {
     .json()
     .then((result) => {
       // 用户未登录
-      if (result.errorCode === 'NOT_LOGIN') {
-        if (
-          history.location.pathname === '/user/login' ||
-          history.location.pathname === '/user/regist' ||
-          history.location.pathname === '/user/reset_password'
-        ) {
+      if (result.errorCode === '9999') {
+        if (isLoginPath()) {
           return;
         }
         history.push(
