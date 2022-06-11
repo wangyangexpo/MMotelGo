@@ -34,7 +34,10 @@ export default () => {
     try {
       const data = await form.validateFields();
       await services.SettingController.AddRoomType(
-        data,
+        {
+          ...data,
+          id: roomTypeId,
+        },
         isUpdate ? 'update' : 'add',
       );
       message.success(`${isUpdate ? '保存' : '添加'}成功`);

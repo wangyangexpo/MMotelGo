@@ -39,7 +39,7 @@ export async function newPmsStore(params?: Partial<SYSTEM.ShopDetail>) {
 }
 
 /** 选择门店进入系统 */
-export async function bindPmsStoreToken(params?: { id?: number }) {
+export async function bindPmsStoreToken(params?: { storeId?: number }) {
   return request<API.Result>('/motel/store/getPmsStore', {
     method: 'GET',
     params,

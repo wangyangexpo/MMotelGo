@@ -35,6 +35,8 @@ declare namespace SYSTEM {
     detailAddress: string; //⼆级详细地址
     type: number; //⻔店类型 1-⺠宿 2-其他
     bossName: string; //负责⼈姓名
-    emailAccount: string; //负责⼈邮箱账号
+    bossPhoneNo: string; //负责⼈手机号
+    bossEmail: string; //负责⼈邮箱账号
+    activationCode?: string; // 激活码
   }
 }

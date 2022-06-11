@@ -1,7 +1,9 @@
-import { Space, Card, Button } from 'antd';
+import { Space, Card, Button, Row, Col } from 'antd';
 import { useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import { ModalForm, ProFormText, ProFormRadio } from '@ant-design/pro-form';
+import Cookie from 'js-cookie';
+import { history } from 'umi';
 import services from '@/services';
 
 const formItemLayout = {
@@ -22,73 +24,105 @@ export default function StorePage() {
       }}
       style={{ minHeight: '100vh' }}
     >
-      <Space wrap size={[12, 12]}>
-        {data?.list?.map((store) => {
-          return (
-            <Card title={store.storeName} key={store.storeId}>
-              到期时间：{store.expirationTime}
-            </Card>
-          );
-        })}
-      </Space>
-      <ModalForm<Partial<SYSTEM.ShopDetail>>
-        title="添加门店"
-        trigger={<Button type="primary">添加门店</Button>}
-        autoFocusFirstInput
-        modalProps={{
-          width: 600,
-        }}
-        onFinish={async (values) => {
-          await services.UserController.newPmsStore(values);
-          run();
-          return true;
-        }}
-        layout="horizontal"
-        {...formItemLayout}
-      >
-        <ProFormText
-          name="name"
-          label="门店名称"
-          fieldProps={{
-            maxLength: 20,
-          }}
-          rules={[{ required: true }]}
-        />
-        <ProFormText
-          name="code"
-          label="门店编号"
-          rules={[{ required: true }]}
-        />
-        <ProFormRadio.Group
-          label="门店类型"
-          name="type"
-          initialValue={1}
-          options={[
-            { label: '⺠宿', value: 1 },
-            { label: '其他', value: 2 },
-          ]}
-        />
-        <ProFormText
-          name="address"
-          label="一级地址"
-          rules={[{ required: true }]}
-        />
-        <ProFormText
-          name="detailAddress"
-          label="详细地址"
-          rules={[{ required: true }]}
-        />
-        <ProFormText
-          name="bossName"
-          label="负责人姓名"
-          rules={[{ required: true }]}
-        />
-        <ProFormText
-          name="emailAccount"
-          label="负责人邮箱"
-          rules={[{ required: true }]}
-        />
-      </ModalForm>
+      <Row gutter={[12, 12]}>
+        <Col span={24}>
+          <Space wrap size={[12, 12]}>
+            {data?.list?.map((store) => {
+              return (
+                <Card
+                  key={store.storeId}
+                  hoverable
+                  style={{ width: 240 }}
+                  onClick={async () => {
+                    await services.UserController.bindPmsStoreToken({
+                      storeId: store.storeId,
+                    });
+                    history.push('/');
+                  }}
+                >
+                  <Card.Meta
+                    title={store.storeName}
+                    description={<>到期时间：{store.expirationTime}</>}
+                  />
+                </Card>
+              );
+            })}
+          </Space>
+        </Col>
+        <Col>
+          <ModalForm<Partial<SYSTEM.ShopDetail>>
+            title="添加门店"
+            trigger={<Button type="primary">添加门店</Button>}
+            autoFocusFirstInput
+            modalProps={{
+              width: 600,
+              destroyOnClose: true,
+            }}
+            onFinish={async (values) => {
+              await services.UserController.newPmsStore(values);
+              run();
+              return true;
+            }}
+            layout="horizontal"
+            preserve={false}
+            {...formItemLayout}
+          >
+            <ProFormText
+              name="name"
+              label="门店名称"
+              fieldProps={{
+                maxLength: 20,
+              }}
+              rules={[{ required: true }]}
+            />
+            <ProFormText
+              name="code"
+              label="门店编号"
+              rules={[{ required: true }]}
+            />
+            <ProFormRadio.Group
+              label="门店类型"
+              name="type"
+              initialValue={1}
+              options={[
+                { label: '⺠宿', value: 1 },
+                { label: '其他', value: 2 },
+              ]}
+            />
+            <ProFormText
+              name="address"
+              label="一级地址"
+              rules={[{ required: true }]}
+            />
+            <ProFormText name="detailAddress" label="详细地址" />
+            <ProFormText
+              name="bossName"
+              label="负责人姓名"
+              rules={[{ required: true }]}
+            />
+            <ProFormText
+              name="bossEmail"
+              label="负责人邮箱"
+              initialValue={Cookie.get('emailAddress')}
+              rules={[
+                {
+                  type: 'email',
+                  message: '邮箱格式不正确',
+                },
+              ]}
+              hidden
+            />
+            <ProFormText name="bossPhoneNo" label="负责人手机号" />
+            <ProFormText
+              name="activationCode"
+              label="激活码"
+              rules={[{ required: true }]}
+              initialValue={'4Rbe5QcR8S5hhqoX'}
+              disabled
+            />
+          </ModalForm>
+        </Col>
+      </Row>
     </PageContainer>
   );
 }

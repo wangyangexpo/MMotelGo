@@ -1,7 +1,7 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Button, Popconfirm, message } from 'antd';
+import { Button, Popconfirm, message, Space } from 'antd';
 import useAddRoomType from './components/AddRoomTypeModal';
 import services from '@/services';
 
@@ -21,7 +21,25 @@ const SettingRoomsPage: React.FC = () => {
       width: 100,
       dataIndex: 'defaultPrice',
       render: (_, record) => {
-        return record?.defaultPrice ? '¥' + record.defaultPrice : '-';
+        if (record.defaultPriceType === 1) {
+          return record?.defaultPrice ? '¥' + record.defaultPrice : '-';
+        }
+        return (
+          <Space direction="vertical">
+            <div>
+              <span>平日：</span>
+              <span>
+                {record?.weekDayPrice ? '¥' + record.weekDayPrice : '-'}
+              </span>
+            </div>
+            <div>
+              <span>周末：</span>
+              <span>
+                {record?.weekEndPrice ? '¥' + record.weekEndPrice : '-'}
+              </span>
+            </div>
+          </Space>
+        );
       },
     },
     {
