@@ -74,7 +74,7 @@ const ShopMange: React.FC = () => {
             {!editable ? (
               data?.name
             ) : (
-              <FormItem noStyle name="shopName" initialValue={data?.name}>
+              <FormItem noStyle name="name" initialValue={data?.name}>
                 <Input />
               </FormItem>
             )}

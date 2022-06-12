@@ -3,7 +3,16 @@ import { useRequest } from 'umi';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
 import SortableList from '@/components/SortableList';
-import { Button, Alert, Card, Typography, Form, Input, Space } from 'antd';
+import {
+  Button,
+  Alert,
+  Card,
+  Typography,
+  Form,
+  Input,
+  Space,
+  message,
+} from 'antd';
 import RoomCard from './components/RoomCard';
 import services from '@/services';
 
@@ -24,7 +33,7 @@ const SettingRoomGroup: React.FC = () => {
   }, [data]);
 
   const hasGroup = groupData?.filter?.((g) => g.id) || [];
-  const noneGroup = groupData?.filter?.((g) => !g.id) || [];
+  const noneGroupRooms = groupData?.filter?.((g) => !g.id)?.[0]?.rooms || [];
 
   const columns: ProColumns<SETTING.RoomGroup>[] = [
     {
@@ -34,15 +43,31 @@ const SettingRoomGroup: React.FC = () => {
       render: (_, record, index) => {
         if (editable) {
           return (
-            <FormItem
-              noStyle
-              name={['list', index, 'groupName']}
-              initialValue={record.groupName}
-              preserve={false}
-              rules={[{ required: true, message: '请填写分组名' }]}
-            >
-              <Input></Input>
-            </FormItem>
+            <>
+              <FormItem
+                hidden
+                name={['list', index, 'id']}
+                initialValue={record.id}
+              >
+                <Input />
+              </FormItem>
+              <FormItem
+                hidden
+                name={['list', index, 'groupType']}
+                initialValue={1}
+              >
+                <Input />
+              </FormItem>
+              <FormItem
+                noStyle
+                name={['list', index, 'groupName']}
+                initialValue={record.groupName}
+                preserve={false}
+                rules={[{ required: true, message: '请填写分组名' }]}
+              >
+                <Input></Input>
+              </FormItem>
+            </>
           );
         }
         return record.groupName;
@@ -51,25 +76,28 @@ const SettingRoomGroup: React.FC = () => {
     {
       title: '房间号',
       dataIndex: 'rooms',
-      render: (_, record) => {
+      render: (_, record, index) => {
         if (editable) {
           return (
-            <SortableList
-              groupName="roomGroup"
-              dataSource={record?.rooms || []}
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-              }}
-              onChange={(list) => {
-                console.log(record.id, list);
-              }}
-              renderItem={(item) => {
-                return (
-                  <RoomCard name={item.roomCode} key={item.id} draggable />
-                );
-              }}
-            ></SortableList>
+            <FormItem
+              noStyle
+              name={['list', index, 'rooms']}
+              initialValue={record?.rooms || []}
+            >
+              <SortableList
+                groupName="roomGroup"
+                dataSource={record?.rooms || []}
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                }}
+                renderItem={(item) => {
+                  return (
+                    <RoomCard name={item.roomCode} key={item.id} draggable />
+                  );
+                }}
+              ></SortableList>
+            </FormItem>
           );
         }
         return (
@@ -135,9 +163,18 @@ const SettingRoomGroup: React.FC = () => {
                 <Button
                   type="primary"
                   onClick={async () => {
-                    const data = await form.validateFields();
-                    console.log(data);
-                    setEditable(false);
+                    try {
+                      const data = await form.validateFields();
+                      const list = data?.list || [];
+                      list.push({
+                        groupType: 0,
+                        rooms: data?.noneGroup,
+                      });
+                      console.log(list);
+                      // run();
+                    } catch (error) {
+                      message.error('请输入分组名称');
+                    }
                   }}
                 >
                   保存
@@ -170,21 +207,23 @@ const SettingRoomGroup: React.FC = () => {
           style={{ marginTop: 24 }}
         >
           {editable ? (
-            <SortableList
-              groupName="roomGroup"
-              dataSource={noneGroup?.[0]?.rooms || []}
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-              }}
-              renderItem={(item) => {
-                return (
-                  <RoomCard name={item.roomCode} key={item.id} draggable />
-                );
-              }}
-            ></SortableList>
+            <FormItem noStyle name="noneGroup" initialValue={noneGroupRooms}>
+              <SortableList
+                groupName="roomGroup"
+                dataSource={noneGroupRooms}
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                }}
+                renderItem={(item) => {
+                  return (
+                    <RoomCard name={item.roomCode} key={item.id} draggable />
+                  );
+                }}
+              ></SortableList>
+            </FormItem>
           ) : (
-            noneGroup?.[0]?.rooms?.map((item) => {
+            noneGroupRooms.map((item) => {
               return (
                 <RoomCard
                   name={item.roomCode}
