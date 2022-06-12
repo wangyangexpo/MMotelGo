@@ -6,6 +6,7 @@ export default defineConfig({
     loading: '@/components/Loading',
   },
   dva: false,
+  publicPath: '/MMotelGo/',
   theme: {
     // '@primary-color': '#FF6F00',
   },

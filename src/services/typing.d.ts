@@ -48,4 +48,5 @@ declare namespace API {
     storeList?: SYSTEM.StoreListInfo[];
   }>;
   type Result_PmsStoreList_ = Result_List_<SYSTEM.StoreListInfo>;
+  type Result_PmsShopDetail_ = Result<SYSTEM.ShopDetail>;
 }

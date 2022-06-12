@@ -203,3 +203,14 @@ export async function updateRoomPrice(params?: {
     data: params,
   });
 }
+
+/** 查询房价管理列表 */
+export async function getShopDetail(params?: { emailAccount?: string }) {
+  return request<API.Result_PmsShopDetail_>(
+    '/motel/config/store/queryStoreByEmail',
+    {
+      method: 'GET',
+      params,
+    },
+  );
+}
