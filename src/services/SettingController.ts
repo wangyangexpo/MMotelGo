@@ -214,3 +214,25 @@ export async function getShopDetail(params?: { emailAccount?: string }) {
     },
   );
 }
+
+/** 查询房价管理列表 */
+export async function getPriceChangeLog(params?: {
+  current?: number;
+  pageSize?: number;
+  logStartTime?: string;
+  logEndTime?: string;
+  startTime?: string;
+  endTime?: string;
+  statue?: 0 | 1;
+  priceType?: number;
+  roomTypeId?: number;
+  operator?: string;
+}) {
+  return request<API.Result_Setting_PriceLogList_>(
+    '/motel/config/price/allPriceLog',
+    {
+      method: 'GET',
+      params,
+    },
+  );
+}

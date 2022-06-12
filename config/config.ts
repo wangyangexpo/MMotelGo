@@ -1,12 +1,14 @@
 import { defineConfig } from 'umi';
 import routes from './routes';
 
+const NODE_ENV = process.env.NODE_ENV;
+
 export default defineConfig({
   dynamicImport: {
     loading: '@/components/Loading',
   },
   dva: false,
-  publicPath: '/MMotelGo/',
+  publicPath: NODE_ENV === 'production' ? '/MMotelGo/' : '/',
   theme: {
     // '@primary-color': '#FF6F00',
   },

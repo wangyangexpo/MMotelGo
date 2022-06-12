@@ -50,4 +50,18 @@ declare namespace SETTING {
     festivalTypeList?: number[];
     type?: number;
   }
+
+  interface PriceLog {
+    id?: React.Key;
+    roomTypeId?: number;
+    roomTypeName?: string;
+    startTime?: string;
+    endTime?: string;
+    statue?: 0 | 1;
+    priceType?: number;
+    operator?: string;
+    beforePrice?: string;
+    afterPrice?: string;
+    createTime?: string;
+  }
 }
