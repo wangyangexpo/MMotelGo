@@ -29,6 +29,7 @@ declare namespace SYSTEM {
   }
 
   interface ShopDetail {
+    id: Key;
     name: string; //⻔店名称
     code: string; //⻔店编号
     address: string; //⼀级地址
@@ -38,5 +39,6 @@ declare namespace SYSTEM {
     bossPhoneNo: string; //负责⼈手机号
     bossEmail: string; //负责⼈邮箱账号
     activationCode?: string; // 激活码
+    createTime?: string;
   }
 }

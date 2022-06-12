@@ -204,7 +204,7 @@ export async function updateRoomPrice(params?: {
   });
 }
 
-/** 查询房价管理列表 */
+/** 查询门店信息 */
 export async function getShopDetail(params?: { emailAccount?: string }) {
   return request<API.Result_PmsShopDetail_>(
     '/motel/config/store/queryStoreByEmail',
@@ -213,6 +213,19 @@ export async function getShopDetail(params?: { emailAccount?: string }) {
       params,
     },
   );
+}
+
+/** 修改门店信息 */
+export async function setShopDetail(params?: {
+  id: Key;
+  name?: string;
+  address?: string;
+  detailAddress?: string;
+}) {
+  return request<API.Result>('/motel/config/store/updateStore', {
+    method: 'PUT',
+    data: params,
+  });
 }
 
 /** 查询房价管理列表 */

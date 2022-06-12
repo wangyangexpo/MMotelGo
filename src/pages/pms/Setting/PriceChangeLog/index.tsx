@@ -4,63 +4,19 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { Button } from 'antd';
 import services from '@/services';
 
-const SettingPriceChangeLog: React.FC = () => {
-  const columns: ProColumns<SETTING.RoomType>[] = [
-    {
-      title: '本地房型',
-      width: 120,
-      dataIndex: 'roomTypeName',
-      ellipsis: true,
-    },
-    {
-      title: '价格渠道',
-      width: 120,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '渠道房型',
-      width: 120,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '价格日期',
-      width: 120,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '修改前价格',
-      width: 120,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '修改后价格',
-      width: 120,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '操作人',
-      width: 100,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '改价状态',
-      width: 100,
-      dataIndex: '1',
-      ellipsis: true,
-    },
-    {
-      title: '操作时间',
-      width: 140,
-      dataIndex: '1',
-    },
-  ];
+const columns: ProColumns<SETTING.PriceLog>[] = [
+  { title: '本地房型', width: 120, dataIndex: 'roomTypeName', ellipsis: true },
+  { title: '价格渠道', width: 120, dataIndex: '1', ellipsis: true },
+  { title: '渠道房型', width: 120, dataIndex: '1', ellipsis: true },
+  { title: '价格日期', width: 120, dataIndex: '1', ellipsis: true },
+  { title: '修改前价格', width: 120, dataIndex: '1', ellipsis: true },
+  { title: '修改后价格', width: 120, dataIndex: '1', ellipsis: true },
+  { title: '操作人', width: 100, dataIndex: '1', ellipsis: true },
+  { title: '改价状态', width: 100, dataIndex: '1', ellipsis: true },
+  { title: '操作时间', width: 140, dataIndex: '1' },
+];
 
+const SettingPriceChangeLog: React.FC = () => {
   return (
     <ProTable
       scroll={{ x: 'scroll' }}
@@ -68,7 +24,7 @@ const SettingPriceChangeLog: React.FC = () => {
       options={false}
       search={false}
       request={async (params) => {
-        const { data } = await services.SettingController.getRoomTypeList(
+        const { data } = await services.SettingController.getPriceChangeLog(
           params,
         );
         const { list, totalCount } = data;

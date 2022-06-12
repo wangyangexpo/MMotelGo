@@ -21,6 +21,11 @@ export const notLoginResponseInterceptor = (response: Response) => {
           `/user/login?redirectTo=${encodeURIComponent(window.location.href)}`,
         );
       }
+      // 未选择门店
+      if (result.errorCode === '0017') {
+        message.destroy();
+        history.push(`/pms/store`);
+      }
     });
   return response;
 };
