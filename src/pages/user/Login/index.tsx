@@ -31,12 +31,10 @@ export default () => {
         subTitle="全球最大酒店管理网站"
         onFinish={async (values) => {
           await services.UserController.accountLogin(values);
-          Cookie.set('emailAddress', values?.emailAddress);
-          Cookie.set('password', values?.password);
           if (values?.autoLogin) {
-            Cookie.set('autoLogin', 1);
+            Cookie.set('emailAddress', values?.emailAddress);
           } else {
-            Cookie.remove('autoLogin');
+            Cookie.remove('emailAddress');
           }
           history.push('/pms/store');
         }}
@@ -62,7 +60,6 @@ export default () => {
             size: 'large',
             prefix: <LockOutlined className={'prefixIcon'} />,
           }}
-          initialValue={Cookie.get('password')}
           placeholder={'密码'}
           rules={[
             {

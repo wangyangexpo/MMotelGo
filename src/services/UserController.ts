@@ -19,20 +19,15 @@ export async function accountLogin(params?: {
   emailAddress?: string;
   password?: string;
 }) {
-  const emailAddress = params?.emailAddress || Cookie.get('emailAddress');
-  const password = params?.password || Cookie.get('password');
-  if (!emailAddress || !password) {
+  if (!params?.emailAddress || !params?.password) {
     history.replace('/user/login');
     return Promise.reject();
   }
   return request<API.Result_LoginInfo_>('/motel/user/login', {
     method: 'POST',
-    data: {
-      emailAddress,
-      password,
-    },
+    data: params,
   }).then(({ data }) => {
-    sessionStorage.setItem('token', data?.token);
+    Cookie.set('token', data?.token);
   });
 }
 

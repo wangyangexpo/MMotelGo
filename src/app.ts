@@ -5,26 +5,6 @@ import {
   commonRequestInterceptor,
   notLoginResponseInterceptor,
 } from '@/utils/plugins';
-import services from '@/services';
-import Cookie from 'js-cookie';
-import { history } from 'umi';
-import { isLoginPath } from '@/utils';
-
-// 全局初始化数据配置，用于 Layout 用户信息和权限初始化
-export async function getInitialState() {
-  if (!isLoginPath()) {
-    const autoLogin = Cookie.get('autoLogin');
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      // 有token说明登录着
-    } else if (autoLogin) {
-      await services.UserController.accountLogin();
-      await services.UserController.bindPmsStoreToken();
-    } else {
-      history.replace('/user/login');
-    }
-  }
-}
 
 export const request: RequestConfig = {
   // credentials: 'include',

@@ -13,11 +13,10 @@ export const notLoginResponseInterceptor = (response: Response) => {
     .then((result) => {
       // 用户未登录
       if (result.errorCode === '0403') {
+        message.destroy();
         if (isLoginPath()) {
           return;
         }
-        message.destroy();
-        Cookie.remove('autoLogin');
         history.push(
           `/user/login?redirectTo=${encodeURIComponent(window.location.href)}`,
         );
@@ -43,7 +42,7 @@ export const commonRequestInterceptor = (
       ...options,
       headers: {
         ...(options?.headers || null),
-        'x-auth': sessionStorage.getItem('token'),
+        'x-auth': Cookie.get('token'),
       },
     },
   };
