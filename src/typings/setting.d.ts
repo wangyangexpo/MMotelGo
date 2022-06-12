@@ -24,7 +24,10 @@ declare namespace SETTING {
     id?: number;
     groupType?: number; // 1-未分组，2-已分组
     groupName?: string;
-    rooms?: string[];
+    rooms?: {
+      id: number;
+      roomCode?: string;
+    }[];
   }
 
   interface RoomSort {

@@ -2,7 +2,7 @@ import React from 'react';
 import SortableList from '@/components/SortableList';
 import RoomCard from './RoomCard';
 import { useRequest } from 'umi';
-import { Skeleton } from 'antd';
+import { Skeleton, message } from 'antd';
 import services from '@/services';
 
 interface Props {
@@ -20,10 +20,17 @@ const SortableRooms: React.FC<Props> = (props) => {
   return (
     <Skeleton loading={loading}>
       <SortableList
-        dataSource={data?.list || []}
+        dataSource={data || []}
         style={{
           display: 'flex',
           flexWrap: 'wrap',
+        }}
+        onChange={async (list) => {
+          await services.SettingController.updateRoomSort({
+            type,
+            list,
+          });
+          message.success('排序成功');
         }}
         renderItem={(item) => {
           return <RoomCard name={item.name} key={item.id} />;

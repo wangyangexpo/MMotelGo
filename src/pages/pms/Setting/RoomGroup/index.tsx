@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRequest } from 'umi';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
 import SortableList from '@/components/SortableList';
-import { Button, Alert, Card, Typography, Form, Input } from 'antd';
+import { Button, Alert, Card, Typography, Form, Input, Space } from 'antd';
 import RoomCard from './components/RoomCard';
 import services from '@/services';
 
 const FormItem = Form.Item;
+let uuid = -1;
 
 const SettingRoomGroup: React.FC = () => {
-  const [editable, setEditable] = useState(false);
   const [form] = Form.useForm();
+  const [editable, setEditable] = useState(false);
+  const [groupData, setGroupData] = useState<SETTING.RoomGroup[]>([]);
+
+  const { data, run } = useRequest(() => {
+    return services.SettingController.getRoomGroupList();
+  });
+
+  useEffect(() => {
+    setGroupData(data?.list || []);
+  }, [data]);
+
+  const hasGroup = groupData?.filter?.((g) => g.id) || [];
+  const noneGroup = groupData?.filter?.((g) => !g.id) || [];
 
   const columns: ProColumns<SETTING.RoomGroup>[] = [
     {
@@ -24,6 +38,8 @@ const SettingRoomGroup: React.FC = () => {
               noStyle
               name={['list', index, 'groupName']}
               initialValue={record.groupName}
+              preserve={false}
+              rules={[{ required: true, message: '请填写分组名' }]}
             >
               <Input></Input>
             </FormItem>
@@ -40,26 +56,32 @@ const SettingRoomGroup: React.FC = () => {
           return (
             <SortableList
               groupName="roomGroup"
-              dataSource={
-                record?.rooms?.map((name, index) => ({
-                  name,
-                  id: index,
-                })) || []
-              }
+              dataSource={record?.rooms || []}
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
               }}
+              onChange={(list) => {
+                console.log(record.id, list);
+              }}
               renderItem={(item) => {
-                return <RoomCard name={item.name} key={item.id} draggable />;
+                return (
+                  <RoomCard name={item.roomCode} key={item.id} draggable />
+                );
               }}
             ></SortableList>
           );
         }
         return (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {record?.rooms?.map((code) => {
-              return <RoomCard name={code} key={code} draggable={editable} />;
+            {record?.rooms?.map((item) => {
+              return (
+                <RoomCard
+                  name={item.roomCode}
+                  key={item.id}
+                  draggable={editable}
+                />
+              );
             })}
           </div>
         );
@@ -82,24 +104,55 @@ const SettingRoomGroup: React.FC = () => {
           options={false}
           search={false}
           pagination={false}
-          request={async () => {
-            const { data } =
-              await services.SettingController.getRoomGroupList();
-            const { list } = data;
-            return {
-              data: list,
-            };
+          dataSource={hasGroup}
+          footer={() => {
+            return editable ? (
+              <Button
+                type="primary"
+                ghost
+                onClick={() => {
+                  setGroupData([...groupData, { id: uuid--, rooms: [] }]);
+                }}
+              >
+                新增分组
+              </Button>
+            ) : (
+              false
+            );
           }}
           rowKey="id"
-          toolBarRender={(action) => [
-            <Button
-              type="primary"
-              onClick={() => {
-                setEditable(!editable);
-              }}
-            >
-              编辑
-            </Button>,
+          toolBarRender={() => [
+            editable ? (
+              <Space>
+                <Button
+                  onClick={() => {
+                    run();
+                    setEditable(false);
+                  }}
+                >
+                  取消
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={async () => {
+                    const data = await form.validateFields();
+                    console.log(data);
+                    setEditable(false);
+                  }}
+                >
+                  保存
+                </Button>
+              </Space>
+            ) : (
+              <Button
+                type="primary"
+                onClick={() => {
+                  setEditable(true);
+                }}
+              >
+                编辑
+              </Button>
+            ),
           ]}
         ></ProTable>
         <Card
@@ -119,23 +172,26 @@ const SettingRoomGroup: React.FC = () => {
           {editable ? (
             <SortableList
               groupName="roomGroup"
-              dataSource={
-                ['1001', '1123', '1201'].map((name, index) => ({
-                  name,
-                  id: index,
-                })) || []
-              }
+              dataSource={noneGroup?.[0]?.rooms || []}
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
               }}
               renderItem={(item) => {
-                return <RoomCard name={item.name} key={item.id} draggable />;
+                return (
+                  <RoomCard name={item.roomCode} key={item.id} draggable />
+                );
               }}
             ></SortableList>
           ) : (
-            ['1001', '1123', '1201'].map((code) => {
-              return <RoomCard name={code} key={code} draggable={editable} />;
+            noneGroup?.[0]?.rooms?.map((item) => {
+              return (
+                <RoomCard
+                  name={item.roomCode}
+                  key={item.id}
+                  draggable={editable}
+                />
+              );
             })
           )}
         </Card>

@@ -28,7 +28,7 @@ const SettingContainer: React.FC = (props) => {
         >
           <SubMenu key="rooms" icon={<UserOutlined />} title="住宿设置">
             <Menu.Item key="/pms/setting/rooms-manage">房型房间设置</Menu.Item>
-            <Menu.Item key="/pms/setting/rooms-hour">钟点房设置</Menu.Item>
+            {/* <Menu.Item key="/pms/setting/rooms-hour">钟点房设置</Menu.Item> */}
             <Menu.Item key="/pms/setting/rooms-group">房间分组设置</Menu.Item>
             <Menu.Item key="/pms/setting/rooms-sort">排序设置</Menu.Item>
           </SubMenu>

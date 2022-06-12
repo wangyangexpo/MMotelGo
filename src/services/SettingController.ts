@@ -157,8 +157,11 @@ export async function getRoomSort(params?: {
 }
 
 /** 修改房间排序 */
-export async function updateRoomSort(params?: { list?: SETTING.RoomSort[] }) {
-  return request<API.Result>('/motel/config/group/updateSortByType', {
+export async function updateRoomSort(params?: {
+  type?: number;
+  list?: SETTING.RoomSort[];
+}) {
+  return request<API.Result>('/motel/config/sort/updateSortByType', {
     method: 'PUT',
     data: params,
   });
