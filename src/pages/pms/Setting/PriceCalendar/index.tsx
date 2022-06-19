@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns } from '@ant-design/pro-table';
+import type { ProCoreActionType } from '@ant-design/pro-utils';
 import { Switch, Space, Typography, DatePicker, Select } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import moment from 'moment';
@@ -51,13 +52,19 @@ const SettingPriceCalendar: React.FC = () => {
           ),
           width: 140,
           align: 'center' as 'left' | 'center' | 'right',
-          render: (_: ReactNode, record: SETTING.RoomPriceListData) => {
+          render: (
+            _: ReactNode,
+            record: SETTING.RoomPriceListData,
+            _i: number,
+            action?: ProCoreActionType,
+          ) => {
             return (
               <PriceEditDrawer
                 record={record}
                 date={item.date}
                 showRemain={showRemain}
                 priceType={1}
+                action={action}
               />
             );
           },
@@ -98,7 +105,7 @@ const SettingPriceCalendar: React.FC = () => {
           total: totalCount,
         };
       }}
-      rowKey="id"
+      rowKey="roomTypeId"
       headerTitle={
         <Space>
           <DatePicker

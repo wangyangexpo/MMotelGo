@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { message, Space, Form, Typography, InputNumber, Input } from 'antd';
 import { DrawerForm, ProFormDateRangePicker } from '@ant-design/pro-form';
+import type { ActionType } from '@ant-design/pro-table';
+import moment from 'moment';
 import services from '@/services';
 
 const FormItem = Form.Item;
@@ -10,13 +12,16 @@ interface Props {
   date?: string;
   showRemain?: boolean;
   priceType?: number;
+  action?: ActionType;
 }
 
 const PriceEditDrawer: React.FC<Props> = (props) => {
-  const { record, showRemain, date, priceType } = props;
+  const { record, showRemain, date, priceType, action } = props;
   const [visible, setVisible] = useState(false);
 
-  const data = record?.dateList?.find((item) => item.date === date);
+  const data = record?.dateList?.find((item) =>
+    moment(item.date).isSame(date, 'd'),
+  );
 
   return (
     <DrawerForm
@@ -52,6 +57,7 @@ const PriceEditDrawer: React.FC<Props> = (props) => {
             startTime: values?.dateRange?.[0],
             endTime: values?.dateRange?.[1],
           });
+          action?.reload();
           message.success('设置成功！');
         } catch (error) {}
         return true;
