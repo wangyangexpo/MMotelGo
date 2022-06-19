@@ -247,8 +247,11 @@ export async function getPriceChangeLog(params?: {
   return request<API.Result_Setting_PriceLogList_>(
     '/motel/config/price/allPriceLog',
     {
-      method: 'GET',
-      params,
+      method: 'POST',
+      data: {
+        ...params,
+        pageNum: params?.current,
+      },
     },
   );
 }

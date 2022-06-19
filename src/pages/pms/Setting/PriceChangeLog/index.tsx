@@ -9,11 +9,16 @@ const columns: ProColumns<SETTING.PriceLog>[] = [
   { title: '价格渠道', width: 120, dataIndex: '1', ellipsis: true },
   { title: '渠道房型', width: 120, dataIndex: '1', ellipsis: true },
   { title: '价格日期', width: 120, dataIndex: '1', ellipsis: true },
-  { title: '修改前价格', width: 120, dataIndex: '1', ellipsis: true },
-  { title: '修改后价格', width: 120, dataIndex: '1', ellipsis: true },
-  { title: '操作人', width: 100, dataIndex: '1', ellipsis: true },
+  { title: '修改前价格', width: 120, dataIndex: 'beforePrice', ellipsis: true },
+  { title: '修改后价格', width: 120, dataIndex: 'afterPrice', ellipsis: true },
+  { title: '操作人', width: 100, dataIndex: 'operator', ellipsis: true },
   { title: '改价状态', width: 100, dataIndex: '1', ellipsis: true },
-  { title: '操作时间', width: 140, dataIndex: '1' },
+  {
+    title: '操作时间',
+    width: 180,
+    dataIndex: 'updateTime',
+    valueType: 'dateTime',
+  },
 ];
 
 const SettingPriceChangeLog: React.FC = () => {
