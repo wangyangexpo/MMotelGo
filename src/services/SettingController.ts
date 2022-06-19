@@ -187,8 +187,8 @@ export async function getRoomPriceList(params?: {
   return request<API.Result_Setting_RoomPriceList_>(
     '/motel/config/price/allRoomTypePrice',
     {
-      method: 'GET',
-      params,
+      method: 'POST',
+      data: params,
     },
   );
 }

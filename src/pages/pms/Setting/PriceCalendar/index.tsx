@@ -1,26 +1,38 @@
 import React, { ReactNode, useState } from 'react';
 import ProTable from '@ant-design/pro-table';
-import { useRequest } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
-import { Switch, Space, Typography } from 'antd';
-import { getWeekDay } from '@/utils';
+import { Switch, Space, Typography, DatePicker, Select } from 'antd';
+import { getWeekDay, getCalendarDate } from '@/utils';
 import moment from 'moment';
 import PriceEditDrawer from './components/PriceEditDrawer';
 import services from '@/services';
+import { useRequest } from 'umi';
 import './style.less';
 
 const SettingPriceCalendar: React.FC = () => {
   const [showRemain, setShowRemain] = useState(false);
+  const [fromDate, setFromDate] = useState(() => moment());
+  const [roomTypeId, setRoomTypeId] = useState(0);
 
+  // 获取房态房间列表
   const { data } = useRequest(async () => {
-    return services.SettingController.getRoomPriceCalendar({
-      startDate: Date.now(),
-    });
+    return services.SettingController.getRoomTypeList();
   });
 
-  function getCalendarColumns(list?: SETTING.CalendarData[]) {
+  const roomTypeOptions = [{ label: '全部房型', value: 0 }].concat(
+    data?.list?.map((item) => {
+      return {
+        label: item.roomTypeName!,
+        value: item.id!,
+      };
+    }) || [],
+  );
+
+  function getCalendarColumns() {
+    const calendarList = getCalendarDate(30, fromDate);
+
     return (
-      list?.map?.((item) => {
+      calendarList?.map?.((item) => {
         const d = moment(item.date);
         const isWeekend = [0, 6].includes(d.day());
         const textType = isWeekend ? 'danger' : undefined;
@@ -62,7 +74,7 @@ const SettingPriceCalendar: React.FC = () => {
       ellipsis: true,
       fixed: 'left',
     },
-    ...getCalendarColumns(data?.list),
+    ...getCalendarColumns(),
   ];
 
   return (
@@ -71,18 +83,38 @@ const SettingPriceCalendar: React.FC = () => {
       size="small"
       scroll={{ x: 'scroll' }}
       columns={columns}
+      params={{ fromDate, roomTypeId }}
       options={false}
       search={false}
       request={async () => {
-        const { data } = await services.SettingController.getRoomPriceList();
-        const { list, totalCount } = data;
+        const { data } = await services.SettingController.getRoomPriceList({
+          priceType: 1,
+          roomTypeId,
+          startTime: fromDate.format('YYYY-MM-DD'),
+        });
+        const { list, totalCount } = data || {};
         return {
           data: list,
           total: totalCount,
         };
       }}
       rowKey="id"
-      toolBarRender={(action) => [
+      headerTitle={
+        <Space>
+          <DatePicker
+            value={fromDate}
+            onChange={(date) => setFromDate(date!)}
+            style={{ width: 140 }}
+          />
+          <Select
+            style={{ width: 140 }}
+            value={roomTypeId}
+            onChange={setRoomTypeId}
+            options={roomTypeOptions}
+          />
+        </Space>
+      }
+      toolBarRender={() => [
         <Space>
           <Switch
             checked={showRemain}

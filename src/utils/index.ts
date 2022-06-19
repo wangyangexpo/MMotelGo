@@ -9,11 +9,14 @@ export const getWeekDay = (date: moment.Moment, short?: boolean) => {
 };
 
 // 生成连续30天的日期
-export const getCalendarDate = (days: number, from?: string) => {
+export const getCalendarDate = (
+  days: number,
+  from?: string | moment.Moment,
+) => {
   const result = [];
   for (let i = 0; i < days; i++) {
     result.push({
-      date: moment(from).add(i, 'd').format('yyyy-MM-DD'),
+      date: moment(from).add(i, 'd').format('YYYY-MM-DD'),
     });
   }
   return result;
