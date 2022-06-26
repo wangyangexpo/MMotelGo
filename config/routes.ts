@@ -32,7 +32,7 @@ export default [
         path: '/pms/setting/price-manage',
         component: 'pms/Setting/PriceCalendar',
       },
-      { path: '/pms/setting/price-batch', component: 'pms/Setting/RoomType' },
+      { path: '/pms/setting/price-batch', component: 'pms/Setting/PriceBatch' },
       {
         path: '/pms/setting/price-log',
         component: 'pms/Setting/PriceChangeLog',
