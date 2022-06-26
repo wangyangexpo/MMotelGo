@@ -208,8 +208,38 @@ const RoomStatePage: React.FC = () => {
   const dataSource = getCalendarRows(rowData?.list);
 
   return (
-    <>
-      <Button>房价管理</Button>
+    <div className="roome-state-container">
+      <Space className="roome-state-calendar-header">
+        <Button onClick={() => {}}>房价管理</Button>
+        <Button
+          onClick={async () => {
+            const { data } =
+              await services.RoomStateController.getTodayOverview({});
+            console.log(data);
+          }}
+        >
+          今日概览
+        </Button>
+        <Button
+          onClick={async () => {
+            const { data } =
+              await services.RoomStateController.getRoomCondition({});
+            console.log(data);
+          }}
+        >
+          房情表
+        </Button>
+        <Button
+          onClick={async () => {
+            const { data } =
+              await services.RoomStateController.getRoomStateChangeLog({});
+            console.log(data);
+          }}
+        >
+          房态操作日志
+        </Button>
+      </Space>
+
       <Table<ROOM_STATE.StateTableData>
         bordered
         size="small"
@@ -223,7 +253,7 @@ const RoomStatePage: React.FC = () => {
         pagination={false}
         rowKey="id"
       />
-    </>
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ export async function getAllRoomOrder(params: { date: string; days: number }) {
 
 /** 查询房情表 */
 export async function getRoomCondition(params: {
-  startTime: string;
+  startTime?: string;
   current?: number;
   pageSize?: number;
 }) {
@@ -52,7 +52,7 @@ export async function getRoomCondition(params: {
 
 /** 查询今日概览 */
 export async function getTodayOverview(params: {
-  status: number;
+  status?: number;
   current?: number;
   pageSize?: number;
 }) {
@@ -70,12 +70,12 @@ export async function getTodayOverview(params: {
 
 /** 查询房态操作日志 */
 export async function getRoomStateChangeLog(params: {
-  status: number;
+  status?: number;
   current?: number;
   pageSize?: number;
-  roomCode: string; //房间号
-  startTime: string; //房态操作开始时间
-  endTime: string; //房态操作结束时间
+  roomCode?: string; //房间号
+  startTime?: string; //房态操作开始时间
+  endTime?: string; //房态操作结束时间
 }) {
   return request<API.Result_RoomState_ChangeLogList_>(
     '/motel/roomState/log/allLog',
