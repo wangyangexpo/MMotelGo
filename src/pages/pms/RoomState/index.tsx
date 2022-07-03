@@ -9,6 +9,8 @@ import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
 import RoomCodeBox from './components/RoomCodeBox';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import TodayOverviewModal from './components/TodayOverviewModal';
+import ChangeLogModal from './components/ChangeLogModal';
 import services from '@/services';
 import moment from 'moment';
 import './style.less';
@@ -215,15 +217,7 @@ const RoomStatePage: React.FC = () => {
     <div className="roome-state-container">
       <Space className="roome-state-calendar-header">
         {/* <Button onClick={() => {}}>房价管理</Button> */}
-        <Button
-          onClick={async () => {
-            const { data } =
-              await services.RoomStateController.getTodayOverview({});
-            console.log(data);
-          }}
-        >
-          今日概览
-        </Button>
+        <TodayOverviewModal />
         <Button
           onClick={async () => {
             const { data } =
@@ -233,15 +227,7 @@ const RoomStatePage: React.FC = () => {
         >
           房情表
         </Button>
-        <Button
-          onClick={async () => {
-            const { data } =
-              await services.RoomStateController.getRoomStateChangeLog({});
-            console.log(data);
-          }}
-        >
-          房态操作日志
-        </Button>
+        <ChangeLogModal />
       </Space>
 
       <Table<ROOM_STATE.StateTableData>

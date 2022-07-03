@@ -165,13 +165,16 @@ const SettingRoomGroup: React.FC = () => {
                   onClick={async () => {
                     try {
                       const data = await form.validateFields();
-                      const list = data?.list || [];
-                      list.push({
+                      const groupList = data?.list || [];
+                      groupList.push({
                         groupType: 0,
                         rooms: data?.noneGroup,
                       });
-                      console.log(list);
-                      // run();
+                      await services.SettingController.updateRoomGroup({
+                        groupList,
+                      });
+                      run();
+                      setEditable(false);
                     } catch (error) {
                       message.error('请输入分组名称');
                     }

@@ -57,7 +57,7 @@ export async function getRoomCondition(params: {
 
 /** 查询今日概览 */
 export async function getTodayOverview(params: {
-  status?: number;
+  status?: string; // 1-今日预抵；2-今日预离；3-当前在住；4-未排房
   current?: number;
   pageSize?: number;
 }) {

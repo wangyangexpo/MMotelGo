@@ -137,8 +137,8 @@ export async function getRoomGroupList() {
 export async function updateRoomGroup(params?: {
   groupList?: SETTING.RoomGroup[];
 }) {
-  return request<API.Result>('/motel/config/group/updateRoomGroup', {
-    method: 'PUT',
+  return request<API.Result>('/motel/config/group/newRoomGroup', {
+    method: 'POST',
     data: params,
   });
 }
