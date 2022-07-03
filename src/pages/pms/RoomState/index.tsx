@@ -25,7 +25,11 @@ const RoomStatePage: React.FC = () => {
 
   // 获取房态房间列表-rows
   const { data: rowData, loading: rowLoading } = useRequest(async () => {
-    return services.RoomStateController.getAllRoomType();
+    return services.RoomStateController.getAllRoomType({
+      startTime: '2022-06-26',
+      endTime: '2022-07-26',
+      list: [0],
+    });
   });
 
   // 获取房间订单-渲染订单单元格
@@ -210,7 +214,7 @@ const RoomStatePage: React.FC = () => {
   return (
     <div className="roome-state-container">
       <Space className="roome-state-calendar-header">
-        <Button onClick={() => {}}>房价管理</Button>
+        {/* <Button onClick={() => {}}>房价管理</Button> */}
         <Button
           onClick={async () => {
             const { data } =

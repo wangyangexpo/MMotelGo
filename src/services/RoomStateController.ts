@@ -12,11 +12,16 @@ export async function getRoomStateCalendar(params?: { startDate?: number }) {
 }
 
 /** 查询房型房间列表 */
-export async function getAllRoomType() {
+export async function getAllRoomType(params: {
+  startTime?: string; //房态看板起始时间
+  endTime?: string; //房态看板结束时间
+  list?: number[]; //房
+}) {
   return request<API.Result_RoomState_RoomTypeList_>(
     '/motel/roomState/calendar/allState',
     {
-      method: 'GET',
+      method: 'POST',
+      data: params,
     },
   );
 }
@@ -80,8 +85,8 @@ export async function getRoomStateChangeLog(params: {
   return request<API.Result_RoomState_ChangeLogList_>(
     '/motel/roomState/log/allLog',
     {
-      method: 'GET',
-      params: {
+      method: 'POST',
+      data: {
         ...params,
         pageNum: params.current,
       },
