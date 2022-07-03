@@ -1,9 +1,9 @@
 import React, { ReactNode, useState } from 'react';
-import { useRequest } from 'umi';
+import { useIntl, useRequest } from 'umi';
 // import ProTable from '@ant-design/pro-table';
 // import type { ProColumns } from '@ant-design/pro-table';
 import { ColumnsType } from 'antd/lib/table';
-import { Button, Space, Typography, Table } from 'antd';
+import { Space, Typography, Table } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
@@ -11,6 +11,7 @@ import RoomCodeBox from './components/RoomCodeBox';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import TodayOverviewModal from './components/TodayOverviewModal';
 import ChangeLogModal from './components/ChangeLogModal';
+import RoomSituationModal from './components/RoomSituationModal';
 import services from '@/services';
 import moment from 'moment';
 import './style.less';
@@ -18,6 +19,7 @@ import './style.less';
 type AlignType = 'left' | 'center' | 'right';
 
 const RoomStatePage: React.FC = () => {
+  const intl = useIntl();
   const [expand, setExpand] = useState(false);
 
   // 生成30天的房态日历-columns
@@ -62,14 +64,16 @@ const RoomStatePage: React.FC = () => {
       calendarList?.map?.((item) => {
         const d = moment(item.date);
         const isWeekend = [0, 6].includes(d.day());
-        const dateText = d.isSame(moment(), 'day') ? '今天' : d.format('MM-DD');
+        const dateText = d.isSame(moment(), 'day')
+          ? intl.formatMessage({ id: '今天' })
+          : d.format('MM-DD');
         const textType = isWeekend ? 'danger' : undefined;
         return {
           title: (
             <Space size={[10, 0]} style={{ padding: '10px 0' }}>
               <Typography.Text type={textType}>{dateText}</Typography.Text>
               <Typography.Text type={textType || 'secondary'}>
-                {getWeekDay(d, true)}
+                {getWeekDay(d)}
               </Typography.Text>
             </Space>
           ),
@@ -83,7 +87,7 @@ const RoomStatePage: React.FC = () => {
                   type="secondary"
                   style={{ fontSize: 12, padding: '6px 0', display: 'block' }}
                 >
-                  剩 2 间
+                  {intl.formatMessage({ id: 'ROOM_LEFT' }, { count: 2 })}
                 </Typography.Text>
               ),
               onCell: (record: ROOM_STATE.StateTableData) => {
@@ -158,7 +162,7 @@ const RoomStatePage: React.FC = () => {
       title: '本地房型',
       children: [
         {
-          title: '房型',
+          title: intl.formatMessage({ id: '房型' }),
           width: 100,
           dataIndex: 'roomTypeName',
           fixed: 'left',
@@ -179,12 +183,12 @@ const RoomStatePage: React.FC = () => {
             >
               {!expand ? (
                 <Space>
-                  <span>收起</span>
+                  <span>{intl.formatMessage({ id: '收起' })}</span>
                   <UpOutlined />
                 </Space>
               ) : (
                 <Space>
-                  <span>展开</span>
+                  <span>{intl.formatMessage({ id: '展开' })}</span>
                   <DownOutlined />
                 </Space>
               )}
@@ -218,15 +222,7 @@ const RoomStatePage: React.FC = () => {
       <Space className="roome-state-calendar-header">
         {/* <Button onClick={() => {}}>房价管理</Button> */}
         <TodayOverviewModal />
-        <Button
-          onClick={async () => {
-            const { data } =
-              await services.RoomStateController.getRoomCondition({});
-            console.log(data);
-          }}
-        >
-          房情表
-        </Button>
+        <RoomSituationModal />
         <ChangeLogModal />
       </Space>
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Tabs } from 'antd';
+import { useIntl } from 'umi';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable, ModalForm } from '@ant-design/pro-components';
 import services from '@/services';
@@ -46,6 +47,7 @@ const columns: ProColumns<TableListItem>[] = [
 interface Props {}
 
 export default (props: Props) => {
+  const intl = useIntl();
   const [status, setStatus] = useState('1');
   return (
     <ModalForm
@@ -55,7 +57,9 @@ export default (props: Props) => {
         maskClosable: false,
       }}
       title="今日概览"
-      trigger={<Button type="primary">今日概览</Button>}
+      trigger={
+        <Button type="primary">{intl.formatMessage({ id: '今日概览' })}</Button>
+      }
       onFinish={async () => {
         return true;
       }}

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
 import { useIntl } from 'umi';
 import type { ProColumns } from '@ant-design/pro-components';
@@ -51,8 +50,8 @@ export default (props: Props) => {
       modalProps={{
         maskClosable: false,
       }}
-      title="操作日志"
-      trigger={<Button>{intl.formatMessage({ id: '操作日志' })}</Button>}
+      title="房情表"
+      trigger={<Button>{intl.formatMessage({ id: '房情表' })}</Button>}
       onFinish={async () => {
         return true;
       }}
@@ -63,8 +62,9 @@ export default (props: Props) => {
         tableAlertRender={false}
         columns={columns}
         request={async (params) => {
-          const { data } =
-            await services.RoomStateController.getRoomStateChangeLog(params);
+          const { data } = await services.RoomStateController.getRoomSituation(
+            params,
+          );
           const { list, totalCount } = data;
           return {
             data: list,

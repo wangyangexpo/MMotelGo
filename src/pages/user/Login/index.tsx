@@ -1,13 +1,12 @@
-import {
-  LoginFormPage,
-  ProFormText,
-  ProFormCheckbox,
-} from '@ant-design/pro-form';
+import { LoginFormPage, ProFormText } from '@ant-design/pro-components';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 import Cookie from 'js-cookie';
 import type { CSSProperties } from 'react';
 import { history } from 'umi';
 import services from '@/services';
+
+const { Link, Text } = Typography;
 
 const iconStyles: CSSProperties = {
   color: 'rgba(0, 0, 0, 0.2)',
@@ -28,14 +27,10 @@ export default () => {
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
         logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
         title="MotelGo"
-        subTitle="全球最大酒店管理网站"
+        subTitle="Hotel Online Property Management Platform"
         onFinish={async (values) => {
           await services.UserController.accountLogin(values);
-          if (values?.autoLogin) {
-            Cookie.set('emailAddress', values?.emailAddress);
-          } else {
-            Cookie.remove('emailAddress');
-          }
+          Cookie.set('emailAddress', values?.emailAddress);
           history.push('/pms/store');
         }}
       >
@@ -46,11 +41,11 @@ export default () => {
             prefix: <UserOutlined className={'prefixIcon'} />,
           }}
           initialValue={Cookie.get('emailAddress')}
-          placeholder={'邮箱'}
+          placeholder={'请输入邮箱账号'}
           rules={[
             {
               required: true,
-              message: '请输入邮箱!',
+              message: '请输入邮箱账号!',
             },
           ]}
         />
@@ -60,7 +55,7 @@ export default () => {
             size: 'large',
             prefix: <LockOutlined className={'prefixIcon'} />,
           }}
-          placeholder={'密码'}
+          placeholder={'请输入密码'}
           rules={[
             {
               required: true,
@@ -71,21 +66,25 @@ export default () => {
         <div
           style={{
             marginBottom: 24,
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
-          <ProFormCheckbox noStyle name="autoLogin" initialValue={true}>
-            自动登录
-          </ProFormCheckbox>
-          <a
-            style={{
-              float: 'right',
-            }}
+          <Link
             onClick={() => {
               history.push('/user/regist');
             }}
           >
             注册账号
-          </a>
+          </Link>
+          <Text
+            type="secondary"
+            onClick={() => {
+              history.push('/user/reset_password');
+            }}
+          >
+            忘记密码
+          </Text>
         </div>
       </LoginFormPage>
     </div>

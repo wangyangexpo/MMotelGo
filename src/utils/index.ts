@@ -1,11 +1,13 @@
 import moment from 'moment';
 import { history } from 'umi';
+import { useIntl } from 'umi';
 
-export const getWeekDay = (date: moment.Moment, short?: boolean) => {
-  if (short) {
-    return ['日', '一', '二', '三', '四', '五', '六'][date.day()];
-  }
-  return ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.day()];
+export const getWeekDay = (date: moment.Moment) => {
+  const intl = useIntl();
+  const intlKey = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][
+    date.day()
+  ];
+  return intl.formatMessage({ id: intlKey });
 };
 
 // 生成连续30天的日期

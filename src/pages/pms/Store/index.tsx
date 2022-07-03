@@ -111,13 +111,11 @@ export default function StorePage() {
               ]}
               hidden
             />
-            <ProFormText name="bossPhoneNo" label="负责人手机号" />
+            <ProFormText name="bossPhoneNo" label="门店座机" />
             <ProFormText
               name="activationCode"
               label="激活码"
               rules={[{ required: true }]}
-              initialValue={'4Rbe5QcR8S5hhqoX'}
-              disabled
             />
           </ModalForm>
         </Col>

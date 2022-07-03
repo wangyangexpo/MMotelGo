@@ -38,7 +38,7 @@ export async function getAllRoomOrder(params: { date: string; days: number }) {
 }
 
 /** 查询房情表 */
-export async function getRoomCondition(params: {
+export async function getRoomSituation(params: {
   startTime?: string;
   current?: number;
   pageSize?: number;
