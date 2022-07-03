@@ -1,6 +1,7 @@
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import { useModel } from 'umi';
+import moment from 'moment';
 import './style.less';
 
 const Text = Typography.Text;
@@ -16,6 +17,10 @@ const EmptyBox: React.FC<Props> = (props) => {
   const [selected, setSelected] = useState(false);
 
   const { state, setState } = useModel('state');
+
+  const price = record?.dateList?.find((d) =>
+    moment(d.date).isSame(date, 'day'),
+  )?.price;
 
   return !selected ? (
     <div
@@ -36,10 +41,10 @@ const EmptyBox: React.FC<Props> = (props) => {
         {record?.roomTypeName}
       </Text>
       <Text type="secondary" className="hiden">
-        {record?.roomNumber}
+        {record?.roomCode}
       </Text>
       <Text type="secondary" className="hiden">
-        {record?.roomNumber}
+        ￥{price}
       </Text>
     </div>
   ) : (

@@ -26,9 +26,9 @@ const RoomStatePage: React.FC = () => {
   // 获取房态房间列表-rows
   const { data: rowData, loading: rowLoading } = useRequest(async () => {
     return services.RoomStateController.getAllRoomType({
-      startTime: '2022-06-26',
-      endTime: '2022-07-26',
-      list: [0],
+      startTime: '2022-07-03',
+      endTime: '2022-08-03',
+      list: [],
     });
   });
 
@@ -189,7 +189,7 @@ const RoomStatePage: React.FC = () => {
             </div>
           ),
           width: 100,
-          dataIndex: 'roomNumber',
+          dataIndex: 'roomCode',
           fixed: 'left',
           align: 'center',
           render: (_, record) => {
@@ -198,7 +198,7 @@ const RoomStatePage: React.FC = () => {
             }
             return (
               <RoomCodeBox
-                code={record.roomNumber}
+                code={record.roomCode}
                 isDirty={record.roomStatus === 1}
               />
             );

@@ -7,7 +7,7 @@ declare namespace ROOM_STATE {
 
   interface Room {
     roomId?: string;
-    roomNumber?: string;
+    roomCode?: string;
     roomStatus?: 0 | 1;
   }
 
@@ -40,7 +40,7 @@ declare namespace ROOM_STATE {
   interface SelectTableData {
     date?: string;
     roomId?: string;
-    roomNumber?: string;
+    roomCode?: string;
   }
 
   interface RoomCondition {
