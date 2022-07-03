@@ -41,7 +41,7 @@ declare namespace API {
 
   type Result_RoomState_OrderList_ = Result_List_<ORDER.OrderData>;
   type Result_RoomState_RoomTypeList_ = Result_List_<ROOM_STATE.RoomType>;
-  type Result_RoomState_CalendarList_ = Result_List_<ROOM_STATE.CalendarData>;
+  type Result_RoomState_StockList_ = Result_List_<ROOM_STATE.StockData>;
   type Result_RoomState_RoomConditionList_ =
     Result_List_<ROOM_STATE.RoomCondition>;
   type Result_RoomState_RoomOverviewList_ =

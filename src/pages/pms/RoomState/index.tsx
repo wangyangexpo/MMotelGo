@@ -36,6 +36,15 @@ const RoomStatePage: React.FC = () => {
     });
   });
 
+  // 获取房态房间列表-rows
+  const { data: stockData, loading: stockLoading } = useRequest(async () => {
+    return services.RoomStateController.getRoomStateStock({
+      startTime: '2022-07-03',
+      endTime: '2022-08-03',
+      list: [],
+    });
+  });
+
   // 获取房间订单-渲染订单单元格
   const { data: orderData, loading: orderLoading } = useRequest(async () => {
     return services.RoomStateController.getAllRoomOrder({
@@ -57,6 +66,11 @@ const RoomStatePage: React.FC = () => {
       }
       return false;
     });
+  }
+
+  function getLeftRoomCount(date: moment.Moment) {
+    return stockData?.list?.find((s) => moment(s.date).isSame(date, 'day'))
+      ?.roomCount;
   }
 
   function getCalendarColumns() {
@@ -87,7 +101,10 @@ const RoomStatePage: React.FC = () => {
                   type="secondary"
                   style={{ fontSize: 12, padding: '6px 0', display: 'block' }}
                 >
-                  {intl.formatMessage({ id: 'ROOM_LEFT' }, { count: 2 })}
+                  {intl.formatMessage(
+                    { id: 'ROOM_LEFT' },
+                    { count: getLeftRoomCount(d) },
+                  )}
                 </Typography.Text>
               ),
               onCell: (record: ROOM_STATE.StateTableData) => {
@@ -230,7 +247,7 @@ const RoomStatePage: React.FC = () => {
         bordered
         size="small"
         sticky={{ offsetHeader: 48 }}
-        loading={rowLoading || orderLoading}
+        loading={rowLoading || orderLoading || stockLoading}
         className="roome-state-calendar-table"
         rowClassName="state-table-row"
         scroll={{ x: 'scroll' }}

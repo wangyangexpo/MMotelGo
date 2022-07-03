@@ -1,8 +1,8 @@
 /** 配置 */
 declare namespace ROOM_STATE {
-  interface CalendarData {
+  interface StockData {
     date: string;
-    type?: number;
+    roomCount: number;
   }
 
   interface Room {
