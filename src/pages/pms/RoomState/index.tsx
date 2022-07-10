@@ -3,7 +3,7 @@ import { useIntl, useRequest } from 'umi';
 // import ProTable from '@ant-design/pro-table';
 // import type { ProColumns } from '@ant-design/pro-table';
 import { ColumnsType } from 'antd/lib/table';
-import { Space, Typography, Table } from 'antd';
+import { Space, Typography, Table, DatePicker } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
@@ -21,6 +21,7 @@ type AlignType = 'left' | 'center' | 'right';
 const RoomStatePage: React.FC = () => {
   const intl = useIntl();
   const [expand, setExpand] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
 
   // 生成30天的房态日历-columns
   const [calendarList, setCalendarList] = useState(() => {
@@ -28,30 +29,45 @@ const RoomStatePage: React.FC = () => {
   });
 
   // 获取房态房间列表-rows
-  const { data: rowData, loading: rowLoading } = useRequest(async () => {
-    return services.RoomStateController.getAllRoomType({
-      startTime: '2022-07-03',
-      endTime: '2022-08-03',
-      list: [],
-    });
-  });
+  const { data: rowData, loading: rowLoading } = useRequest(
+    async () => {
+      return services.RoomStateController.getAllRoomType({
+        startTime: selectedDate.clone().format('YYYY-MM-DD'),
+        endTime: selectedDate.clone().add(30, 'day').format('YYYY-MM-DD'),
+        list: [],
+      });
+    },
+    {
+      refreshDeps: [selectedDate],
+    },
+  );
 
-  // 获取房态房间列表-rows
-  const { data: stockData, loading: stockLoading } = useRequest(async () => {
-    return services.RoomStateController.getRoomStateStock({
-      startTime: '2022-07-03',
-      endTime: '2022-08-03',
-      list: [],
-    });
-  });
+  // 获取房态剩余房间-rows
+  const { data: stockData, loading: stockLoading } = useRequest(
+    async () => {
+      return services.RoomStateController.getRoomStateStock({
+        startTime: selectedDate.clone().format('YYYY-MM-DD'),
+        endTime: selectedDate.clone().add(30, 'day').format('YYYY-MM-DD'),
+        list: [],
+      });
+    },
+    {
+      refreshDeps: [selectedDate],
+    },
+  );
 
   // 获取房间订单-渲染订单单元格
-  const { data: orderData, loading: orderLoading } = useRequest(async () => {
-    return services.RoomStateController.getAllRoomOrder({
-      date: '2022-05-14',
-      days: 30,
-    });
-  });
+  const { data: orderData, loading: orderLoading } = useRequest(
+    async () => {
+      return services.RoomStateController.getAllRoomOrder({
+        date: selectedDate.clone().format('YYYY-MM-DD'),
+        days: 30,
+      });
+    },
+    {
+      refreshDeps: [selectedDate],
+    },
+  );
 
   function findOrderByRecord(record: ROOM_STATE.StateTableData, date?: string) {
     const recDate = moment(date);
@@ -176,7 +192,19 @@ const RoomStatePage: React.FC = () => {
 
   const columns: ColumnsType<ROOM_STATE.StateTableData> = [
     {
-      title: '本地房型',
+      title: (
+        <DatePicker
+          value={selectedDate}
+          onChange={(value) => {
+            const selctDate = value || moment();
+            setCalendarList(getCalendarDate(30, selctDate));
+            setSelectedDate(selctDate);
+          }}
+          inputReadOnly
+          autoFocus={false}
+          allowClear={false}
+        />
+      ),
       children: [
         {
           title: intl.formatMessage({ id: '房型' }),
