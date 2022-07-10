@@ -11,8 +11,14 @@ export default [
   },
   {
     name: '房态',
-    path: 'pms/room-state',
+    path: 'pms/room-state/calendar',
     component: 'pms/RoomState',
+  },
+  {
+    name: '单日房态',
+    path: 'pms/room-state/single-day',
+    component: 'pms/RoomState/SingleDay',
+    hideInMenu: true,
   },
   {
     path: 'pms/setting',

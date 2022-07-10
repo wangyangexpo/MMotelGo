@@ -77,4 +77,23 @@ declare namespace ROOM_STATE {
     operator: string; //操作⼈姓名
     createTime: string; //⽇志创建时间
   }
+
+  interface SingleDayData {
+    id: number; //房态表主键id
+    roomTypeId: number; //房型id
+    roomTypeName: string; //房型名称
+    remainCount: number; //库存量
+    roomList: {
+      roomId: number; //房间id
+      roomCode: string; //房号
+      status: number; //状态 参⻅RoomStatusEnum枚举
+      statusDesc: string; //状态描述 参⻅RoomStatusEnum枚举
+      startTime: string; //房态开始时间
+      endTime: string; //房态结束时间
+      orderId: number; //订单id，可为空
+      reserveName: string; //订单预定⼈姓名，可为空
+      channelName: string; //订单来源渠道，可为空
+      remark: string; //备注，可为空
+    }[];
+  }
 }

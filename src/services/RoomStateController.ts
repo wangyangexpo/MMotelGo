@@ -97,3 +97,21 @@ export async function getRoomStateChangeLog(params: {
     },
   );
 }
+
+/** 查询单日房态 */
+export async function getSingleDayRoomState(params: {
+  stateDate?: string; //单日房态时间
+  roomTypeId?: number; //房型id，如果等于0代表所有房型
+  sortType?: number; // 1-按房型排序 2-按房间排序 3-按房间分组排序
+  statusList?: number[];
+}) {
+  return request<API.Result_RoomState_SingleDayList_>(
+    '/motel/roomState/calendar/singleDayState',
+    {
+      method: 'POST',
+      data: {
+        ...params,
+      },
+    },
+  );
+}

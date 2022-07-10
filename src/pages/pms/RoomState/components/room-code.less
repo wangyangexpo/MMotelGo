@@ -41,3 +41,32 @@
     }
   }
 }
+
+.room-single-box {
+  width: 138px;
+  height: 94px;
+  position: relative;
+  background-color: #fff;
+  padding: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &::before {
+    content: attr(data-text);
+  }
+
+  &.dirty {
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url('~@/assets/images/dirty.svg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      right: 6px;
+      top: 6px;
+    }
+  }
+}
