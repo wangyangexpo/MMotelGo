@@ -78,7 +78,11 @@ const SingleDay: React.FC = () => {
             />
           </Card>
           <Card size="small" bordered={false} title="房型筛选">
-            <Select value={sortType} onChange={(type) => setSortType(type)}>
+            <Select
+              style={{ width: '100%' }}
+              value={sortType}
+              onChange={(type) => setSortType(type)}
+            >
               <Option value={1}>按房型排序</Option>
               <Option value={2}>按房间排序</Option>
               <Option value={3}>按房间分组排序</Option>

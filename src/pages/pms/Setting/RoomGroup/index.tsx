@@ -13,6 +13,7 @@ import {
   Space,
   message,
 } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import RoomCard from './components/RoomCard';
 import services from '@/services';
 
@@ -43,7 +44,7 @@ const SettingRoomGroup: React.FC = () => {
       render: (_, record, index) => {
         if (editable) {
           return (
-            <>
+            <Space>
               <FormItem
                 hidden
                 name={['list', index, 'id']}
@@ -67,7 +68,23 @@ const SettingRoomGroup: React.FC = () => {
               >
                 <Input></Input>
               </FormItem>
-            </>
+              <DeleteOutlined
+                onClick={() => {
+                  const ngRooms =
+                    groupData?.filter?.((g) => !g.id)?.[0]?.rooms || [];
+                  const gList = groupData?.filter?.((g) => g.id) || [];
+                  const newGroupList = (
+                    gList?.filter((g) => g.id !== record.id) || []
+                  ).concat([
+                    {
+                      rooms: ngRooms.concat(record?.rooms || []),
+                    },
+                  ]);
+
+                  setGroupData(newGroupList);
+                }}
+              />
+            </Space>
           );
         }
         return record.groupName;
@@ -93,7 +110,7 @@ const SettingRoomGroup: React.FC = () => {
                 }}
                 renderItem={(item) => {
                   return (
-                    <RoomCard name={item.roomCode} key={item.id} draggable />
+                    <RoomCard name={item?.roomCode} key={item.id} draggable />
                   );
                 }}
               ></SortableList>
@@ -102,10 +119,10 @@ const SettingRoomGroup: React.FC = () => {
         }
         return (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {record?.rooms?.map((item) => {
+            {record?.rooms?.filter(Boolean)?.map((item) => {
               return (
                 <RoomCard
-                  name={item.roomCode}
+                  name={item?.roomCode}
                   key={item.id}
                   draggable={editable}
                 />
@@ -168,6 +185,7 @@ const SettingRoomGroup: React.FC = () => {
                       const groupList = data?.list || [];
                       groupList.push({
                         groupType: 0,
+                        groupName: '',
                         rooms: data?.noneGroup,
                       });
                       await services.SettingController.updateRoomGroup({
@@ -175,8 +193,10 @@ const SettingRoomGroup: React.FC = () => {
                       });
                       run();
                       setEditable(false);
-                    } catch (error) {
-                      message.error('请输入分组名称');
+                    } catch (error: any) {
+                      if (error?.errorFields) {
+                        message.error('请输入分组名称');
+                      }
                     }
                   }}
                 >
