@@ -1,9 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import { useIntl, useRequest } from 'umi';
-// import ProTable from '@ant-design/pro-table';
-// import type { ProColumns } from '@ant-design/pro-table';
 import { ColumnsType } from 'antd/lib/table';
-import { Space, Typography, Table, DatePicker } from 'antd';
+import { Space, Typography, Table, DatePicker, Radio } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
@@ -21,11 +19,12 @@ type AlignType = 'left' | 'center' | 'right';
 const RoomStatePage: React.FC = () => {
   const intl = useIntl();
   const [expand, setExpand] = useState(false);
+  const [duration, setDuration] = useState(30);
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
 
-  // 生成30天的房态日历-columns
+  // 生成房态日历-columns
   const [calendarList, setCalendarList] = useState(() => {
-    return getCalendarDate(30);
+    return getCalendarDate(duration);
   });
 
   // 获取房态房间列表-rows
@@ -33,12 +32,12 @@ const RoomStatePage: React.FC = () => {
     async () => {
       return services.RoomStateController.getAllRoomType({
         startTime: selectedDate.clone().format('YYYY-MM-DD'),
-        endTime: selectedDate.clone().add(30, 'day').format('YYYY-MM-DD'),
+        endTime: selectedDate.clone().add(duration, 'day').format('YYYY-MM-DD'),
         list: [],
       });
     },
     {
-      refreshDeps: [selectedDate],
+      refreshDeps: [selectedDate, duration],
     },
   );
 
@@ -47,12 +46,12 @@ const RoomStatePage: React.FC = () => {
     async () => {
       return services.RoomStateController.getRoomStateStock({
         startTime: selectedDate.clone().format('YYYY-MM-DD'),
-        endTime: selectedDate.clone().add(30, 'day').format('YYYY-MM-DD'),
+        endTime: selectedDate.clone().add(duration, 'day').format('YYYY-MM-DD'),
         list: [],
       });
     },
     {
-      refreshDeps: [selectedDate],
+      refreshDeps: [selectedDate, duration],
     },
   );
 
@@ -61,11 +60,11 @@ const RoomStatePage: React.FC = () => {
     async () => {
       return services.RoomStateController.getAllRoomOrder({
         date: selectedDate.clone().format('YYYY-MM-DD'),
-        days: 30,
+        days: duration,
       });
     },
     {
-      refreshDeps: [selectedDate],
+      refreshDeps: [selectedDate, duration],
     },
   );
 
@@ -198,7 +197,7 @@ const RoomStatePage: React.FC = () => {
           value={selectedDate}
           onChange={(value) => {
             const selctDate = value || moment();
-            setCalendarList(getCalendarDate(30, selctDate));
+            setCalendarList(getCalendarDate(duration, selctDate));
             setSelectedDate(selctDate);
           }}
           inputReadOnly
@@ -266,10 +265,25 @@ const RoomStatePage: React.FC = () => {
   return (
     <div className="roome-state-container">
       <Space className="roome-state-calendar-header">
-        {/* <Button onClick={() => {}}>房价管理</Button> */}
-        <TodayOverviewModal />
-        <RoomSituationModal />
-        <ChangeLogModal />
+        <Radio.Group
+          defaultValue={duration}
+          buttonStyle="solid"
+          onChange={(e) => {
+            const dur = e.target.value;
+            setCalendarList(getCalendarDate(dur, selectedDate));
+            setDuration(dur);
+          }}
+        >
+          <Radio.Button value={30}>30天</Radio.Button>
+          <Radio.Button value={15}>15天</Radio.Button>
+          <Radio.Button value={7}>7天</Radio.Button>
+        </Radio.Group>
+        <Space>
+          {/* <Button onClick={() => {}}>房价管理</Button> */}
+          <TodayOverviewModal />
+          <RoomSituationModal />
+          <ChangeLogModal />
+        </Space>
       </Space>
 
       <Table<ROOM_STATE.StateTableData>
