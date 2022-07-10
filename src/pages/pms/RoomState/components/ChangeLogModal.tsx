@@ -50,6 +50,7 @@ export default (props: Props) => {
       layout="horizontal"
       modalProps={{
         maskClosable: false,
+        destroyOnClose: true,
       }}
       title="操作日志"
       trigger={<Button>{intl.formatMessage({ id: '操作日志' })}</Button>}

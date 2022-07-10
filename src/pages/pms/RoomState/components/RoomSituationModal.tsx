@@ -49,6 +49,7 @@ export default (props: Props) => {
       layout="horizontal"
       modalProps={{
         maskClosable: false,
+        destroyOnClose: true,
       }}
       title="房情表"
       trigger={<Button>{intl.formatMessage({ id: '房情表' })}</Button>}

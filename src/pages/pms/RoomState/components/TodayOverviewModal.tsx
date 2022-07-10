@@ -55,6 +55,7 @@ export default (props: Props) => {
       layout="horizontal"
       modalProps={{
         maskClosable: false,
+        destroyOnClose: true,
       }}
       title="今日概览"
       trigger={

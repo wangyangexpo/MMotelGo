@@ -119,7 +119,7 @@ const RoomStatePage: React.FC = () => {
                 >
                   {intl.formatMessage(
                     { id: 'ROOM_LEFT' },
-                    { count: getLeftRoomCount(d) },
+                    { count: getLeftRoomCount(d) || 0 },
                   )}
                 </Typography.Text>
               ),
@@ -194,6 +194,7 @@ const RoomStatePage: React.FC = () => {
     {
       title: (
         <DatePicker
+          bordered={false}
           value={selectedDate}
           onChange={(value) => {
             const selctDate = value || moment();
