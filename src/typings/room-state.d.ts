@@ -5,6 +5,11 @@ declare namespace ROOM_STATE {
     roomCount: number;
   }
 
+  interface StatusEnum {
+    code: number;
+    desc: string;
+  }
+
   interface Room {
     roomId?: string;
     roomCode?: string;

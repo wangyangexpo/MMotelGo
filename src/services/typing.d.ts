@@ -49,6 +49,7 @@ declare namespace API {
     Result_List_<ROOM_STATE.RoomOverview>;
   type Result_RoomState_ChangeLogList_ =
     Result_List_<ROOM_STATE.StateChangeLog>;
+  type Result_RoomState_StatusEnum_ = Result_List_<ROOM_STATE.StatusEnum>;
 
   // 用户注册，登录，修改密码相关
   type Result_LoginInfo_ = Result<{

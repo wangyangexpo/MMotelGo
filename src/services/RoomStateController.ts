@@ -111,7 +111,19 @@ export async function getSingleDayRoomState(params: {
       method: 'POST',
       data: {
         ...params,
+        statusList: params?.statusList?.length ? params.statusList : [0],
       },
+    },
+  );
+}
+
+/** 查询房态枚举 */
+export async function getRoomStatusEnum(params?: {}) {
+  return request<API.Result_RoomState_StatusEnum_>(
+    '/motel/roomState/calendar/roomStatusList',
+    {
+      method: 'GET',
+      params,
     },
   );
 }

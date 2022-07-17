@@ -8,6 +8,7 @@ import {
   Col,
   DatePicker,
   Select,
+  Checkbox,
 } from 'antd';
 import { useRequest } from 'umi';
 import services from '@/services';
@@ -15,30 +16,39 @@ import SingleDayBox from './components/SingleDayBox';
 import moment from 'moment';
 import './single.less';
 
+const CheckboxGroup = Checkbox.Group;
+
 const { Text } = Typography;
 const { Option } = Select;
 
 const SingleDay: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
   const [sortType, setSortType] = useState(1);
+  const [statusList, setStatusList] = useState<number[]>([]);
+
+  const { data: enumData, loading: enumLoading } = useRequest(() => {
+    return services.RoomStateController.getRoomStatusEnum();
+  });
+
   const { data, loading, run } = useRequest(
     () => {
       return services.RoomStateController.getSingleDayRoomState({
         stateDate: selectedDate.format('YYYY-MM-DD'),
         roomTypeId: 0,
         sortType,
-        statusList: [1, 2, 3, 4],
+        statusList,
       });
     },
     {
-      refreshDeps: [selectedDate, sortType],
+      refreshDeps: [selectedDate, sortType, statusList],
     },
   );
+
   return (
     <div className="single-day-container">
       <Row gutter={24}>
         <Col span={18}>
-          <Skeleton loading={loading}>
+          <Skeleton loading={enumLoading || loading}>
             {data?.list?.map((item) => {
               return (
                 <div className="single-day-card" key={item.roomTypeId}>
@@ -89,7 +99,25 @@ const SingleDay: React.FC = () => {
             </Select>
           </Card>
           <Card size="small" bordered={false} title="房态筛选">
-            1
+            <Row gutter={[0, 8]}>
+              <Col span={24}>
+                <Checkbox>全部</Checkbox>
+              </Col>
+              <CheckboxGroup
+                onChange={(l) => {
+                  setStatusList(l as number[]);
+                }}
+                value={statusList}
+              >
+                <Row gutter={[16, 8]}>
+                  {enumData?.list?.map((item) => (
+                    <Col span={8}>
+                      <Checkbox value={item.code}>{item.desc}</Checkbox>
+                    </Col>
+                  ))}
+                </Row>
+              </CheckboxGroup>
+            </Row>
           </Card>
         </Col>
       </Row>
