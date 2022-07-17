@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
-import { useIntl, useRequest } from 'umi';
+import { useIntl, useRequest, useHistory } from 'umi';
 import { ColumnsType } from 'antd/lib/table';
-import { Space, Typography, Table, DatePicker, Radio } from 'antd';
+import { Space, Typography, Table, DatePicker, Radio, Button } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
@@ -18,6 +18,7 @@ type AlignType = 'left' | 'center' | 'right';
 
 const RoomStatePage: React.FC = () => {
   const intl = useIntl();
+  const history = useHistory();
   const [expand, setExpand] = useState(false);
   const [duration, setDuration] = useState(30);
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
@@ -265,19 +266,28 @@ const RoomStatePage: React.FC = () => {
   return (
     <div className="roome-state-container">
       <Space className="roome-state-calendar-header">
-        <Radio.Group
-          defaultValue={duration}
-          buttonStyle="solid"
-          onChange={(e) => {
-            const dur = e.target.value;
-            setCalendarList(getCalendarDate(dur, selectedDate));
-            setDuration(dur);
-          }}
-        >
-          <Radio.Button value={30}>30天</Radio.Button>
-          <Radio.Button value={15}>15天</Radio.Button>
-          <Radio.Button value={7}>7天</Radio.Button>
-        </Radio.Group>
+        <Space>
+          <Radio.Group
+            defaultValue={duration}
+            buttonStyle="solid"
+            onChange={(e) => {
+              const dur = e.target.value;
+              setCalendarList(getCalendarDate(dur, selectedDate));
+              setDuration(dur);
+            }}
+          >
+            <Radio.Button value={30}>30天</Radio.Button>
+            <Radio.Button value={15}>15天</Radio.Button>
+            <Radio.Button value={7}>7天</Radio.Button>
+          </Radio.Group>
+          <Button
+            onClick={() => {
+              history.push('/pms/room-state/single-day');
+            }}
+          >
+            单日房态
+          </Button>
+        </Space>
         <Space>
           {/* <Button onClick={() => {}}>房价管理</Button> */}
           <TodayOverviewModal />
