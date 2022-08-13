@@ -25,14 +25,11 @@ const EmptyBox: React.FC<Props> = (props) => {
       switch (info.type) {
         case 'SELECTED':
           if (info?.roomId === record.id && info.date === date) {
-            setVisible(true);
           } else {
             setVisible(false);
           }
           break;
         case 'CANCEL_SELECTED':
-          setSelectedRooms([]);
-          setVisible(false);
           setSelected(false);
         default:
           break;
@@ -56,6 +53,8 @@ const EmptyBox: React.FC<Props> = (props) => {
             type="secondary"
             className="btn"
             onClick={() => {
+              setVisible(false);
+              setSelectedRooms([]);
               selectService.sendCancelInfo();
             }}
           >
@@ -88,6 +87,7 @@ const EmptyBox: React.FC<Props> = (props) => {
               roomTypeId: record.roomTypeId,
               roomTypeName: record.roomTypeName,
             };
+            setVisible(true);
             setSelected(true);
             setSelectedRooms([...selectedRooms, info]);
             selectService.sendSelectedInfo(info);
