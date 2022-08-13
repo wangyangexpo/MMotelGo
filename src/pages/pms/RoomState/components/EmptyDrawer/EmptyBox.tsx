@@ -74,7 +74,7 @@ const EmptyBox: React.FC<Props> = (props) => {
         </Space>
       }
       overlayClassName="room-box-action-popover"
-      placement="leftTop"
+      placement="rightTop"
       visible={visible}
     >
       {!selected ? (
