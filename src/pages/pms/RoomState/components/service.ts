@@ -3,14 +3,20 @@ import { Subject } from 'rxjs';
 const subject = new Subject();
 
 export const selectService = {
-  sendSelectedInfo: (info: { id?: Key; date?: string }) =>
-    subject.next({
+  sendSelectedInfo: (info: ROOM_STATE.SelectTableData) => {
+    return subject.next({
       type: 'SELECTED',
       ...info,
-    }),
-  sendCancelInfo: () =>
-    subject.next({
+    });
+  },
+  sendCancelInfo: () => {
+    return subject.next({
       type: 'CANCEL_SELECTED',
+    });
+  },
+  sendAddOrder: () =>
+    subject.next({
+      type: 'ADD_ORDER',
     }),
   getSelectedInfo: () => subject.asObservable(),
 };

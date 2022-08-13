@@ -1,15 +1,17 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import { useIntl, useRequest, useHistory } from 'umi';
 import { ColumnsType } from 'antd/lib/table';
 import { Space, Typography, Table, DatePicker, Radio, Button } from 'antd';
 import { getWeekDay, getCalendarDate } from '@/utils';
 import OrderDrawer from './components/OrderDrawer';
 import EmptyDrawer from './components/EmptyDrawer';
+import AddOrderDrawer from './components/AddOrderDrawer';
 import RoomCodeBox from './components/RoomCodeBox';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import TodayOverviewModal from './components/TodayOverviewModal';
 import ChangeLogModal from './components/ChangeLogModal';
 import RoomSituationModal from './components/RoomSituationModal';
+import { selectService } from './components/service';
 import services from '@/services';
 import moment from 'moment';
 import './style.less';
@@ -20,8 +22,24 @@ const RoomStatePage: React.FC = () => {
   const intl = useIntl();
   const history = useHistory();
   const [expand, setExpand] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
   const [duration, setDuration] = useState(30);
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
+
+  useEffect(() => {
+    const subs = selectService.getSelectedInfo().subscribe((info: any) => {
+      switch (info.type) {
+        case 'ADD_ORDER':
+          setAddVisible(true);
+        default:
+          break;
+      }
+    });
+
+    return () => {
+      subs.unsubscribe();
+    };
+  }, []);
 
   // 生成房态日历-columns
   const [calendarList, setCalendarList] = useState(() => {
@@ -308,6 +326,12 @@ const RoomStatePage: React.FC = () => {
         dataSource={dataSource}
         pagination={false}
         rowKey="id"
+      />
+      <AddOrderDrawer
+        visible={addVisible}
+        onClose={() => {
+          setAddVisible(false);
+        }}
       />
     </div>
   );

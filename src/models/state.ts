@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-const useRoomState = () => {
-  const [state, setState] = useState<ROOM_STATE.SelectTableData[]>([]);
+const useRoomSelect = () => {
+  const [selectedRooms, setSelectedRooms] = useState<
+    ROOM_STATE.SelectTableData[]
+  >([]);
   return {
-    state,
-    setState,
+    selectedRooms,
+    setSelectedRooms,
   };
 };
 
-export default useRoomState;
+export default useRoomSelect;

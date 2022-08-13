@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Popover, Space, Typography } from 'antd';
-import moment from 'moment';
+import { useModel } from 'umi';
 import { selectService } from '../service';
+import moment from 'moment';
 import './style.less';
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 interface Props {
   record: ROOM_STATE.StateTableData;
@@ -14,6 +15,8 @@ interface Props {
 const EmptyBox: React.FC<Props> = (props) => {
   const { record, date } = props;
 
+  const { selectedRooms, setSelectedRooms } = useModel('state');
+
   const [selected, setSelected] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -21,13 +24,14 @@ const EmptyBox: React.FC<Props> = (props) => {
     const subs = selectService.getSelectedInfo().subscribe((info: any) => {
       switch (info.type) {
         case 'SELECTED':
-          if (info?.id === record.id && info.date === date) {
+          if (info?.roomId === record.id && info.date === date) {
             setVisible(true);
           } else {
             setVisible(false);
           }
           break;
         case 'CANCEL_SELECTED':
+          setSelectedRooms([]);
           setVisible(false);
           setSelected(false);
         default:
@@ -60,7 +64,11 @@ const EmptyBox: React.FC<Props> = (props) => {
           <Text type="secondary" className="btn">
             关房
           </Text>
-          <Text type="secondary" className="btn">
+          <Text
+            type="secondary"
+            className="btn"
+            onClick={selectService.sendAddOrder}
+          >
             入住
           </Text>
         </Space>
@@ -73,11 +81,16 @@ const EmptyBox: React.FC<Props> = (props) => {
         <div
           className="room-empty-box"
           onClick={() => {
+            const info = {
+              date,
+              roomId: record.id,
+              roomCode: record.roomCode,
+              roomTypeId: record.roomTypeId,
+              roomTypeName: record.roomTypeName,
+            };
             setSelected(true);
-            selectService.sendSelectedInfo({
-              id: record.id,
-              date: date,
-            });
+            setSelectedRooms([...selectedRooms, info]);
+            selectService.sendSelectedInfo(info);
           }}
         >
           <Text type="secondary" className="hiden">
@@ -94,10 +107,10 @@ const EmptyBox: React.FC<Props> = (props) => {
         <div
           className="room-empty-box-checked"
           onClick={() => {
+            setSelectedRooms(
+              selectedRooms.filter((item) => item.roomId !== record.id),
+            );
             setSelected(false);
-            // setState(
-            //   state.filter((s) => s.roomId !== record.roomId || s.date !== date),
-            // );
           }}
         ></div>
       )}

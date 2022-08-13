@@ -44,8 +44,11 @@ declare namespace ROOM_STATE {
 
   interface SelectTableData {
     date?: string;
-    roomId?: string;
+    roomId?: Key;
     roomCode?: string;
+    price?: number;
+    roomTypeId?: number;
+    roomTypeName?: string;
   }
 
   interface RoomCondition {
