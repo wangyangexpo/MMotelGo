@@ -1,4 +1,4 @@
-.room-sort-card {
+.financial-note-card {
   width: 172px;
   height: 56px;
   background-color: #fff;
@@ -10,15 +10,25 @@
   margin-bottom: 16px;
   font-size: 14px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-height: 56px;
-  text-align: center;
   position: relative;
+  padding: 0 12px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  &.sortable-chosen {
+  & .text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  & .text-input {
+    margin-right: 8px;
+  }
+
+  &.sortable-chosen,
+  &:hover {
     border: 1px solid #1890ff;
   }
 
@@ -39,6 +49,13 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     top: 50%;
+    left: 0;
     transform: translateY(-50%);
+  }
+
+  & .action {
+    & .pointer {
+      cursor: pointer;
+    }
   }
 }

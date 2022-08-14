@@ -31,7 +31,7 @@ declare namespace SETTING {
   }
 
   interface RoomSort {
-    id?: number;
+    id: number;
     name?: string;
     sort?: number;
   }

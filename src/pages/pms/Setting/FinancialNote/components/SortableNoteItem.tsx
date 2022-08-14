@@ -36,7 +36,9 @@ const SortableNoteItem: React.FC<Props> = (props) => {
           message.success('排序成功');
         }}
         renderItem={(item) => {
-          return <NoteItem name={item.name} key={item.id} />;
+          return (
+            <NoteItem noteName={item.name} noteId={item.id} key={item.id} />
+          );
         }}
       ></SortableList>
     </Skeleton>
