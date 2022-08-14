@@ -23,7 +23,7 @@ const RoomStatePage: React.FC = () => {
   const history = useHistory();
   const [expand, setExpand] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState(7);
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
 
   useEffect(() => {
