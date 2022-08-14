@@ -35,7 +35,7 @@ export default function SortableList<T extends Record<string, any>>(
       })) || [],
     );
   }, [dataSource]);
-  return list.length >= 0 ? (
+  return (
     <ReactSortable<T & { id: number }>
       list={list}
       group={groupName}
@@ -51,5 +51,5 @@ export default function SortableList<T extends Record<string, any>>(
         return renderItem?.(item, index);
       })}
     </ReactSortable>
-  ) : null;
+  );
 }
