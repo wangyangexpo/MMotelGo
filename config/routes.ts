@@ -44,6 +44,14 @@ export default [
         component: 'pms/Setting/PriceChangeLog',
       },
       { path: '/pms/setting/shop-manage', component: 'pms/Setting/ShopManage' },
+      {
+        path: '/pms/setting/financial-payment',
+        component: 'pms/Setting/FinancialPayment',
+      },
+      {
+        path: '/pms/setting/financial-note',
+        component: 'pms/Setting/FinancialNote',
+      },
     ],
   },
   {

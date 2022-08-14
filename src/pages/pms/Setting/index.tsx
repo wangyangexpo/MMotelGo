@@ -5,6 +5,7 @@ import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
+  MoneyCollectOutlined,
 } from '@ant-design/icons';
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -39,6 +40,16 @@ const SettingContainer: React.FC = (props) => {
           </SubMenu>
           <SubMenu key="shop" icon={<NotificationOutlined />} title="门店设置">
             <Menu.Item key="/pms/setting/shop-manage">门店设置</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="financial"
+            icon={<MoneyCollectOutlined />}
+            title="财务设置"
+          >
+            <Menu.Item key="/pms/setting/financial-payment">
+              收款方式设置
+            </Menu.Item>
+            <Menu.Item key="/pms/setting/financial-note">记一笔设置</Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>
