@@ -79,4 +79,6 @@ export default {
   负责人姓名: 'Principal Name',
   门店座机: 'Store Landline Number',
   激活码: 'Activation Code',
+  保存: 'Save',
+  取消: 'Cancel',
 };

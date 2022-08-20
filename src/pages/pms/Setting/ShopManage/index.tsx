@@ -8,7 +8,7 @@ import {
   Space,
   message,
 } from 'antd';
-import { useRequest } from 'umi';
+import { useRequest, useIntl } from 'umi';
 import services from '@/services';
 import moment from 'moment';
 import './style.less';
@@ -17,6 +17,7 @@ const FormItem = Form.Item;
 const DescItem = Descriptions.Item;
 
 const ShopMange: React.FC = () => {
+  const intl = useIntl();
   const [editable, setEditable] = useState(false);
   const [form] = Form.useForm();
 
@@ -38,7 +39,7 @@ const ShopMange: React.FC = () => {
                     setEditable(false);
                   }}
                 >
-                  取消
+                  {intl.formatMessage({ id: '取消' })}
                 </Button>
                 <Button
                   type="primary"
@@ -53,7 +54,7 @@ const ShopMange: React.FC = () => {
                     run();
                   }}
                 >
-                  保存
+                  {intl.formatMessage({ id: '保存' })}
                 </Button>
               </Space>
             ) : (
@@ -63,14 +64,14 @@ const ShopMange: React.FC = () => {
                   setEditable(true);
                 }}
               >
-                编辑
+                {intl.formatMessage({ id: '编辑' })}
               </Button>
             )
           }
           labelStyle={{ fontSize: 10, color: '#999', padding: '0 12px' }}
           contentStyle={{ padding: '0 12px' }}
         >
-          <DescItem label="门店名称">
+          <DescItem label={intl.formatMessage({ id: '门店名称' })}>
             {!editable ? (
               data?.name
             ) : (
@@ -79,11 +80,13 @@ const ShopMange: React.FC = () => {
               </FormItem>
             )}
           </DescItem>
-          <DescItem label="门店编号">{data?.code}</DescItem>
-          <DescItem label="门店类型">
+          <DescItem label={intl.formatMessage({ id: '门店编号' })}>
+            {data?.code}
+          </DescItem>
+          <DescItem label={intl.formatMessage({ id: '门店类型' })}>
             {['', '民宿', '其他'][data?.type!]}
           </DescItem>
-          <DescItem label="门店地址">
+          <DescItem label={intl.formatMessage({ id: '门店地址' })}>
             {!editable ? (
               data?.address
             ) : (
@@ -92,7 +95,7 @@ const ShopMange: React.FC = () => {
               </FormItem>
             )}
           </DescItem>
-          <DescItem label="详细地址" span={2}>
+          <DescItem label={intl.formatMessage({ id: '详细地址' })} span={2}>
             {!editable ? (
               data?.detailAddress
             ) : (
@@ -105,13 +108,17 @@ const ShopMange: React.FC = () => {
               </FormItem>
             )}
           </DescItem>
-          <DescItem label="创建日期">
+          <DescItem label={intl.formatMessage({ id: '创建日期' })}>
             {data?.createTime
               ? moment(data?.createTime).format('YYYY/MM/DD')
               : '--'}
           </DescItem>
-          <DescItem label="负责人">{data?.bossName}</DescItem>
-          <DescItem label="负责人邮箱">{data?.bossEmail}</DescItem>
+          <DescItem label={intl.formatMessage({ id: '负责人' })}>
+            {data?.bossName}
+          </DescItem>
+          <DescItem label={intl.formatMessage({ id: '负责人邮箱' })}>
+            {data?.bossEmail}
+          </DescItem>
         </Descriptions>
       </Form>
     </Skeleton>
