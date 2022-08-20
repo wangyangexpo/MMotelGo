@@ -1,6 +1,7 @@
 // 运行时配置
 import type { RunTimeLayoutConfig, RequestConfig } from 'umi';
 import rightContentRender from '@/components/Layout/RightContentRender';
+import Logo from '@/assets/images/logo.jpeg';
 import {
   commonRequestInterceptor,
   notLoginResponseInterceptor,
@@ -20,5 +21,6 @@ export const layout: RunTimeLayoutConfig = ({}) => {
   return {
     // 登录账号信息，包括所选管理员渠道
     rightContentRender,
+    logo: Logo,
   };
 };

@@ -26,7 +26,7 @@ export default {
   住宿设置: 'Accommodation Settings',
   房型房间设置: 'Room Type Setting',
   房间分组设置: 'Room Group Setting',
-  排序设置: 'Sort Setting:',
+  排序设置: 'Sort Setting',
   房价设置: 'Price Stetting',
   房价管理: 'Price Management',
   批量改价: 'Price Batch Change',
@@ -41,6 +41,7 @@ export default {
   新增房型: 'New Room Type',
   分组名称: 'Group Name',
   编辑: 'Edit',
+  删除: 'Delete',
   未分组房间: 'Ungrouped Room',
   点击编辑才可拖拽房间至分组: 'Click Edit to Drag Room to Group',
   '设置分组后，可在日历房态页面按照分组进行筛选':

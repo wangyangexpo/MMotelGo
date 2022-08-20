@@ -1,23 +1,29 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
+import { useIntl } from 'umi';
 import type { ProColumns } from '@ant-design/pro-table';
 import { Button, Popconfirm, message, Space } from 'antd';
 import useAddRoomType from './components/AddRoomTypeModal';
 import services from '@/services';
 
 const SettingRoomsPage: React.FC = () => {
+  const intl = useIntl();
   const { addRoomTypeModal, openAddRoomTypeModal } = useAddRoomType();
 
   const columns: ProColumns<SETTING.RoomType>[] = [
     {
-      title: '房型名称',
+      title: intl.formatMessage({ id: '房型名称' }),
       width: 120,
       dataIndex: 'roomTypeName',
       ellipsis: true,
     },
-    { title: '简称', width: 120, dataIndex: 'roomTypeShortName' },
     {
-      title: '默认门市价',
+      title: intl.formatMessage({ id: '简称' }),
+      width: 120,
+      dataIndex: 'roomTypeShortName',
+    },
+    {
+      title: intl.formatMessage({ id: '默认门市价' }),
       width: 100,
       dataIndex: 'defaultPrice',
       render: (_, record) => {
@@ -43,12 +49,12 @@ const SettingRoomsPage: React.FC = () => {
       },
     },
     {
-      title: '房间数',
+      title: intl.formatMessage({ id: '房间数' }),
       width: 80,
       dataIndex: 'roomCount',
     },
     {
-      title: '房间号',
+      title: intl.formatMessage({ id: '房间号' }),
       width: 180,
       dataIndex: 'roomCodeList',
       ellipsis: true,
@@ -57,7 +63,7 @@ const SettingRoomsPage: React.FC = () => {
       },
     },
     {
-      title: '操作',
+      title: intl.formatMessage({ id: '操作' }),
       width: 120,
       key: 'option',
       valueType: 'option',
@@ -70,7 +76,7 @@ const SettingRoomsPage: React.FC = () => {
               openAddRoomTypeModal(action, record?.id);
             }}
           >
-            编辑
+            {intl.formatMessage({ id: '编辑' })}
           </a>,
           <Popconfirm
             key="2"
@@ -86,7 +92,7 @@ const SettingRoomsPage: React.FC = () => {
               } catch (error) {}
             }}
           >
-            <a>删除</a>
+            <a>{intl.formatMessage({ id: '删除' })}</a>
           </Popconfirm>,
         ];
       },

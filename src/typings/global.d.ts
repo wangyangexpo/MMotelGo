@@ -1,5 +1,6 @@
 declare module 'mockjs';
 declare module 'js-cookie';
+declare module '@/assets/*';
 
 declare type Key = React.Key;
 

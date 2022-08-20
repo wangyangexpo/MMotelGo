@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'umi';
+import { useHistory, useIntl } from 'umi';
 import { Layout, Menu } from 'antd';
 import {
   UserOutlined,
@@ -11,6 +11,7 @@ const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 const SettingContainer: React.FC = (props) => {
+  const intl = useIntl();
   const history = useHistory();
   const pathname = history.location.pathname;
   return (
@@ -27,29 +28,57 @@ const SettingContainer: React.FC = (props) => {
             history.push(key);
           }}
         >
-          <SubMenu key="rooms" icon={<UserOutlined />} title="住宿设置">
-            <Menu.Item key="/pms/setting/rooms-manage">房型房间设置</Menu.Item>
+          <SubMenu
+            key="rooms"
+            icon={<UserOutlined />}
+            title={intl.formatMessage({ id: '住宿设置' })}
+          >
+            <Menu.Item key="/pms/setting/rooms-manage">
+              {intl.formatMessage({ id: '房型房间设置' })}
+            </Menu.Item>
             {/* <Menu.Item key="/pms/setting/rooms-hour">钟点房设置</Menu.Item> */}
-            <Menu.Item key="/pms/setting/rooms-group">房间分组设置</Menu.Item>
-            <Menu.Item key="/pms/setting/rooms-sort">排序设置</Menu.Item>
+            <Menu.Item key="/pms/setting/rooms-group">
+              {intl.formatMessage({ id: '房间分组设置' })}
+            </Menu.Item>
+            <Menu.Item key="/pms/setting/rooms-sort">
+              {intl.formatMessage({ id: '排序设置' })}
+            </Menu.Item>
           </SubMenu>
-          <SubMenu key="price" icon={<LaptopOutlined />} title="房价设置">
-            <Menu.Item key="/pms/setting/price-manage">房价管理</Menu.Item>
-            <Menu.Item key="/pms/setting/price-batch">批量改价</Menu.Item>
-            <Menu.Item key="/pms/setting/price-log">改价记录</Menu.Item>
+          <SubMenu
+            key="price"
+            icon={<LaptopOutlined />}
+            title={intl.formatMessage({ id: '房价设置' })}
+          >
+            <Menu.Item key="/pms/setting/price-manage">
+              {intl.formatMessage({ id: '房价管理' })}
+            </Menu.Item>
+            <Menu.Item key="/pms/setting/price-batch">
+              {intl.formatMessage({ id: '批量改价' })}
+            </Menu.Item>
+            <Menu.Item key="/pms/setting/price-log">
+              {intl.formatMessage({ id: '改价记录' })}
+            </Menu.Item>
           </SubMenu>
-          <SubMenu key="shop" icon={<NotificationOutlined />} title="门店设置">
-            <Menu.Item key="/pms/setting/shop-manage">门店设置</Menu.Item>
+          <SubMenu
+            key="shop"
+            icon={<NotificationOutlined />}
+            title={intl.formatMessage({ id: '门店设置' })}
+          >
+            <Menu.Item key="/pms/setting/shop-manage">
+              {intl.formatMessage({ id: '门店设置' })}
+            </Menu.Item>
           </SubMenu>
           <SubMenu
             key="financial"
             icon={<MoneyCollectOutlined />}
-            title="财务设置"
+            title={intl.formatMessage({ id: '财务设置' })}
           >
             <Menu.Item key="/pms/setting/financial-payment">
-              收款方式设置
+              {intl.formatMessage({ id: '收款方式设置' })}
             </Menu.Item>
-            <Menu.Item key="/pms/setting/financial-note">记一笔设置</Menu.Item>
+            <Menu.Item key="/pms/setting/financial-note">
+              {intl.formatMessage({ id: '记一笔设置' })}
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>

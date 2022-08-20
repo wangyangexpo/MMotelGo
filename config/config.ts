@@ -14,7 +14,7 @@ export default defineConfig({
   },
   // 最佳实践中内置了 Layout，你也可以配置为 false 关闭它
   layout: {
-    name: 'MotelGo',
+    name: 'PieTable',
     // logo: 'https://img.alicdn.com/imgextra/i3/O1CN01u0CsC61b0A6wBavkQ_!!6000000003402-2-tps-360-362.png',
     navTheme: 'light',
     layout: 'top',
@@ -22,7 +22,7 @@ export default defineConfig({
     fixedHeader: true,
     fixSiderbar: true,
     breadcrumbRender: false,
-    title: 'MotelGo',
+    title: 'PieTable',
     locale: true,
     pwa: false,
   },
