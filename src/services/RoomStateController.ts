@@ -111,7 +111,6 @@ export async function getSingleDayRoomState(params: {
       method: 'POST',
       data: {
         ...params,
-        statusList: params?.statusList?.length ? params.statusList : [0],
       },
     },
   );

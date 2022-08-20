@@ -33,8 +33,9 @@ const SettingRoomGroup: React.FC = () => {
     setGroupData(data?.list || []);
   }, [data]);
 
-  const hasGroup = groupData?.filter?.((g) => g.id) || [];
-  const noneGroupRooms = groupData?.filter?.((g) => !g.id)?.[0]?.rooms || [];
+  const hasGroup = groupData?.filter?.((g) => g.groupId) || [];
+  const noneGroupRooms =
+    groupData?.filter?.((g) => !g.groupId)?.[0]?.rooms || [];
 
   const columns: ProColumns<SETTING.RoomGroup>[] = [
     {
@@ -47,8 +48,8 @@ const SettingRoomGroup: React.FC = () => {
             <Space>
               <FormItem
                 hidden
-                name={['list', index, 'id']}
-                initialValue={record.id}
+                name={['list', index, 'groupId']}
+                initialValue={record.groupId}
               >
                 <Input />
               </FormItem>
@@ -71,16 +72,18 @@ const SettingRoomGroup: React.FC = () => {
               <DeleteOutlined
                 onClick={() => {
                   const ngRooms =
-                    groupData?.filter?.((g) => !g.id)?.[0]?.rooms || [];
-                  const gList = groupData?.filter?.((g) => g.id) || [];
+                    groupData?.filter?.((g) => !g.groupId)?.[0]?.rooms || [];
+                  const gList = groupData?.filter?.((g) => g.groupId) || [];
                   const newGroupList = (
-                    gList?.filter((g) => g.id !== record.id) || []
+                    gList?.filter((g) => g.groupId !== record.groupId) || []
                   ).concat([
                     {
                       rooms: ngRooms.concat(record?.rooms || []),
                     },
                   ]);
-
+                  form.setFieldsValue({
+                    noneGroup: ngRooms,
+                  });
                   setGroupData(newGroupList);
                 }}
               />
@@ -156,7 +159,7 @@ const SettingRoomGroup: React.FC = () => {
                 type="primary"
                 ghost
                 onClick={() => {
-                  setGroupData([...groupData, { id: uuid--, rooms: [] }]);
+                  setGroupData([...groupData, { groupId: uuid--, rooms: [] }]);
                 }}
               >
                 新增分组
@@ -165,7 +168,7 @@ const SettingRoomGroup: React.FC = () => {
               false
             );
           }}
-          rowKey="id"
+          rowKey="groupId"
           toolBarRender={() => [
             editable ? (
               <Space>
@@ -186,6 +189,7 @@ const SettingRoomGroup: React.FC = () => {
                       groupList.push({
                         groupType: 0,
                         groupName: '',
+                        groupId: null,
                         rooms: data?.noneGroup,
                       });
                       await services.SettingController.updateRoomGroup({

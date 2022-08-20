@@ -21,7 +21,7 @@ declare namespace SETTING {
   }
 
   interface RoomGroup {
-    id?: number;
+    groupId?: number;
     groupType?: number; // 1-未分组，2-已分组
     groupName?: string;
     rooms?: {

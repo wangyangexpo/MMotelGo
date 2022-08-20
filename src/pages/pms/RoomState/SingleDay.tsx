@@ -25,12 +25,17 @@ const SingleDay: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
   const [sortType, setSortType] = useState(1);
   const [statusList, setStatusList] = useState<number[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   const { data: enumData, loading: enumLoading } = useRequest(() => {
-    return services.RoomStateController.getRoomStatusEnum();
+    return services.RoomStateController.getRoomStatusEnum().then((res) => {
+      setStatusList(res.data?.list?.map((item) => item.code) || []);
+      setIsReady(true);
+      return res;
+    });
   });
 
-  const { data, loading, run } = useRequest(
+  const { data, loading } = useRequest(
     () => {
       return services.RoomStateController.getSingleDayRoomState({
         stateDate: selectedDate.format('YYYY-MM-DD'),
@@ -41,6 +46,7 @@ const SingleDay: React.FC = () => {
     },
     {
       refreshDeps: [selectedDate, sortType, statusList],
+      ready: isReady,
     },
   );
 
@@ -49,7 +55,7 @@ const SingleDay: React.FC = () => {
       <Row gutter={24}>
         <Col span={18}>
           <Skeleton loading={enumLoading || loading}>
-            {data?.list?.map((item) => {
+            {data?.list?.map?.((item) => {
               return (
                 <div className="single-day-card" key={item.roomTypeId}>
                   <Space>
@@ -71,7 +77,7 @@ const SingleDay: React.FC = () => {
                   </Space>
                 </div>
               );
-            })}
+            }) || null}
           </Skeleton>
         </Col>
         <Col span={6}>
@@ -101,7 +107,25 @@ const SingleDay: React.FC = () => {
           <Card size="small" bordered={false} title="房态筛选">
             <Row gutter={[0, 8]}>
               <Col span={24}>
-                <Checkbox>全部</Checkbox>
+                <Checkbox
+                  checked={statusList?.length === enumData?.list?.length}
+                  indeterminate={
+                    !!enumData?.list?.length &&
+                    statusList?.length > 0 &&
+                    statusList?.length < enumData?.list?.length
+                  }
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setStatusList(
+                        enumData?.list?.map((item) => item.code) || [],
+                      );
+                    } else {
+                      setStatusList([]);
+                    }
+                  }}
+                >
+                  全部
+                </Checkbox>
               </Col>
               <CheckboxGroup
                 onChange={(l) => {
