@@ -52,6 +52,10 @@ export default [
         path: '/pms/setting/financial-note',
         component: 'pms/Setting/FinancialNote',
       },
+      {
+        path: '/pms/setting/account-list',
+        component: 'pms/Setting/AccountManage',
+      },
     ],
   },
   {

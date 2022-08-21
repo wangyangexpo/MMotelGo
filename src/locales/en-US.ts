@@ -81,4 +81,9 @@ export default {
   激活码: 'Activation Code',
   保存: 'Save',
   取消: 'Cancel',
+  账号管理: 'Account Manage',
+  账号列表: 'Account List',
+  财务设置: 'Financial Setting',
+  收款方式设置: 'Payment Setting',
+  记一笔设置: 'Take Note Setting',
 };

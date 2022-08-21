@@ -80,6 +80,15 @@ const SettingContainer: React.FC = (props) => {
               {intl.formatMessage({ id: '记一笔设置' })}
             </Menu.Item>
           </SubMenu>
+          <SubMenu
+            key="account"
+            icon={<MoneyCollectOutlined />}
+            title={intl.formatMessage({ id: '账号管理' })}
+          >
+            <Menu.Item key="/pms/setting/account-list">
+              {intl.formatMessage({ id: '账号列表' })}
+            </Menu.Item>
+          </SubMenu>
         </Menu>
       </Sider>
       <Layout>
