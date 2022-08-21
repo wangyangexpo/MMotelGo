@@ -1,39 +1,56 @@
-import { Button, Typography } from 'antd';
+import { Button, Typography, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
+import services from '@/services';
 
 const { Link } = Typography;
 
-type TableListItem = Partial<{}>;
+type TableListItem = Partial<ACCOUNT.AccountData>;
 
 export default () => {
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '名称',
-      width: 180,
+      title: '账号',
+      width: 140,
       ellipsis: true,
-      dataIndex: 'name',
+      dataIndex: 'emailAddress',
       formItemProps: {
         name: 'searchParam',
       },
       fieldProps: {
-        placeholder: '请输入名称',
+        placeholder: '请输入账号、员工姓名',
+      },
+    },
+    {
+      title: '员工姓名',
+      width: 140,
+      ellipsis: true,
+      dataIndex: 'nickName',
+      search: false,
+    },
+    {
+      title: '状态',
+      width: 90,
+      dataIndex: 'status',
+      search: false,
+      render: (_, record) => {
+        return <Switch defaultChecked={record.status === 1} />;
       },
     },
     {
       title: '操作',
       fixed: 'right',
-      width: 180,
+      width: 120,
       key: 'option',
       valueType: 'option',
       render: (_text, record, _, action) => {
         return [
           <Link key="edit" onClick={() => {}}>
-            编辑
+            设置权限
           </Link>,
           <Link key="status" onClick={() => {}}>
-            启用
+            删除
           </Link>,
         ];
       },
@@ -44,7 +61,7 @@ export default () => {
     <PageContainer
       ghost
       header={{
-        title: '标题',
+        title: '账户列表',
       }}
     >
       <ProTable<TableListItem>
@@ -52,8 +69,13 @@ export default () => {
         scroll={{ x: 'scroll' }}
         columns={columns}
         request={async (params) => {
+          const { data } = await services.AccountController.getPmsAccountList(
+            params,
+          );
+          const { list, total } = data || {};
           return {
-            success: true,
+            total,
+            data: list || [],
           };
         }}
         options={false}

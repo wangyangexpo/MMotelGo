@@ -16,6 +16,7 @@ declare namespace API {
       pageNum?: number;
       pageSize?: number;
       totalCount?: number;
+      total?: number;
     };
   }
 
@@ -58,4 +59,10 @@ declare namespace API {
   }>;
   type Result_PmsStoreList_ = Result_List_<SYSTEM.StoreListInfo>;
   type Result_PmsShopDetail_ = Result<SYSTEM.ShopDetail>;
+
+  type Result_PmsAccountList_ = Result_List_<ACCOUNT.AccountData>;
+  type Result_PmsAccountAuthorityList_ = Result<{
+    menuAuthorityList: ACCOUNT.MenuAuthorityModule[];
+    overAllAuthorityList: ACCOUNT.OverallAuthorityModule[];
+  }>;
 }

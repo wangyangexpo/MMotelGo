@@ -16,7 +16,7 @@ const SettingContainer: React.FC = (props) => {
   const pathname = history.location.pathname;
   return (
     <Layout>
-      <Sider width={200} collapsed={false} theme="light">
+      <Sider width={240} collapsed={false} theme="light">
         <Menu
           mode="inline"
           defaultSelectedKeys={[pathname]}
