@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { history } from 'umi';
-import { useIntl } from 'umi';
+import { history, useIntl } from 'umi';
 
 export const getWeekDay = (date: moment.Moment) => {
   const intl = useIntl();

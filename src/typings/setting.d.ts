@@ -9,7 +9,10 @@ declare namespace SETTING {
     weekDayPrice?: number;
     weekEndPrice?: number;
     roomCount?: number;
-    roomCodeList?: string[];
+    roomList?: {
+      id: number;
+      code: string;
+    }[];
   }
 
   interface HourRoom {

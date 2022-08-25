@@ -3,10 +3,36 @@ import { Input, Space, Form, Button, Badge } from 'antd';
 import type { FormInstance } from '@ant-design/pro-form';
 import { PlusOutlined, CloseCircleFilled } from '@ant-design/icons';
 
+interface RoomValue {
+  id?: number;
+  code: string;
+}
+
 interface Props {
   form?: FormInstance;
   roomCount?: number;
-  initialValue?: string[];
+  initialValue?: RoomValue[];
+}
+
+function RoomInput(props: {
+  value?: RoomValue;
+  onChange?: (value: RoomValue) => void;
+}) {
+  const { value, onChange } = props;
+  return (
+    <Input
+      value={value?.code}
+      style={{ width: '105px' }}
+      placeholder="如：101"
+      onChange={(e) => {
+        onChange?.({
+          id: value?.id,
+          code: e.target.value || '',
+        });
+      }}
+      allowClear
+    />
+  );
 }
 
 export default function RoomNumberGroup(props: Props) {
@@ -14,33 +40,35 @@ export default function RoomNumberGroup(props: Props) {
 
   useEffect(() => {
     if (roomCount) {
-      const roomCodeList = form?.getFieldValue(['roomCodeList']) || [];
-      const newRoomCodes = roomCodeList.slice(0, roomCount);
-      if (newRoomCodes.length >= roomCount) {
+      const roomList = form?.getFieldValue(['roomList']) || [];
+      const newRooms = roomList.slice(0, roomCount);
+      if (newRooms.length >= roomCount) {
         // 房间减少
         form?.setFieldsValue({
-          roomCodeList: newRoomCodes,
+          roomList: newRooms,
         });
       } else {
         // 房间增加
-        const lastRoomCode = roomCodeList?.[roomCodeList.length - 1];
-        const appendRooms = [...newRoomCodes];
-        for (let i = 1; i <= roomCount - newRoomCodes.length; i++) {
+        const lastRoomCode = roomList?.[roomList.length - 1];
+        const appendRooms = [...newRooms];
+        for (let i = 1; i <= roomCount - newRooms.length; i++) {
           if (/^[0-9]+$/.test(lastRoomCode)) {
-            appendRooms.push(String(+lastRoomCode + i));
+            appendRooms.push({
+              code: String(+lastRoomCode + i),
+            });
           } else {
-            appendRooms.push('');
+            appendRooms.push({});
           }
         }
         form?.setFieldsValue({
-          roomCodeList: appendRooms,
+          roomList: appendRooms,
         });
       }
     }
   }, [roomCount]);
 
   return (
-    <Form.List name="roomCodeList" initialValue={initialValue}>
+    <Form.List name="roomList" initialValue={initialValue}>
       {(fields, { add, remove }) => {
         return (
           <Space direction="vertical">
@@ -60,10 +88,10 @@ export default function RoomNumberGroup(props: Props) {
                           display: fields.length > 1 ? 'block' : 'none',
                         }}
                         onClick={() => {
-                          const roomCodeList =
-                            form?.getFieldValue(['roomCodeList']) || [];
+                          const roomList =
+                            form?.getFieldValue(['roomList']) || [];
                           form?.setFieldsValue({
-                            roomCount: roomCodeList.length - 1,
+                            roomCount: roomList.length - 1,
                           });
                           remove(index);
                         }}
@@ -71,11 +99,7 @@ export default function RoomNumberGroup(props: Props) {
                     }
                   >
                     <Form.Item {...field} noStyle>
-                      <Input
-                        style={{ width: '105px' }}
-                        placeholder="如：101"
-                        allowClear
-                      />
+                      <RoomInput />
                     </Form.Item>
                   </Badge>
                 );
@@ -86,16 +110,17 @@ export default function RoomNumberGroup(props: Props) {
                 icon={<PlusOutlined />}
                 type="text"
                 onClick={() => {
-                  const roomCodeList =
-                    form?.getFieldValue(['roomCodeList']) || [];
-                  const lastRoomCode = roomCodeList?.[roomCodeList.length - 1];
+                  const roomList = form?.getFieldValue(['roomList']) || [];
+                  const lastRoomCode = roomList?.[roomList.length - 1]?.code;
                   if (/^[0-9]+$/.test(lastRoomCode)) {
-                    add(String(+lastRoomCode + 1));
+                    add({
+                      code: String(+lastRoomCode + 1),
+                    });
                   } else {
-                    add('');
+                    add({});
                   }
                   form?.setFieldsValue({
-                    roomCount: roomCodeList.length + 1,
+                    roomCount: roomList.length + 1,
                   });
                 }}
               >

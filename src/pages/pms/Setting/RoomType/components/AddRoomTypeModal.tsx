@@ -177,7 +177,7 @@ export default () => {
                 <RoomNumberGroup
                   form={form}
                   roomCount={roomCount}
-                  initialValue={data?.roomCodeList}
+                  initialValue={data?.roomList}
                 />
               );
             }}

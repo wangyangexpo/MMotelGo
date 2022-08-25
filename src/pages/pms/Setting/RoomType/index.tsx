@@ -59,7 +59,7 @@ const SettingRoomsPage: React.FC = () => {
       dataIndex: 'roomCodeList',
       ellipsis: true,
       render: (_, record) => {
-        return record?.roomCodeList?.join('，');
+        return record?.roomList?.map((item) => item.code)?.join('，');
       },
     },
     {
