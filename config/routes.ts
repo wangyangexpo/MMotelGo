@@ -15,6 +15,11 @@ export default [
     component: 'pms/RoomState',
   },
   {
+    name: '订单',
+    path: 'pms/room-state/order',
+    component: 'pms/Order',
+  },
+  {
     name: '单日房态',
     path: 'pms/room-state/single-day',
     component: 'pms/RoomState/SingleDay',

@@ -2,6 +2,7 @@ export default {
   WELCOME_TO_UMI_WORLD: '{name}, welcome to MotelGo',
   'menu.首页': 'Home',
   'menu.房态': 'State',
+  'menu.订单': 'Order',
   'menu.设置': 'Setting',
   'menu.登录': 'Login',
   'menu.注册账号': 'Register Account',
