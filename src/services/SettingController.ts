@@ -255,3 +255,50 @@ export async function getPriceChangeLog(params?: {
     },
   );
 }
+
+/** 记一笔列表 */
+export async function getMakeNoteList(params?: { storeId?: number }) {
+  return request<API.Result_Setting_MakeNoteList_>(
+    '/motel/config/makeNote/list',
+    {
+      method: 'POST',
+      data: params,
+    },
+  );
+}
+
+/** 记一笔新增 */
+export async function addMakeNote(params?: {
+  storeId: number;
+  name: string;
+  type: 0 | 1;
+}) {
+  return request<API.Result>('/motel/config/makeNote/save', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 记一笔更新 */
+export async function updateMakeNote(params?: { id?: number; name: string }) {
+  return request<API.Result>('/motel/config/makeNote/update', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 记一笔删除 */
+export async function deleteMakeNote(params?: { id?: number }) {
+  return request<API.Result>('/motel/config/makeNote/delete', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 记一笔排序 */
+export async function sortMakeNote(params?: { idList?: number[] }) {
+  return request<API.Result>('/motel/config/makeNote/sort', {
+    method: 'POST',
+    data: params,
+  });
+}

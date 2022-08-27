@@ -70,4 +70,12 @@ declare namespace SETTING {
     afterPrice?: string;
     createTime?: string;
   }
+
+  interface MakeNote {
+    id?: number;
+    name?: string;
+    sort?: number;
+    type?: 0 | 1;
+    storeId?: number;
+  }
 }

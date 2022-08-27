@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Input, Popconfirm } from 'antd';
+import { Space, Input, Popconfirm, message } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -7,17 +7,24 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { editingService } from './service';
-
+import services from '@/services';
+import Cookie from 'js-cookie';
 import './card.less';
+
+export enum NoteTypeEnum {
+  INCOME = 0,
+  EXPAND = 1,
+}
 
 interface Props {
   noteName?: string;
-  noteId: Key;
+  noteId?: number;
+  type: NoteTypeEnum;
 }
 
 const NoteItem: React.FC<Props> = (props) => {
-  const { noteName, noteId } = props;
-  const [editing, setEditing] = useState(false);
+  const { noteName, noteId, type } = props;
+  const [editing, setEditing] = useState(() => noteId === -1);
   const [value, setValue] = useState(() => noteName);
 
   useEffect(() => {
@@ -58,8 +65,11 @@ const NoteItem: React.FC<Props> = (props) => {
               placement="bottom"
               okText="是"
               cancelText="否"
-              onVisibleChange={() => {
-                editingService.sendEditing(-1);
+              onConfirm={async () => {
+                await services.SettingController.deleteMakeNote({
+                  id: noteId,
+                });
+                editingService.sendEditingDone();
               }}
             >
               <DeleteOutlined className="pointer" />
@@ -74,13 +84,37 @@ const NoteItem: React.FC<Props> = (props) => {
             onChange={(e) => setValue(e.target.value)}
           />
           <Space className="action">
-            <CheckOutlined className="pointer" style={{ color: 'green' }} />
+            <CheckOutlined
+              className="pointer"
+              style={{ color: 'green' }}
+              onClick={async () => {
+                if (!value) {
+                  return message.error('名称不能为空');
+                }
+                if (noteId === -1) {
+                  await services.SettingController.addMakeNote({
+                    storeId: Cookie.get('storeId'),
+                    name: value,
+                    type,
+                  });
+                } else {
+                  await services.SettingController.updateMakeNote({
+                    name: value,
+                    id: noteId,
+                  });
+                }
+                editingService.sendEditingDone();
+              }}
+            />
             <CloseOutlined
               className="pointer"
               style={{ color: 'red' }}
               onClick={(e) => {
                 e.stopPropagation();
-                editingService.sendCancelEdit();
+                editingService.sendCancelEdit({
+                  id: noteId,
+                  type,
+                });
                 setValue(noteName);
                 setEditing(false);
               }}

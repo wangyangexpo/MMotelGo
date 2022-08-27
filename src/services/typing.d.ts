@@ -40,6 +40,12 @@ declare namespace API {
   type Result_Setting_PriceCalendarList_ = Result_List_<SETTING.CalendarData>;
   type Result_Setting_PriceLogList_ = Result_List_<SETTING.PriceLog>;
 
+  type Result_Setting_MakeNoteList_ = Result<{
+    incomeList: SETTING.MakeNote[];
+    expendList: SETTING.MakeNote[];
+  }>;
+
+  // 房态看板
   type Result_RoomState_OrderList_ = Result_List_<ORDER.OrderData>;
   type Result_RoomState_RoomTypeList_ = Result_List_<ROOM_STATE.RoomType>;
   type Result_RoomState_StockList_ = Result_List_<ROOM_STATE.StockData>;
@@ -65,6 +71,5 @@ declare namespace API {
     menuAuthorityList: ACCOUNT.MenuAuthorityModule[];
     overAllAuthorityList: ACCOUNT.OverallAuthorityModule[];
   }>;
-
   type Result_PmsAccountDetail_ = Result<ACCOUNT.AccountDetail>;
 }

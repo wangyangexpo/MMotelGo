@@ -1,47 +1,43 @@
 import React from 'react';
 import SortableList from '@/components/SortableList';
-import NoteItem from './NoteItem';
-import { useRequest } from 'umi';
-import { Skeleton, message } from 'antd';
+import { NoteTypeEnum } from './NoteItem';
 import services from '@/services';
+import NoteItem from './NoteItem';
+import { message } from 'antd';
 
 interface Props {
-  type?: number;
+  type: NoteTypeEnum;
   disabled?: boolean;
+  dataSource?: SETTING.MakeNote[];
 }
 
 const SortableNoteItem: React.FC<Props> = (props) => {
-  const { type, disabled } = props;
-
-  const { data, loading } = useRequest(async () => {
-    return services.SettingController.getRoomSort({
-      type: type,
-    });
-  });
+  const { type, disabled, dataSource } = props;
 
   return (
-    <Skeleton loading={loading}>
-      <SortableList
-        dataSource={data || []}
-        disabled={disabled}
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-        }}
-        onChange={async (list) => {
-          await services.SettingController.updateRoomSort({
-            type,
-            list,
-          });
-          message.success('排序成功');
-        }}
-        renderItem={(item) => {
-          return (
-            <NoteItem noteName={item.name} noteId={item.id} key={item.id} />
-          );
-        }}
-      ></SortableList>
-    </Skeleton>
+    <SortableList
+      dataSource={dataSource || []}
+      disabled={disabled}
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}
+      onChange={async (list) => {
+        await services.SettingController.sortMakeNote({
+          idList: list.map((item) => item.id as number) || [],
+        });
+      }}
+      renderItem={(item) => {
+        return (
+          <NoteItem
+            noteName={item.name}
+            noteId={item.id}
+            key={item.id}
+            type={type}
+          />
+        );
+      }}
+    ></SortableList>
   );
 };
 
