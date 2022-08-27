@@ -144,7 +144,7 @@ const SettingRoomGroup: React.FC = () => {
         message="设置分组后，可在日历房态页面按照分组进行筛选。例：可设置【杭州西湖区】分组，将所有位于西湖区的房间分配在该分组下"
         type="info"
       />
-      <Form form={form}>
+      <Form form={form} preserve={false}>
         <ProTable
           bordered
           columns={columns}
