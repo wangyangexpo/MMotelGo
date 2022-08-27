@@ -1,7 +1,10 @@
 import { ProFormText } from '@ant-design/pro-components';
-import { Card, Skeleton, Form, Tabs, Space, Button } from 'antd';
-import AuthorityCheckGroup from './components/AuthorityCheckGroup';
-import { useRequest } from 'umi';
+import { Card, Skeleton, Form, Tabs, Space, Button, message } from 'antd';
+import AuthorityCheckGroup, {
+  AuthorityTypeEnum,
+} from './components/AuthorityCheckGroup';
+import { flatten, values } from 'lodash-es';
+import { useRequest, useParams, useHistory } from 'umi';
 import services from '@/services';
 // import './less.less';
 
@@ -12,13 +15,31 @@ const formLayout = {
 
 export default () => {
   const [form] = Form.useForm();
+  const params = useParams<{ accountId: string }>();
+  const history = useHistory();
 
-  const { data, loading } = useRequest(() => {
+  const isUpdate = !!params?.accountId;
+
+  const { data: account, loading: detailLoading } = useRequest(() => {
+    if (params.accountId) {
+      return services.AccountController.getAccountDetail({
+        accountId: params.accountId,
+      });
+    }
+    return Promise.resolve({ data: null });
+  });
+
+  // 已选中的菜单权限
+  const menuChecked = account?.menuAuthorityList || [];
+  // 已选中的全局权限
+  // const globalChecked = account?.overAllAuthorityList || [];
+
+  const { data: authority, loading: authorityLoading } = useRequest(() => {
     return services.AccountController.getAccountAuthorityList();
   });
-  const { menuAuthorityList } = data || {};
+  const { menuAuthorityList } = authority || {};
   return (
-    <Skeleton loading={loading}>
+    <Skeleton loading={authorityLoading || detailLoading}>
       <Form {...formLayout} form={form}>
         <Card
           title="基本设置"
@@ -26,9 +47,24 @@ export default () => {
             <>
               <Button
                 type="primary"
-                onClick={() => {
-                  const formData = form.getFieldsValue();
-                  console.log(formData);
+                onClick={async () => {
+                  try {
+                    const formData = await form.validateFields();
+                    const menuAuthorityList =
+                      flatten(values(formData?.menuAuthorityList)) || [];
+                    // const overAllAuthorityList =
+                    //   flatten(values(formData?.overAllAuthorityList)) || [];
+                    await services.AccountController.addPmsAccount(
+                      {
+                        ...formData,
+                        accountId: params.accountId,
+                        menuAuthorityList,
+                      },
+                      isUpdate ? 'update' : 'add',
+                    );
+                    message.success(isUpdate ? '保存成功' : '添加成功');
+                    history.goBack();
+                  } catch (error) {}
                 }}
               >
                 保存
@@ -38,21 +74,21 @@ export default () => {
         >
           <ProFormText
             label="账号（邮箱）"
-            name="email"
+            name="emailAddress"
             fieldProps={{
               maxLength: 100,
             }}
             rules={[{ required: true, message: '请输入邮箱账号' }]}
-            initialValue={null}
+            initialValue={account?.emailAddress}
           />
           <ProFormText
             label="员工姓名"
-            name="name"
+            name="nickName"
             fieldProps={{
               maxLength: 100,
             }}
             rules={[{ required: true, message: '请输入员工姓名' }]}
-            initialValue={null}
+            initialValue={account?.nickName}
           />
         </Card>
         <Card title="权限设置" style={{ marginTop: 24 }}>
@@ -81,8 +117,9 @@ export default () => {
                               <AuthorityCheckGroup
                                 menu={subMenu}
                                 key={subMenu.menuId}
-                                checkedValues={[]}
+                                checkedValues={menuChecked}
                                 prefixName={mainMenuName}
+                                type={AuthorityTypeEnum.MENU}
                               />
                             );
                           })}

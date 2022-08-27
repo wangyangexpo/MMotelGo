@@ -3,7 +3,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Cookie from 'js-cookie';
 import type { CSSProperties } from 'react';
-import { history } from 'umi';
+import { useHistory } from 'umi';
 import services from '@/services';
 
 const { Link, Text } = Typography;
@@ -16,6 +16,7 @@ const iconStyles: CSSProperties = {
 };
 
 export default () => {
+  const history = useHistory();
   return (
     <div
       style={{

@@ -65,4 +65,6 @@ declare namespace API {
     menuAuthorityList: ACCOUNT.MenuAuthorityModule[];
     overAllAuthorityList: ACCOUNT.OverallAuthorityModule[];
   }>;
+
+  type Result_PmsAccountDetail_ = Result<ACCOUNT.AccountDetail>;
 }

@@ -3,7 +3,7 @@ import { useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import { ModalForm, ProFormText, ProFormRadio } from '@ant-design/pro-form';
 import Cookie from 'js-cookie';
-import { history } from 'umi';
+import { useHistory } from 'umi';
 import services from '@/services';
 
 const formItemLayout = {
@@ -12,6 +12,8 @@ const formItemLayout = {
 };
 
 export default function StorePage() {
+  const history = useHistory();
+
   const { data, run } = useRequest(() => {
     return services.UserController.getPmsStoreList();
   });

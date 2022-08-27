@@ -22,17 +22,15 @@ export async function getPmsAccountList(params: {
 /** 添加账号 */
 export async function addPmsAccount(
   params: {
-    accountId?: number;
-    phoneNo?: string;
+    accountId?: string;
+    nickName?: string;
     emailAddress?: string;
-    firstName?: string;
-    lastName?: string;
     menuAuthorityList?: number[];
     overAllAuthorityList?: number[];
   },
   action?: 'add' | 'update',
 ) {
-  if (action === 'add') {
+  if (action === 'update') {
     return request<API.Result>('/motel/account/updateAccount', {
       method: 'POST',
       data: params,
@@ -69,6 +67,17 @@ export async function getAccountAuthorityList() {
     '/motel/account/getAccountAuthorityList',
     {
       method: 'GET',
+    },
+  );
+}
+
+/** 查询当前登录账号权限详情 */
+export async function getAccountDetail(params: { accountId: string }) {
+  return request<API.Result_PmsAccountDetail_>(
+    '/motel/account/getAccountDetail',
+    {
+      method: 'GET',
+      params,
     },
   );
 }

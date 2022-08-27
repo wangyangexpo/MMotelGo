@@ -1,8 +1,8 @@
-import { Button, Typography, Switch } from 'antd';
+import { Button, Typography, Switch, message, Popconfirm } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { history } from 'umi';
+import { useHistory } from 'umi';
 import services from '@/services';
 
 const { Link } = Typography;
@@ -10,10 +10,10 @@ const { Link } = Typography;
 type TableListItem = Partial<ACCOUNT.AccountData>;
 
 export default () => {
+  const history = useHistory();
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '账号',
-      width: 140,
       ellipsis: true,
       dataIndex: 'emailAddress',
       formItemProps: {
@@ -25,34 +25,68 @@ export default () => {
     },
     {
       title: '员工姓名',
-      width: 140,
       ellipsis: true,
       dataIndex: 'nickName',
       search: false,
     },
     {
       title: '状态',
-      width: 90,
       dataIndex: 'status',
       search: false,
       render: (_, record) => {
-        return <Switch defaultChecked={record.status === 1} />;
+        return (
+          <Switch
+            defaultChecked={record.status === 1}
+            onChange={async (checked) => {
+              try {
+                await services.AccountController.setPmsAccountStatus({
+                  accountId: record.id,
+                  status: checked ? 1 : 0,
+                });
+                message.success('操作成功');
+              } catch (error) {
+                message.error('操作失败');
+              }
+            }}
+          />
+        );
       },
     },
     {
       title: '操作',
       fixed: 'right',
-      width: 120,
+      width: 140,
       key: 'option',
       valueType: 'option',
       render: (_text, record, _, action) => {
+        const deleteAccount = async () => {
+          try {
+            await services.AccountController.deletePmsAccount({
+              accountId: record.id,
+            });
+            message.success('删除成功！');
+            action?.reload();
+          } catch (error) {}
+        };
         return [
-          <Link key="edit" onClick={() => {}}>
+          <Link
+            key="edit"
+            onClick={() => {
+              history.push(
+                '/pms/setting/account-list/add-or-edit/' + record.id,
+              );
+            }}
+          >
             设置权限
           </Link>,
-          <Link key="status" onClick={() => {}}>
-            删除
-          </Link>,
+          <Popconfirm
+            key="status"
+            placement="topRight"
+            title="此操作将永久删除, 是否继续？"
+            onConfirm={deleteAccount}
+          >
+            <Link>删除</Link>
+          </Popconfirm>,
         ];
       },
     },
@@ -82,7 +116,7 @@ export default () => {
       search={{
         defaultCollapsed: false,
       }}
-      toolBarRender={(action) => [
+      toolBarRender={() => [
         <Button
           type="primary"
           icon={<PlusOutlined />}

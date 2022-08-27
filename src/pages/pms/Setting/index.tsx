@@ -23,7 +23,7 @@ const SettingContainer: React.FC = (props) => {
           defaultOpenKeys={[
             pathname?.split('/pms/setting/')?.[1]?.split('-')?.[0],
           ]}
-          onSelect={(info) => {
+          onClick={(info) => {
             const { key } = info;
             history.push(key);
           }}

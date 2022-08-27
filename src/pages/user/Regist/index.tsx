@@ -1,13 +1,13 @@
 import { MailOutlined, UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
-import { message, Form, Button } from 'antd';
+import { Form, Button } from 'antd';
 import { emailPattern } from '@/constants';
 import services from '@/services';
-import { history } from 'umi';
-// import { useState } from 'react';
+import { useHistory } from 'umi';
 
 export default () => {
   const [form] = Form.useForm();
+  const history = useHistory();
   return (
     <div style={{ backgroundColor: 'white' }}>
       <LoginForm

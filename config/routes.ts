@@ -60,6 +60,10 @@ export default [
         path: '/pms/setting/account-list/add-or-edit',
         component: 'pms/Setting/AccountManage/Edit',
       },
+      {
+        path: '/pms/setting/account-list/add-or-edit/:accountId',
+        component: 'pms/Setting/AccountManage/Edit',
+      },
     ],
   },
   {

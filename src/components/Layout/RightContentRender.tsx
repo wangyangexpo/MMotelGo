@@ -1,11 +1,12 @@
 import { Avatar, Space, Select, Popover, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { setLocale, getLocale, getAllLocales, history } from 'umi';
+import { setLocale, getLocale, getAllLocales, useHistory } from 'umi';
 import { localeMap } from '@/constants';
 import Cookie from 'js-cookie';
 
 export default () => {
   const allLocales = getAllLocales();
+  const history = useHistory();
   return (
     <Space>
       <Select

@@ -10,6 +10,15 @@ declare namespace ACCOUNT {
     storeId: number;
   }
 
+  interface AccountDetail {
+    accountId: number;
+    nickName: string;
+    phoneNo: string;
+    emailAddress: string;
+    menuAuthorityList: number[];
+    overAllAuthorityList: number[];
+  }
+
   interface SubMenu {
     menuId: number;
     menuName: string;

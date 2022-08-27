@@ -20,14 +20,19 @@ interface Props {
 }
 
 const AuthorityCheckGroup = (props: Props) => {
-  const { menu, checkedValues, prefixName } = props;
+  const {
+    menu,
+    checkedValues,
+    prefixName,
+    type = AuthorityTypeEnum.MENU,
+  } = props;
   const { menuName, authorityList } = menu;
 
   // 所有Id数组
   const authIdList = authorityList?.map((a) => a.authorityId);
 
   // Form.Item键值
-  const name = `${prefixName}-${menuName}`;
+  const name = [type, `${prefixName}-${menuName}`];
 
   // 初始值
   const value = checkedValues?.filter((i) => {
