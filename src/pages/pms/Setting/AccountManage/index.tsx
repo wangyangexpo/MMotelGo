@@ -1,7 +1,8 @@
 import { Button, Typography, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { history } from 'umi';
 import services from '@/services';
 
 const { Link } = Typography;
@@ -58,41 +59,40 @@ export default () => {
   ];
 
   return (
-    <PageContainer
-      ghost
-      header={{
-        title: '账户列表',
+    <ProTable<TableListItem>
+      size="large"
+      scroll={{ x: 'scroll' }}
+      columns={columns}
+      request={async (params) => {
+        const { data } = await services.AccountController.getPmsAccountList(
+          params,
+        );
+        const { list, total } = data || {};
+        return {
+          total,
+          data: list || [],
+        };
       }}
-    >
-      <ProTable<TableListItem>
-        size="large"
-        scroll={{ x: 'scroll' }}
-        columns={columns}
-        request={async (params) => {
-          const { data } = await services.AccountController.getPmsAccountList(
-            params,
-          );
-          const { list, total } = data || {};
-          return {
-            total,
-            data: list || [],
-          };
-        }}
-        options={false}
-        rowKey="id"
-        pagination={{
-          pageSize: 10,
-          showQuickJumper: true,
-        }}
-        search={{
-          defaultCollapsed: false,
-        }}
-        toolBarRender={(action) => [
-          <Button type="primary" icon={<PlusOutlined />} onClick={() => {}}>
-            添加
-          </Button>,
-        ]}
-      />
-    </PageContainer>
+      options={false}
+      rowKey="id"
+      pagination={{
+        pageSize: 10,
+        showQuickJumper: true,
+      }}
+      search={{
+        defaultCollapsed: false,
+      }}
+      toolBarRender={(action) => [
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => {
+            history.push('/pms/setting/account-list/add-or-edit');
+          }}
+        >
+          添加
+        </Button>,
+      ]}
+    />
   );
 };

@@ -65,7 +65,7 @@ export async function deletePmsAccount(params: { accountId?: number }) {
 
 /** 查询当前登录账号可配置的权限列表 */
 export async function getAccountAuthorityList() {
-  return request<API.Result_PmsAccountList_>(
+  return request<API.Result_PmsAccountAuthorityList_>(
     '/motel/account/getAccountAuthorityList',
     {
       method: 'GET',
