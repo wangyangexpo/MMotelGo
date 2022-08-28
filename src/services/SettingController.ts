@@ -317,6 +317,7 @@ export async function getConsumerItemList(params?: {
       method: 'POST',
       data: {
         ...params,
+        pageNum: params?.current,
         storeId: Cookie.get('storeId'),
       },
     },

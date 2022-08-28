@@ -27,7 +27,10 @@ export default () => {
       const data = await form.validateFields();
       setSubmitLoading(true);
       await services.SettingController.addConsumerItem(
-        data,
+        {
+          id: consumer?.id,
+          ...data,
+        },
         isUpdate ? 'update' : 'add',
       );
       message.success(`${isUpdate ? '保存' : '添加'}成功`);
