@@ -13,9 +13,7 @@ export default () => {
   const [expendList, setExpendList] = useState<SETTING.MakeNote[]>([]);
 
   const { loading, run } = useRequest(async () => {
-    return services.SettingController.getMakeNoteList({
-      storeId: Cookie.get('storeId'),
-    }).then((res) => {
+    return services.SettingController.getMakeNoteList().then((res) => {
       setIncomeList(res?.data?.incomeList || []);
       setExpendList(res?.data?.expendList || []);
     });

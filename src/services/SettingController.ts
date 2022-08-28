@@ -1,4 +1,5 @@
 import { request } from 'umi';
+import Cookie from 'js-cookie';
 
 /** 新增修改房型房间 */
 export async function addRoomType(
@@ -257,25 +258,26 @@ export async function getPriceChangeLog(params?: {
 }
 
 /** 记一笔列表 */
-export async function getMakeNoteList(params?: { storeId?: number }) {
+export async function getMakeNoteList() {
   return request<API.Result_Setting_MakeNoteList_>(
     '/motel/config/makeNote/list',
     {
       method: 'POST',
-      data: params,
+      data: {
+        storeId: Cookie.get('storeId'),
+      },
     },
   );
 }
 
 /** 记一笔新增 */
-export async function addMakeNote(params?: {
-  storeId: number;
-  name: string;
-  type: 0 | 1;
-}) {
+export async function addMakeNote(params?: { name: string; type: 0 | 1 }) {
   return request<API.Result>('/motel/config/makeNote/save', {
     method: 'POST',
-    data: params,
+    data: {
+      ...params,
+      storeId: Cookie.get('storeId'),
+    },
   });
 }
 
@@ -313,7 +315,10 @@ export async function getConsumerItemList(params?: {
     '/motel/config/consumptionItem/list',
     {
       method: 'POST',
-      data: params,
+      data: {
+        ...params,
+        storeId: Cookie.get('storeId'),
+      },
     },
   );
 }
@@ -331,7 +336,10 @@ export async function addConsumerItem(
   if (action === 'add') {
     return request<API.Result>('/motel/config/consumptionItem/save', {
       method: 'POST',
-      data: params,
+      data: {
+        ...params,
+        storeId: Cookie.get('storeId'),
+      },
     });
   }
   return request<API.Result>('/motel/config/consumptionItem/update', {

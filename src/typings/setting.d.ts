@@ -83,7 +83,7 @@ declare namespace SETTING {
     id?: number;
     name?: string;
     storeId?: number;
-    classifyName?: string;
+    classify?: number;
     price?: number;
     status?: 0 | 1;
   }

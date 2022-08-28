@@ -93,7 +93,6 @@ const NoteItem: React.FC<Props> = (props) => {
                 }
                 if (noteId === -1) {
                   await services.SettingController.addMakeNote({
-                    storeId: Cookie.get('storeId'),
                     name: value,
                     type,
                   });

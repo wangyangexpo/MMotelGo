@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Button, Form, message, Modal, Space, InputNumber } from 'antd';
 import type { ActionType } from '@ant-design/pro-table';
 import { ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import { ConsumerItemClassifyEnum } from '@/constants';
 import services from '@/services';
+import Cookie from 'js-cookie';
 
 const FormItem = Form.Item;
 
@@ -71,10 +73,19 @@ export default () => {
         layout="horizontal"
       >
         <ProFormSelect
-          name="name"
+          name="classify"
           label="消费项分类"
-          rules={[{ required: true }]}
-          initialValue={consumer?.classifyName}
+          rules={[{ required: true, message: '请选择分类' }]}
+          initialValue={consumer?.classify}
+          options={[
+            { label: '早餐消费', value: ConsumerItemClassifyEnum.BREAKFAST },
+            {
+              label: '客房消费',
+              value: ConsumerItemClassifyEnum.ROOM_CONSUMPTION,
+            },
+            { label: '赔偿', value: ConsumerItemClassifyEnum.COMPENSATION },
+            { label: '其他', value: ConsumerItemClassifyEnum.OTHER },
+          ]}
         />
         <ProFormText
           label="名称"
@@ -89,7 +100,7 @@ export default () => {
           label="价格"
           name="price"
           initialValue={consumer?.price}
-          rules={[{ required: true }]}
+          rules={[{ required: true, message: '请输入价格' }]}
         >
           <InputNumber style={{ width: '100%' }} addonBefore="￥" />
         </FormItem>
