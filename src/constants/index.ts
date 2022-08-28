@@ -34,3 +34,10 @@ export const systemMenuOptions = [
     remark: true,
   },
 ];
+
+export enum ConsumerItemClassifyEnum {
+  OTHER = 1, // 其他
+  BREAKFAST = 2, // 早餐消费
+  ROOM_CONSUMPTION = 3, // 客房消费
+  COMPENSATION = 4, // 赔偿
+}

@@ -78,4 +78,13 @@ declare namespace SETTING {
     type?: 0 | 1;
     storeId?: number;
   }
+
+  interface ConsumerItem extends BasicExtraProps {
+    id?: number;
+    name?: string;
+    storeId?: number;
+    classifyName?: string;
+    price?: number;
+    status?: 0 | 1;
+  }
 }

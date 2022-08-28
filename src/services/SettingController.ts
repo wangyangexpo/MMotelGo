@@ -1,7 +1,7 @@
 import { request } from 'umi';
 
 /** 新增修改房型房间 */
-export async function AddRoomType(
+export async function addRoomType(
   params?: SETTING.RoomType,
   action?: 'add' | 'update',
 ) {
@@ -54,7 +54,7 @@ export async function deleteRoomType(params?: { id?: number }) {
 }
 
 /** 新增修改钟点房 */
-export async function AddHourRoom(
+export async function addHourRoom(
   params?: SETTING.HourRoom,
   action?: 'add' | 'update',
 ) {
@@ -298,6 +298,62 @@ export async function deleteMakeNote(params?: { id?: number }) {
 /** 记一笔排序 */
 export async function sortMakeNote(params?: { idList?: number[] }) {
   return request<API.Result>('/motel/config/makeNote/sort', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 消费项列表 */
+export async function getConsumerItemList(params?: {
+  storeId?: number;
+  current?: number;
+  pageSize?: number;
+}) {
+  return request<API.Result_Setting_ConsumerItemList_>(
+    '/motel/config/consumptionItem/list',
+    {
+      method: 'POST',
+      data: params,
+    },
+  );
+}
+
+/** 消费项新增 | 修改 */
+export async function addConsumerItem(
+  params?: {
+    id?: number;
+    name: string;
+    classiftyName: string;
+    price: number;
+  },
+  action?: 'add' | 'update',
+) {
+  if (action === 'add') {
+    return request<API.Result>('/motel/config/consumptionItem/save', {
+      method: 'POST',
+      data: params,
+    });
+  }
+  return request<API.Result>('/motel/config/consumptionItem/update', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 消费项删除 */
+export async function deleteConsumerItem(params?: { id?: number }) {
+  return request<API.Result>('/motel/config/consumptionItem/delete', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/** 启用 / 禁用消费项 */
+export async function setConsumerItemStatus(params: {
+  id?: number;
+  status?: 0 | 1;
+}) {
+  return request<API.Result>('/motel/config/consumptionItem/updateStatus', {
     method: 'POST',
     data: params,
   });

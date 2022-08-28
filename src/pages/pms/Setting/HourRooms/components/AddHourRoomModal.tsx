@@ -33,7 +33,7 @@ export default () => {
     try {
       const data = await form.validateFields();
       setSubmitLoading(true);
-      await services.SettingController.AddHourRoom(
+      await services.SettingController.addHourRoom(
         data,
         isUpdate ? 'update' : 'add',
       );

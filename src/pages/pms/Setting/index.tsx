@@ -43,6 +43,9 @@ const SettingContainer: React.FC = (props) => {
             <Menu.Item key="/pms/setting/rooms-sort">
               {intl.formatMessage({ id: '排序设置' })}
             </Menu.Item>
+            <Menu.Item key="/pms/setting/consumer-item">
+              {intl.formatMessage({ id: '消费项设置' })}
+            </Menu.Item>
           </SubMenu>
           <SubMenu
             key="price"

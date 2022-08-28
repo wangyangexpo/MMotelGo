@@ -33,7 +33,7 @@ export default () => {
   async function onSubmit() {
     try {
       const data = await form.validateFields();
-      await services.SettingController.AddRoomType(
+      await services.SettingController.addRoomType(
         {
           ...data,
           id: roomTypeId,

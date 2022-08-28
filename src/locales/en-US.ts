@@ -28,6 +28,7 @@ export default {
   房型房间设置: 'Room Type Setting',
   房间分组设置: 'Room Group Setting',
   排序设置: 'Sort Setting',
+  消费项设置: 'Consumer Item Setting',
   房价设置: 'Price Stetting',
   房价管理: 'Price Management',
   批量改价: 'Price Batch Change',

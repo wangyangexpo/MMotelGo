@@ -40,6 +40,10 @@ export default [
       { path: '/pms/setting/rooms-group', component: 'pms/Setting/RoomGroup' },
       { path: '/pms/setting/rooms-sort', component: 'pms/Setting/RoomSort' },
       {
+        path: '/pms/setting/consumer-item',
+        component: 'pms/Setting/ConsumerItem',
+      },
+      {
         path: '/pms/setting/price-manage',
         component: 'pms/Setting/PriceCalendar',
       },

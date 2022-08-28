@@ -45,6 +45,8 @@ declare namespace API {
     expendList: SETTING.MakeNote[];
   }>;
 
+  type Result_Setting_ConsumerItemList_ = Result_List_<SETTING.ConsumerItem>;
+
   // 房态看板
   type Result_RoomState_OrderList_ = Result_List_<ORDER.OrderData>;
   type Result_RoomState_RoomTypeList_ = Result_List_<ROOM_STATE.RoomType>;
